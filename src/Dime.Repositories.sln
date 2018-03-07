@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories", "core\Dime.Repositories\Dime.Repositories.csproj", "{72A74CEB-EC06-43A8-85C2-E4CFDA8DFCE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F753A01F-2E0C-4036-9DEF-6047253255D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.LiteDb", "core\Dime.Repositories.LiteDb\Dime.Repositories.LiteDb.csproj", "{B2730D85-205F-4798-9BAC-0809A29C8BFA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.LiteDb.Tests", "test\Dime.Repositories.LiteDb.Tests\Dime.Repositories.LiteDb.Tests.csproj", "{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Redis.Tests", "test\Dime.Repositories.Redis.Tests\Dime.Repositories.Redis.Tests.csproj", "{79D70F03-970F-4E07-B9BD-60C7098A4D8C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Redis", "core\Dime.Repositories.Redis\Dime.Repositories.Redis.csproj", "{6FE577DC-F4A5-4B8E-A77B-6B10C4FC7973}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql", "core\Dime.Repositories.Sql\Dime.Repositories.Sql.csproj", "{0FB51C4F-7198-40CF-8442-9A09BF016C42}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.NetCore", "core\Dime.Repositories.Sql.EntityFramework\Dime.Repositories.Sql.EntityFramework.NetCore.csproj", "{B501E673-CC10-4BFF-A086-CFF1DF482816}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.NetFull", "core\Dime.Repositories.Sql.EntityFramework.Legacy\Dime.Repositories.Sql.EntityFramework.NetFull.csproj", "{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.Tests", "test\Dime.Repositories.Sql.EntityFramework.Tests\Dime.Repositories.Sql.EntityFramework.Tests.csproj", "{752C2101-5877-4C29-9EFF-D868D1C82426}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72A74CEB-EC06-43A8-85C2-E4CFDA8DFCE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72A74CEB-EC06-43A8-85C2-E4CFDA8DFCE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72A74CEB-EC06-43A8-85C2-E4CFDA8DFCE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72A74CEB-EC06-43A8-85C2-E4CFDA8DFCE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2730D85-205F-4798-9BAC-0809A29C8BFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2730D85-205F-4798-9BAC-0809A29C8BFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2730D85-205F-4798-9BAC-0809A29C8BFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2730D85-205F-4798-9BAC-0809A29C8BFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79D70F03-970F-4E07-B9BD-60C7098A4D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79D70F03-970F-4E07-B9BD-60C7098A4D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79D70F03-970F-4E07-B9BD-60C7098A4D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79D70F03-970F-4E07-B9BD-60C7098A4D8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FE577DC-F4A5-4B8E-A77B-6B10C4FC7973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE577DC-F4A5-4B8E-A77B-6B10C4FC7973}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE577DC-F4A5-4B8E-A77B-6B10C4FC7973}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE577DC-F4A5-4B8E-A77B-6B10C4FC7973}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FB51C4F-7198-40CF-8442-9A09BF016C42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FB51C4F-7198-40CF-8442-9A09BF016C42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FB51C4F-7198-40CF-8442-9A09BF016C42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FB51C4F-7198-40CF-8442-9A09BF016C42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B501E673-CC10-4BFF-A086-CFF1DF482816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B501E673-CC10-4BFF-A086-CFF1DF482816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B501E673-CC10-4BFF-A086-CFF1DF482816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B501E673-CC10-4BFF-A086-CFF1DF482816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{752C2101-5877-4C29-9EFF-D868D1C82426}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{752C2101-5877-4C29-9EFF-D868D1C82426}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{752C2101-5877-4C29-9EFF-D868D1C82426}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{752C2101-5877-4C29-9EFF-D868D1C82426}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
+		{79D70F03-970F-4E07-B9BD-60C7098A4D8C} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
+		{752C2101-5877-4C29-9EFF-D868D1C82426} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EFEF8275-DA5B-4493-8BB7-32E760B05267}
+	EndGlobalSection
+EndGlobal
