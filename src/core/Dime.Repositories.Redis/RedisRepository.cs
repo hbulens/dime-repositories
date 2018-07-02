@@ -1,7 +1,7 @@
-﻿using ServiceStack.Redis;
-using System;
+﻿using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ServiceStack.Redis;
 
 namespace Dime.Repositories.Redis
 {
@@ -25,16 +25,16 @@ namespace Dime.Repositories.Redis
         /// </history>
         public RedisRepository(IRedisClientsManager redisContext, string contextKey)
         {
-            this.RedisManager = redisContext;
-            this.ContextKey = contextKey;
+            RedisManager = redisContext;
+            ContextKey = contextKey;
         }
 
         #endregion Constructor
 
         #region Properties
 
-        private IRedisClientsManager RedisManager { get; set; }
-        private string ContextKey { get; set; }
+        private IRedisClientsManager RedisManager { get; }
+        private string ContextKey { get; }
 
         /// <summary>
         ///

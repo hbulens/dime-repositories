@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -153,7 +152,6 @@ namespace Dime.Repositories
             int? page = null,
             int? pageSize = null,
             params string[] includes);
-
 
         /// <summary>
         /// Finds entities based on provided criteria.

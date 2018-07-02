@@ -11,7 +11,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TEntity Create(TEntity entity)
         {
-            return this.Create(entity, true);
+            return Create(entity, true);
         }
 
         /// <summary>
@@ -22,13 +22,13 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TEntity Create(TEntity entity, bool commitChanges)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Entry(entity).State = EntityState.Added;
                 TEntity createdEntity = ctx.Set<TEntity>().Add(entity);
 
                 if (commitChanges)
-                    this.SaveChanges(ctx);
+                    SaveChanges(ctx);
 
                 return createdEntity;
             }

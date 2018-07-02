@@ -1,5 +1,4 @@
-﻿using LinqKit;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
@@ -7,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using LinqKit;
 
 namespace Dime.Repositories
 {
@@ -19,7 +19,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> where)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 return await ctx.Set<TEntity>().AsNoTracking().AnyAsync(where);
             }
@@ -32,7 +32,7 @@ namespace Dime.Repositories
         /// <returns>The record of type <typeparamref name="TEntity"/> that matches the id</returns>
         public async virtual Task<TEntity> FindByIdAsync(long id)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 return await ctx.Set<TEntity>().FindAsync(id);
             }
@@ -46,7 +46,7 @@ namespace Dime.Repositories
         /// <returns>The record of type <typeparamref name="TEntity"/> that matches the id</returns>
         public async virtual Task<TEntity> FindByIdAsync(long id, params string[] includes)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 foreach (string include in includes)
                 {
@@ -64,7 +64,7 @@ namespace Dime.Repositories
         /// <returns>The first record of type <typeparamref name="TEntity"/> that matches the query</returns>
         public virtual async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> where)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 TEntity query = ctx.Set<TEntity>()
                     .Include(ctx)
@@ -85,7 +85,7 @@ namespace Dime.Repositories
         /// <returns>The first record of type <typeparamref name="TEntity"/> that matches the query</returns>
         public virtual async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> where, params string[] includes)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TEntity> query = ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -119,7 +119,7 @@ namespace Dime.Repositories
             int? pageSize = default(int?),
             params string[] includes) where TResult : class
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TResult> query = ctx.Set<TEntity>()
                 .AsExpandable()
@@ -131,7 +131,7 @@ namespace Dime.Repositories
                 .With(pageSize)
                 .WithSelect(select);
 
-                IQueryable<TResult> fullGraphQuery = await Task.Run(() => this.Include<TResult>(query, includes));
+                IQueryable<TResult> fullGraphQuery = await Task.Run(() => Include<TResult>(query, includes));
                 return fullGraphQuery.FirstOrDefault();
             }
         }
@@ -147,7 +147,7 @@ namespace Dime.Repositories
         /// </history>
         public virtual async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> where, params string[] includes)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TEntity> query = ctx.Set<TEntity>()
                 .Include(ctx, includes)
@@ -181,7 +181,7 @@ namespace Dime.Repositories
             int? pageSize = null,
             params string[] includes)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TResult> query = ctx.Set<TEntity>()
                 .Include(ctx, includes)
@@ -220,7 +220,7 @@ namespace Dime.Repositories
             int? pageSize = null,
             params string[] includes)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TEntity> query = ctx.Set<TEntity>()
                 .Include(ctx, includes)
@@ -248,29 +248,23 @@ namespace Dime.Repositories
             {
                 return query;
             }
-            else if (includes.Count() == 0)
-            {
-                MetadataWorkspace workspace = ((IObjectContextAdapter)this.Context).ObjectContext.MetadataWorkspace;
-                ObjectItemCollection itemCollection = (ObjectItemCollection)(workspace.GetItemCollection(DataSpace.OSpace));
-                EntityType entityType = itemCollection.OfType<EntityType>().Single(e => itemCollection.GetClrType(e) == typeof(TEntity));
-
-                foreach (NavigationProperty navigationProperty in entityType.NavigationProperties)
-                {
-                    query = query.Include(navigationProperty.Name);
-                }
-
-                return query;
-            }
             else
             {
-                foreach (var include in includes)
+                if (!includes.Any())
                 {
-                    if (include != null)
+                    MetadataWorkspace workspace = ((IObjectContextAdapter)Context).ObjectContext.MetadataWorkspace;
+                    ObjectItemCollection itemCollection = (ObjectItemCollection)workspace.GetItemCollection(DataSpace.OSpace);
+                    EntityType entityType = itemCollection.OfType<EntityType>().Single(e => itemCollection.GetClrType(e) == typeof(TEntity));
+
+                    foreach (NavigationProperty navigationProperty in entityType.NavigationProperties)
                     {
-                        query = query.Include(include);
+                        query = query.Include(navigationProperty.Name);
                     }
+
+                    return query;
                 }
-                return query;
+
+                return includes.Where(include => include != null).Aggregate(query, (current, include) => current.Include(include));
             }
         }
     }

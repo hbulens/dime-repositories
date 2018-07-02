@@ -11,11 +11,11 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TEntity Update(TEntity entity)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Set<TEntity>().Attach(entity);
                 ctx.Entry(entity).State = EntityState.Modified;
-                this.SaveChanges(ctx);
+                SaveChanges(ctx);
 
                 return entity;
             }
@@ -29,14 +29,14 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TEntity Update(TEntity entity, bool commitChanges = true)
         {
-            using (TContext context = this.Context)
+            using (TContext context = Context)
             {
                 context.Set<TEntity>().Attach(entity);
                 context.Entry(entity).State = EntityState.Modified;
 
                 if (commitChanges)
                 {
-                    this.SaveChanges(context);
+                    SaveChanges(context);
                 }
 
                 return entity;

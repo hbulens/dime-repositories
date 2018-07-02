@@ -21,13 +21,13 @@ namespace Dime.Repositories
         /// </history>
         public IEnumerable<SqlParameter> GetStoredProcedureSchema(string name, string schema = "dbo")
         {
-            using (SqlConnection connection = new SqlConnection(this.Context.Database.Connection.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(Context.Database.Connection.ConnectionString))
             {
                 connection.Open();
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = string.Format("{0}.{1}", schema, name);
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = $"{schema}.{name}";
+                    cmd.CommandType = CommandType.StoredProcedure;
 
                     SqlCommandBuilder.DeriveParameters(cmd);
                     foreach (SqlParameter param in cmd.Parameters)
@@ -48,12 +48,12 @@ namespace Dime.Repositories
         {
             Func<string, DbParameter[], string> execQuery = (x, y) =>
             {
-                string parameterString = string.Join(",", parameters.Select(z => string.Format("{0}={1}", z.ParameterName, z.Value)));
-                return string.Format("EXEC {0} {1}", name, parameterString);
+                string parameterString = string.Join(",", parameters.Select(z => $"{z.ParameterName}={z.Value}"));
+                return $"EXEC {name} {parameterString}";
             };
 
             string execQueryString = execQuery(name, parameters);
-            using (DbContext context = this.Context)
+            using (DbContext context = Context)
             {
                 return context.Database.ExecuteSqlCommand(execQueryString, parameters);
             }
@@ -69,12 +69,12 @@ namespace Dime.Repositories
         {
             Func<string, DbParameter[], string> execQuery = (x, y) =>
             {
-                string parameterString = string.Join(",", parameters.Select(z => string.Format("{0}={1}", z.ParameterName, z.Value)));
-                return string.Format("EXEC {0}.{1} {2}", schema, name, parameterString);
+                string parameterString = string.Join(",", parameters.Select(z => $"{z.ParameterName}={z.Value}"));
+                return $"EXEC {schema}.{name} {parameterString}";
             };
 
             string execQueryString = execQuery(name, parameters);
-            using (DbContext context = this.Context)
+            using (DbContext context = Context)
             {
                 return context.Database.ExecuteSqlCommand(execQueryString, parameters);
             }
@@ -91,13 +91,13 @@ namespace Dime.Repositories
         /// </history>
         public IEnumerable<T> ExecuteStoredProcedure<T>(string name, string schema = "dbo", params DbParameter[] parameters)
         {
-            using (DbConnection connection = this.Context.Database.Connection)
+            using (DbConnection connection = Context.Database.Connection)
             {
                 connection.Open();
                 using (DbCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = string.Format("{0}.{1}", schema, name);
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = $"{schema}.{name}";
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddRange(parameters);
 
                     using (DbDataReader reader = cmd.ExecuteReader())

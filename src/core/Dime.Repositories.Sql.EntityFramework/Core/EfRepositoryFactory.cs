@@ -28,30 +28,18 @@ namespace Dime.Repositories
             IMultiTenantDbContextFactory<TContext> contextFactory,
             IMultiTenantRepositoryConfiguration repositoryConfiguration)
         {
-            this.ContextFactory = contextFactory;
-            this.RepositoryConfiguration = repositoryConfiguration;
+            ContextFactory = contextFactory;
+            RepositoryConfiguration = repositoryConfiguration;
         }
 
         #endregion Constructor
 
         #region Properties
 
-        protected IMultiTenantDbContextFactory<TContext> ContextFactory { get; private set; }
+        protected IMultiTenantDbContextFactory<TContext> ContextFactory { get; }
         public IMultiTenantRepositoryConfiguration RepositoryConfiguration { get; set; }
 
-        private DbContext _context;
-
-        public DbContext Context
-        {
-            get
-            {
-                return _context;
-            }
-            private set
-            {
-                _context = value;
-            }
-        }
+        public DbContext Context { get; private set; }
 
         #endregion Properties
 
@@ -61,12 +49,9 @@ namespace Dime.Repositories
         /// Gets the repository.
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
-        /// <param name="connection">The connection.</param>
         /// <returns></returns>
         public virtual IRepository<TEntity> Create<TEntity>() where TEntity : class, new()
-        {
-            return new EfRepository<TEntity, TContext>(this.ContextFactory, this.RepositoryConfiguration);
-        }
+            => new EfRepository<TEntity, TContext>(ContextFactory, RepositoryConfiguration);
 
         /// <summary>
         /// Gets the repository.
@@ -75,9 +60,7 @@ namespace Dime.Repositories
         /// <param name="connection">The connection.</param>
         /// <returns></returns>
         public virtual IRepository<TEntity> Create<TEntity>(string connection) where TEntity : class, new()
-        {
-            return new EfRepository<TEntity, TContext>(this.ContextFactory, this.RepositoryConfiguration);
-        }
+            => new EfRepository<TEntity, TContext>(ContextFactory, RepositoryConfiguration);
 
         /// <summary>
         /// Gets the repository.
@@ -88,9 +71,9 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual IRepository<TEntity> Create<TEntity>(string tenant, string connection) where TEntity : class, new()
         {
-            this.ContextFactory.Connection = connection;
-            this.ContextFactory.Tenant = tenant;
-            return new EfRepository<TEntity, TContext>(this.ContextFactory, this.RepositoryConfiguration);
+            ContextFactory.Connection = connection;
+            ContextFactory.Tenant = tenant;
+            return new EfRepository<TEntity, TContext>(ContextFactory, RepositoryConfiguration);
         }
 
         /// <summary>
@@ -98,14 +81,12 @@ namespace Dime.Repositories
         /// </summary>
         /// <returns></returns>
         private static IMultiTenantRepositoryConfiguration GetDefaultRepositoryConfiguration()
-        {
-            return new RepositoryConfiguration()
+            => new RepositoryConfiguration
             {
                 SaveInBatch = false,
                 Cached = true,
                 SaveStrategy = ConcurrencyStrategy.ClientFirst
             };
-        }
 
         #endregion Methods
     }

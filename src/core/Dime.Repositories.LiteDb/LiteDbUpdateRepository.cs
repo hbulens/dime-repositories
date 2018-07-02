@@ -1,8 +1,8 @@
-﻿using LiteDB;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using LiteDB;
 
 namespace Dime.Repositories
 {
@@ -18,7 +18,7 @@ namespace Dime.Repositories
         /// </history>
         public T Update(T entity)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             collection.Update(entity);
 
             return entity;
@@ -35,7 +35,7 @@ namespace Dime.Repositories
         /// </history>
         public T Update(T entity, bool commitChanges = true)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             collection.Update(entity);
 
             return entity;
@@ -52,7 +52,7 @@ namespace Dime.Repositories
         /// </history>
         public Task<T> UpdateAsync(T entity, bool commitChanges = true)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             collection.Update(entity);
 
             return Task.FromResult(entity);
@@ -69,7 +69,7 @@ namespace Dime.Repositories
         /// </history>
         public async Task UpdateAsync(IEnumerable<T> entities, bool commitChanges = true)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             collection.Update(entities);
 
             await Task.FromResult(0);

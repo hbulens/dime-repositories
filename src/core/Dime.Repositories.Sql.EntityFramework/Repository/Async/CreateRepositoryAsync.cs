@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Dime.Repositories
 {
@@ -16,11 +17,11 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Entry(entity).State = EntityState.Added;
                 EntityEntry<TEntity> createdItem = ctx.Set<TEntity>().Add(entity);
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
 
                 return createdItem.Entity;
             }
@@ -34,11 +35,11 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<TEntity> CreateAsync(TEntity entity, Expression<Func<TEntity, bool>> predicate)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Entry(entity).State = EntityState.Added;
                 TEntity createdItem = ctx.Set<TEntity>().AddIfNotExists(entity, predicate);
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
 
                 return createdItem;
             }
@@ -52,13 +53,13 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<TEntity> CreateAsync(TEntity entity, Func<TEntity, TContext, Task> beforeSaveAction)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 await beforeSaveAction(entity, ctx);
 
                 ctx.Entry(entity).State = EntityState.Added;
                 EntityEntry<TEntity> createdItem = ctx.Set<TEntity>().Add(entity);
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
 
                 return createdItem.Entity;
             }
@@ -72,13 +73,13 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<TEntity> CreateAsync(TEntity entity, bool commit)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Entry(entity).State = EntityState.Added;
                 EntityEntry<TEntity> createdItem = ctx.Set<TEntity>().Add(entity);
 
                 if (commit)
-                    await this.SaveChangesAsync(ctx);
+                    await SaveChangesAsync(ctx);
 
                 return createdItem.Entity;
             }
@@ -88,21 +89,26 @@ namespace Dime.Repositories
         /// Save new items to the data store
         /// </summary>
         /// <param name="entities">The disconnected entities to store</param>
-        /// <returns>The connected entity</returns>
+        /// <returns>The connected entities</returns>
         public virtual async Task<IQueryable<TEntity>> CreateAsync(IQueryable<TEntity> entities)
         {
-            using (TContext ctx = this.Context)
+            if (!entities.Any())
+                return entities;
+
+            List<TEntity> newEntities = new List<TEntity>();
+            using (TContext ctx = Context)
             {
-                foreach (TEntity entity in entities)
+                foreach (TEntity entity in entities.ToList())
                 {
                     ctx.Entry(entity).State = EntityState.Added;
-                    ctx.Set<TEntity>().Add(entity);
+                    EntityEntry<TEntity> newEntity = ctx.Set<TEntity>().Add(entity);
+                    newEntities.Add(newEntity.Entity);
                 }
 
-                await this.SaveChangesAsync(ctx);
-
-                return entities;
+                await SaveChangesAsync(ctx);
             }
+
+            return newEntities.AsQueryable();
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Dime.Repositories
         /// <param name="schemas"></param>
         public ProvisioningResult(bool success)
         {
-            this.Success = success;
+            Success = success;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Dime.Repositories
         /// <param name="schemas"></param>
         public ProvisioningResult(bool success, string tenantCode) : this(success)
         {
-            this.Success = success;
+            Success = success;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Dime.Repositories
         /// <param name="schemas"></param>
         public ProvisioningResult(bool success, string tenantCode, IEnumerable<string> schemas) : this(success, tenantCode)
         {
-            this.TakenSchemas = schemas;
+            TakenSchemas = schemas;
         }
 
         #endregion Constructor

@@ -1,5 +1,4 @@
-﻿using LinqKit;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -8,6 +7,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using LinqKit;
 
 namespace Dime.Repositories
 {
@@ -28,7 +28,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public bool Exists(Expression<Func<TEntity, bool>> where)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 return ctx.Set<TEntity>().Any(where);
             }
@@ -41,7 +41,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TEntity FindById(long id)
         {
-            return this.Context.Set<TEntity>().Find(id);
+            return Context.Set<TEntity>().Find(id);
         }
 
         /// <summary>
@@ -51,14 +51,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TEntity FindOne(Expression<Func<TEntity, bool>> where)
         {
-            if (where == null)
-            {
-                return this.FindAll().FirstOrDefault();
-            }
-            else
-            {
-                return this.FindAll(where).FirstOrDefault();
-            }
+            return @where == null ? FindAll().FirstOrDefault() : FindAll(@where).FirstOrDefault();
         }
 
         /// <summary>
@@ -68,14 +61,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TEntity FindOne(Expression<Func<TEntity, bool>> where, params string[] includes)
         {
-            if (where == null)
-            {
-                return this.FindAll().FirstOrDefault();
-            }
-            else
-            {
-                return this.FindAll(where, true, includes).FirstOrDefault();
-            }
+            return @where == null ? FindAll().FirstOrDefault() : FindAll(@where, true, includes).FirstOrDefault();
         }
 
         /// <summary>
@@ -90,17 +76,14 @@ namespace Dime.Repositories
         {
             if (includes == null)
             {
-                return this.FindAll(where);
+                return FindAll(where);
             }
             else
             {
-                using (TContext ctx = this.Context)
+                using (TContext ctx = Context)
                 {
                     IQueryable<TEntity> query = ctx.Set<TEntity>().With(where).With(page, pageSize).With(pageSize).AsNoTracking();
-                    foreach (var include in includes)
-                    {
-                        query = query.Include(include);
-                    }
+                    query = includes.Aggregate(query, (current, include) => current.Include(include));
 
                     return query.ToList().AsQueryable();
                 }
@@ -117,20 +100,17 @@ namespace Dime.Repositories
         {
             if (includes == null)
             {
-                return this.FindAll(where);
+                return FindAll(where);
             }
             else
             {
-                using (TContext ctx = this.Context)
+                using (TContext ctx = Context)
                 {
                     IQueryable<TEntity> query = where == null ?
                     ctx.Set<TEntity>().AsNoTracking() :
                     ctx.Set<TEntity>().Where(where).AsNoTracking();
 
-                    foreach (var include in includes)
-                    {
-                        query = query.Include(include);
-                    }
+                    query = includes.Aggregate(query, (current, include) => current.Include(include));
 
                     return query.ToList().AsQueryable();
                 }
@@ -144,14 +124,14 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> where = null)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TEntity> query = where == null ?
                 ctx.Set<TEntity>().AsNoTracking() :
                 ctx.Set<TEntity>().Where(where).AsNoTracking();
 
                 MetadataWorkspace workspace = ((IObjectContextAdapter)ctx).ObjectContext.MetadataWorkspace;
-                ObjectItemCollection itemCollection = (ObjectItemCollection)(workspace.GetItemCollection(DataSpace.OSpace));
+                ObjectItemCollection itemCollection = (ObjectItemCollection)workspace.GetItemCollection(DataSpace.OSpace);
                 EntityType entityType = itemCollection.OfType<EntityType>().Single(e => itemCollection.GetClrType(e) == typeof(TEntity));
 
                 object _lock = new object();
@@ -175,7 +155,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> where = null, params string[] includes)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TEntity> query = ctx.Set<TEntity>()
                 .Include(ctx, includes)
@@ -201,7 +181,7 @@ namespace Dime.Repositories
         /// </history>
         public virtual IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> where, bool includeAll, params string[] includes)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TEntity> query = where == null ?
                     ctx.Set<TEntity>().AsNoTracking() :
@@ -210,7 +190,7 @@ namespace Dime.Repositories
                 if (includeAll)
                 {
                     MetadataWorkspace workspace = ((IObjectContextAdapter)ctx).ObjectContext.MetadataWorkspace;
-                    ObjectItemCollection itemCollection = (ObjectItemCollection)(workspace.GetItemCollection(DataSpace.OSpace));
+                    ObjectItemCollection itemCollection = (ObjectItemCollection)workspace.GetItemCollection(DataSpace.OSpace);
                     EntityType entityType = itemCollection.OfType<EntityType>().Single(e => itemCollection.GetClrType(e) == typeof(TEntity));
 
                     object _lock = new object();
@@ -223,10 +203,7 @@ namespace Dime.Repositories
                     });
                 }
 
-                foreach (var include in includes)
-                {
-                    query = query.Include(include);
-                }
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
 
                 return query.ToList().AsQueryable();
             }

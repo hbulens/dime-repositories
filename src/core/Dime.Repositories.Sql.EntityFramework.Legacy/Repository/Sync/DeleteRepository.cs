@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,11 +14,11 @@ namespace Dime.Repositories
         /// <param name="id"></param>
         public virtual void Delete(long id)
         {
-            using (TContext context = this.Context)
+            using (TContext context = Context)
             {
-                var item = context.Set<TEntity>().Find(id);
+                TEntity item = context.Set<TEntity>().Find(id);
                 context.Set<TEntity>().Remove(item);
-                this.SaveChanges(context);
+                SaveChanges(context);
             }
         }
 
@@ -27,13 +28,13 @@ namespace Dime.Repositories
         /// <param name="entity"></param>
         public virtual void Delete(TEntity entity)
         {
-            using (TContext context = this.Context)
+            using (TContext context = Context)
             {
                 if (context.Entry(entity).State == EntityState.Detached)
                     context.Set<TEntity>().Attach(entity);
 
                 context.Set<TEntity>().Remove(entity);
-                this.SaveChanges(context);
+                SaveChanges(context);
             }
         }
 
@@ -43,15 +44,15 @@ namespace Dime.Repositories
         /// <param name="where"></param>
         public virtual void Delete(Expression<Func<TEntity, bool>> where)
         {
-            using (TContext context = this.Context)
+            using (TContext context = Context)
             {
-                var objects = context.Set<TEntity>().Where(where).AsNoTracking().AsEnumerable();
-                foreach (var item in objects)
+                IEnumerable<TEntity> objects = context.Set<TEntity>().Where(where).AsNoTracking().AsEnumerable();
+                foreach (TEntity item in objects)
                 {
                     context.Set<TEntity>().Remove(item);
                 }
 
-                this.SaveChanges(context);
+                SaveChanges(context);
             }
         }
     }

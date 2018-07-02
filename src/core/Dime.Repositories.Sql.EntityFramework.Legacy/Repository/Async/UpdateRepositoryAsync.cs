@@ -17,13 +17,13 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, bool commitChanges = true)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Set<TEntity>().Attach(entity);
                 ctx.Entry(entity).State = EntityState.Modified;
 
                 if (commitChanges)
-                    await this.SaveChangesAsync(ctx);
+                    await SaveChangesAsync(ctx);
 
                 return entity;
             }
@@ -37,7 +37,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public async Task UpdateAsync(IEnumerable<TEntity> entities, bool commitChanges = true)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 foreach (TEntity entity in entities)
                 {
@@ -45,7 +45,7 @@ namespace Dime.Repositories
                     ctx.Entry(entity).State = EntityState.Modified;
                 }
 
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Dime.Repositories
         /// <returns>The updated entity</returns>
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, params string[] properties)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Set<TEntity>().Attach(entity);
                 DbEntityEntry<TEntity> entry = ctx.Entry(entity);
@@ -75,7 +75,7 @@ namespace Dime.Repositories
                 }
 
                 ctx.Entry(entity).State = EntityState.Modified;
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
                 return entity;
             }
         }
@@ -88,7 +88,7 @@ namespace Dime.Repositories
         /// <returns>The updated entity</returns>
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Set<TEntity>().Attach(entity);
                 DbEntityEntry<TEntity> entry = ctx.Entry(entity);
@@ -100,7 +100,7 @@ namespace Dime.Repositories
 
                 ctx.Entry(entity).State = EntityState.Modified;
 
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
 
                 return entity;
             }

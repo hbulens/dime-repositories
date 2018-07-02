@@ -27,7 +27,7 @@ namespace Dime.Repositories
         /// <param name="connectionString"></param>
         protected MultiTenantContextFactory(string connectionString) : this()
         {
-            this.Connection = connectionString;
+            Connection = connectionString;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Dime.Repositories
         /// <param name="tenant"></param>
         protected MultiTenantContextFactory(string connectionString, string tenant) : this(connectionString)
         {
-            this.Tenant = tenant;
+            Tenant = tenant;
         }
 
         #endregion Constructor
@@ -58,10 +58,10 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TContext Create()
         {
-            if (!string.IsNullOrEmpty(this.Tenant) && !string.IsNullOrEmpty(this.Connection))
-                return this.Create(this.Tenant, this.Connection);
+            if (!string.IsNullOrEmpty(Tenant) && !string.IsNullOrEmpty(Connection))
+                return Create(Tenant, Connection);
             else
-                return this.Create("dbo", this.Connection);
+                return Create("dbo", Connection);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TContext Create(string connection)
         {
-            return this.Create("dbo", connection);
+            return Create("dbo", connection);
         }
 
         /// <summary>
@@ -86,19 +86,17 @@ namespace Dime.Repositories
         public TContext Create(string tenant, string connection, string context)
         {
             if (string.IsNullOrEmpty(context))
-                return this.Create(tenant, connection);
-            else
-            {
-                SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
-                DbConnection dbConnection = connectionFactory.CreateConnection(connection);
-                System.Data.Entity.Database.SetInitializer<TContext>(null);
+                return Create(tenant, connection);
 
-                DbCompiledModel compiledModel = NamedModelCache.GetOrAdd(
-                   Tuple.Create(tenant, dbConnection.ConnectionString, context),
-                   t => { return this.GetContextModel(dbConnection, tenant); });
+            SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
+            DbConnection dbConnection = connectionFactory.CreateConnection(connection);
+            Database.SetInitializer<TContext>(null);
 
-                return this.ConstructContext(dbConnection, compiledModel, false);
-            }
+            DbCompiledModel compiledModel = NamedModelCache.GetOrAdd(
+                Tuple.Create(tenant, dbConnection.ConnectionString, context),
+                t => GetContextModel(dbConnection, tenant));
+
+            return ConstructContext(dbConnection, compiledModel, false);
         }
 
         /// <summary>
@@ -114,13 +112,13 @@ namespace Dime.Repositories
         {
             SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
             DbConnection dbConnection = connectionFactory.CreateConnection(connection);
-            System.Data.Entity.Database.SetInitializer<TContext>(null);
+            Database.SetInitializer<TContext>(null);
 
             DbCompiledModel compiledModel = ModelCache.GetOrAdd(
                Tuple.Create(tenant, dbConnection.ConnectionString),
-               t => { return this.GetContextModel(dbConnection, tenant); });
+               t => GetContextModel(dbConnection, tenant));
 
-            return this.ConstructContext(dbConnection, compiledModel, false);
+            return ConstructContext(dbConnection, compiledModel, false);
         }
 
         /// <summary>

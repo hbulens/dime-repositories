@@ -17,14 +17,14 @@ namespace Dime.Repositories
         /// <param name="repositoryFactory"></param>
         public UnitOfWork(IMultiTenantEfRepositoryFactory repositoryFactory)
         {
-            this.RepositoryFactory = repositoryFactory;
+            RepositoryFactory = repositoryFactory;
         }
 
         #endregion Constructor
 
         #region Properties
 
-        private IMultiTenantEfRepositoryFactory RepositoryFactory { get; set; }
+        private IMultiTenantEfRepositoryFactory RepositoryFactory { get; }
 
         #endregion Properties
 
@@ -33,11 +33,11 @@ namespace Dime.Repositories
         /// <summary>
         /// Creates a repository for the requested type
         /// </summary>
-        /// <typeparam name="T">The entity type</typeparam>      
+        /// <typeparam name="T">The entity type</typeparam>
         /// <returns>An instantiated and connected repository</returns>
         public IRepository<T> GetRepository<T>() where T : class, new()
         {
-            return this.RepositoryFactory.Create<T>();
+            return RepositoryFactory.Create<T>();
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Dime.Repositories
         /// <returns>An instantiated and connected repository</returns>
         public IRepository<T> GetRepository<T>(string connection) where T : class, new()
         {
-            return this.RepositoryFactory.Create<T>(connection);
+            return RepositoryFactory.Create<T>(connection);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Dime.Repositories
         /// <returns>An instantiated and connected repository</returns>
         public IRepository<T> GetRepository<T>(string tenant, string connection) where T : class, new()
         {
-            return this.RepositoryFactory.Create<T>(tenant, connection);
+            return RepositoryFactory.Create<T>(tenant, connection);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public bool SaveChanges()
         {
-            int result = this.RepositoryFactory.Context.SaveChanges();
+            int result = RepositoryFactory.Context.SaveChanges();
             return 0 < result;
         }
 
@@ -79,7 +79,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public async Task<bool> SaveChangesAsync()
         {
-            int result = await this.RepositoryFactory.Context.SaveChangesAsync();
+            int result = await RepositoryFactory.Context.SaveChangesAsync();
             return 0 < result;
         }
 

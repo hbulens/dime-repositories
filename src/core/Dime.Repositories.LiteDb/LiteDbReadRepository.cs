@@ -1,9 +1,9 @@
-﻿using LiteDB;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using LiteDB;
 
 namespace Dime.Repositories
 {
@@ -60,7 +60,7 @@ namespace Dime.Repositories
         /// </history>
         public Task<T> FindOneAsync(Expression<Func<T, bool>> where)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             return Task.FromResult(collection.FindOne(where));
         }
 
@@ -107,7 +107,7 @@ namespace Dime.Repositories
         /// </history>
         public IEnumerable<T> FindAll(Expression<Func<T, bool>> where)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             return collection.FindAll().ToList();
         }
 
@@ -124,7 +124,7 @@ namespace Dime.Repositories
         /// </history>
         public IEnumerable<T> FindAll(Expression<Func<T, bool>> where, int? page, int? pageSize, string[] includes)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             return collection.FindAll().ToList();
         }
 
@@ -140,7 +140,7 @@ namespace Dime.Repositories
         /// </history>
         public IEnumerable<T> FindAll(Expression<Func<T, bool>> where, bool includeAll, params string[] includes)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             return collection.FindAll().ToList();
         }
 
@@ -206,7 +206,7 @@ namespace Dime.Repositories
         /// </history>
         public Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> where = null, Expression<Func<T, object>> orderBy = null, bool? ascending = default(bool?), int? page = default(int?), int? pageSize = default(int?), params string[] includes)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             return Task.FromResult(collection.FindAll().ToList() as IEnumerable<T>);
         }
 
@@ -223,7 +223,7 @@ namespace Dime.Repositories
         {
             lock (_padlock)
             {
-                LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+                LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
                 IEnumerable<T> items = collection.Find(where);
                 return Task.FromResult(items);
             }
@@ -243,8 +243,8 @@ namespace Dime.Repositories
         /// </history>
         public Task<IPage<T>> FindAllPagedAsync(Expression<Func<T, bool>> where = null, IEnumerable<IOrder<T>> orderBy = null, int? page = default(int?), int? pageSize = default(int?), params string[] includes)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
-            IEnumerable<T> items = collection.Find(where, page.GetValueOrDefault(), pageSize == null ? int.MaxValue : pageSize.GetValueOrDefault());
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
+            IEnumerable<T> items = collection.Find(where, page.GetValueOrDefault(), pageSize ?? int.MaxValue);
             int collectionCount = collection.Count(where);
 
             return Task.FromResult(new Page<T>(items, collectionCount) as IPage<T>);
@@ -262,7 +262,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public Task<IPage<T>> FindAllPagedAsync(Expression<Func<T, bool>> where, Expression<Func<T, object>> orderBy, bool? ascending, int? page, int? pageSize, params string[] includes)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             IEnumerable<T> items = collection.Find(where, page.GetValueOrDefault(), pageSize.GetValueOrDefault());
             int collectionCount = collection.Count(where);
             return Task.FromResult(new Page<T>(items, collectionCount)) as Task<IPage<T>>;
@@ -280,10 +280,10 @@ namespace Dime.Repositories
         /// <returns></returns>
         public Task<IPage<T>> FindAllPagedAsync(Expression<Func<T, bool>> where, IEnumerable<Expression<Func<T, object>>> orderBy, bool? ascending, int? page, int? pageSize, params string[] includes)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             IEnumerable<T> items = collection.Find(where, page.GetValueOrDefault(), pageSize.GetValueOrDefault());
             int collectionCount = collection.Count(where);
-            return Task.FromResult(new Page<T>(items, collectionCount) as IPage<T>) as Task<IPage<T>>;
+            return Task.FromResult(new Page<T>(items, collectionCount) as IPage<T>);
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public Task<IPage<T>> FindAllPagedAsync(Expression<Func<T, bool>> where, Expression<Func<T, bool>> count, IEnumerable<IOrder<T>> orderBy, int? page, int? pageSize, params string[] includes)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             IEnumerable<T> items = collection.Find(where, page.GetValueOrDefault(), pageSize.GetValueOrDefault());
             int collectionCount = collection.Count(count);
             return Task.FromResult(new Page<T>(items, collectionCount) as IPage<T>);
@@ -317,7 +317,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public Task<IPage<T>> FindAllPagedAsync(Expression<Func<T, bool>> where, Expression<Func<T, object>> orderBy, Expression<Func<T, object>> groupBy, bool? ascending, int? page, int? pageSize, params string[] includes)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             IEnumerable<T> items = collection.Find(where, page.GetValueOrDefault(), pageSize.GetValueOrDefault());
             int collectionCount = collection.Count(where);
             return Task.FromResult(new Page<T>(items, collectionCount) as IPage<T>);
@@ -401,7 +401,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public Task<long> Count()
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             return Task.FromResult((long)collection.Count());
         }
 
@@ -412,7 +412,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public Task<long> Count(Expression<Func<T, bool>> where)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             return Task.FromResult((long)collection.Count(where));
         }
 

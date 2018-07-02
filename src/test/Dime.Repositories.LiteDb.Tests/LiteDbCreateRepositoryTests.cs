@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Dime.Repositories.LiteDb.Tests
 {
-    /// <summary>
-    ///
-    /// </summary>
+    [TestClass]
     public class LiteDbCreateRepositoryTests
     {
         #region Constructor
@@ -16,7 +14,7 @@ namespace Dime.Repositories.LiteDb.Tests
         /// </summary>
         public LiteDbCreateRepositoryTests()
         {
-            this.Factory = new LiteDbRepositoryFactory(@"C:\Temp\MyData.db");
+            Factory = new LiteDbRepositoryFactory(@"C:\Temp\MyData.db");
         }
 
         #endregion Constructor
@@ -29,13 +27,13 @@ namespace Dime.Repositories.LiteDb.Tests
 
         #region Methods
 
-        [Fact]
+        [TestMethod]
         public async Task CreateAsyncReturnsTrue()
         {
-            using (IRepository<TestModel> repository = this.Factory.Create<TestModel>())
+            using (IRepository<TestModel> repository = Factory.Create<TestModel>())
             {
                 TestModel item = await repository.CreateAsync(new TestModel() { Id = new Random().Next(0, 10000000) });
-                Assert.NotNull(item);
+                Assert.IsNotNull(item);
             }
         }
 

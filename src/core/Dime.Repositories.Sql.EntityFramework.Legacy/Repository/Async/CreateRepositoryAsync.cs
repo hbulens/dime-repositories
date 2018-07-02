@@ -15,11 +15,11 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Entry(entity).State = EntityState.Added;
                 TEntity createdItem = ctx.Set<TEntity>().Add(entity);
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
 
                 return createdItem;
             }
@@ -33,11 +33,11 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<TEntity> CreateAsync(TEntity entity, Expression<Func<TEntity, bool>> predicate)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Entry(entity).State = EntityState.Added;
                 TEntity createdItem = ctx.Set<TEntity>().AddIfNotExists(entity, predicate);
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
 
                 return createdItem;
             }
@@ -51,13 +51,13 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<TEntity> CreateAsync(TEntity entity, Func<TEntity, TContext, Task> beforeSaveAction)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 await beforeSaveAction(entity, ctx);
 
                 ctx.Entry(entity).State = EntityState.Added;
                 TEntity createdItem = ctx.Set<TEntity>().Add(entity);
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
 
                 return createdItem;
             }
@@ -71,13 +71,13 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<TEntity> CreateAsync(TEntity entity, bool commit)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Entry(entity).State = EntityState.Added;
                 TEntity createdItem = ctx.Set<TEntity>().Add(entity);
 
                 if (commit)
-                    await this.SaveChangesAsync(ctx);
+                    await SaveChangesAsync(ctx);
 
                 return createdItem;
             }
@@ -90,7 +90,7 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<IQueryable<TEntity>> CreateAsync(IQueryable<TEntity> entities)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 foreach (TEntity entity in entities)
                 {
@@ -98,7 +98,7 @@ namespace Dime.Repositories
                     ctx.Set<TEntity>().Add(entity);
                 }
 
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
 
                 return entities;
             }

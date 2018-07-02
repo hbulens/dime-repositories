@@ -13,20 +13,8 @@ namespace Dime.Repositories
         /// <param name="source">The source.</param>
         /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
-        /// <history>
-        /// [HB] 17/08/2015 - Create
-        /// </history>
         internal static IQueryable<TSource> With<TSource>(this IQueryable<TSource> source, Expression<Func<TSource, bool>> predicate)
-        {
-            if (predicate == null)
-            {
-                return source;
-            }
-            else
-            {
-                return source.Where(predicate);
-            }
-        }
+            => predicate == null ? source : source.Where(predicate);
 
         /// <summary>
         /// Wrapper around LINQ WHERE
@@ -35,19 +23,7 @@ namespace Dime.Repositories
         /// <param name="source">The source.</param>
         /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
-        /// <history>
-        /// [HB] 17/08/2015 - Create
-        /// </history>
         internal static TSource WithFirst<TSource>(this IQueryable<TSource> source, Expression<Func<TSource, bool>> predicate)
-        {
-            if (predicate == null)
-            {
-                return source.FirstOrDefault();
-            }
-            else
-            {
-                return source.FirstOrDefault(predicate);
-            }
-        }
+            => predicate == null ? source.FirstOrDefault() : source.FirstOrDefault(predicate);
     }
 }

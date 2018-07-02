@@ -16,14 +16,7 @@ namespace Dime.Repositories
         /// </history>
         internal static IQueryable<TSource> With<TSource>(this IQueryable<TSource> source, int? takeCount)
         {
-            if ((takeCount ?? 0) == 0)
-            {
-                return source;
-            }
-            else
-            {
-                return source.Take((int)takeCount);
-            }
+            return (takeCount ?? 0) == 0 ? source : source.Take((int)takeCount);
         }
     }
 }

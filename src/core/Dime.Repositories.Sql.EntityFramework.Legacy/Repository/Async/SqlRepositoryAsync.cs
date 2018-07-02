@@ -15,7 +15,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public async Task ExecuteSqlAsync(string sql)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 await ctx.Database.ExecuteSqlCommandAsync(sql);
             }
@@ -31,12 +31,12 @@ namespace Dime.Repositories
         {
             Func<string, DbParameter[], string> execQuery = (x, y) =>
             {
-                string parameterString = string.Join(",", parameters.Select(z => string.Format("{0}={1}", z.ParameterName, z.Value)));
-                return string.Format("EXEC {0} {1}", name, parameterString);
+                string parameterString = string.Join(",", parameters.Select(z => $"{z.ParameterName}={z.Value}"));
+                return $"EXEC {name} {parameterString}";
             };
 
             string execQueryString = execQuery(name, parameters);
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters);
             }
@@ -52,12 +52,12 @@ namespace Dime.Repositories
         {
             Func<string, DbParameter[], string> execQuery = (x, y) =>
             {
-                string parameterString = string.Join(",", parameters.Select(z => string.Format("{0}={1}", z.ParameterName, z.Value)));
-                return string.Format("EXEC {0}.{1} {2}", schema, name, parameterString);
+                string parameterString = string.Join(",", parameters.Select(z => $"{z.ParameterName}={z.Value}"));
+                return $"EXEC {schema}.{name} {parameterString}";
             };
 
             string execQueryString = execQuery(name, parameters);
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters);
             }
@@ -74,7 +74,7 @@ namespace Dime.Repositories
         /// </history>
         public async Task<IEnumerable<T>> ExecuteStoredProcedureAsync<T>(string name, string schema = "dbo", params DbParameter[] parameters)
         {
-            using (DbConnection connection = this.Context.Database.Connection)
+            using (DbConnection connection = Context.Database.Connection)
             {
                 connection.Open();
                 using (DbCommand cmd = connection.CreateCommand())
@@ -101,12 +101,12 @@ namespace Dime.Repositories
         {
             Func<string, DbParameter[], string> execQuery = (x, y) =>
             {
-                string parameterString = string.Join(",", parameters.Select(z => string.Format("{0}={1}", z.ParameterName, z.Value)));
-                return string.Format("EXEC {0}.{1} {2}", schema, nameof(name), parameterString);
+                string parameterString = string.Join(",", parameters.Select(z => $"{z.ParameterName}={z.Value}"));
+                return $"EXEC {schema}.{nameof(name)} {parameterString}";
             };
 
             string execQueryString = execQuery(nameof(name), parameters);
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters);
             }
@@ -123,13 +123,13 @@ namespace Dime.Repositories
         {
             Func<string, DbParameter[], string> execQuery = (x, y) =>
             {
-                string parameterString = string.Join(",", parameters.Select(z => string.Format("@{0}={1}", z.ParameterName, z.Value)));
-                return string.Format("EXEC {0} {1}", command, parameterString);
+                string parameterString = string.Join(",", parameters.Select(z => $"@{z.ParameterName}={z.Value}"));
+                return $"EXEC {command} {parameterString}";
             };
 
             return await Task.Run(() =>
             {
-                using (TContext ctx = this.Context)
+                using (TContext ctx = Context)
                 {
                     return ctx.Database.SqlQuery<T>(execQuery(command, parameters));
                 }

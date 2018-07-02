@@ -1,4 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Dime.Repositories
@@ -6,33 +11,105 @@ namespace Dime.Repositories
     public partial class EfRepository<TEntity, TContext>
     {
         /// <summary>
-        ///
+        /// Save a new item to the data store
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">The disconnected entity to store</param>
+        /// <returns>The connected entity</returns>
         public virtual TEntity Create(TEntity entity)
         {
-            return this.Create(entity, true);
+            using (TContext ctx = Context)
+            {
+                ctx.Entry(entity).State = EntityState.Added;
+                EntityEntry<TEntity> createdItem = ctx.Set<TEntity>().Add(entity);
+                SaveChanges(ctx);
+
+                return createdItem.Entity;
+            }
         }
 
         /// <summary>
-        ///
+        /// Save a new item to the data store
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="commitChanges"></param>
-        /// <returns></returns>
-        public virtual TEntity Create(TEntity entity, bool commitChanges)
+        /// <param name="entity">The disconnected entity to store</param>
+        /// <param name="predicate">The predicate to validate before creating the entity</param>
+        /// <returns>The connected entity</returns>
+        public virtual TEntity Create(TEntity entity, Expression<Func<TEntity, bool>> predicate)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Entry(entity).State = EntityState.Added;
-                EntityEntry<TEntity> createdEntity = ctx.Set<TEntity>().Add(entity);
+                TEntity createdItem = ctx.Set<TEntity>().AddIfNotExists(entity, predicate);
+                SaveChanges(ctx);
 
-                if (commitChanges)
-                    this.SaveChanges(ctx);
-
-                return createdEntity.Entity;
+                return createdItem;
             }
+        }
+
+        /// <summary>
+        /// Save a new item to the data store and provide the chance to execute additional logic before saving
+        /// </summary>
+        /// <param name="entity">The disconnected entity to store</param>
+        /// <param name="beforeSaveAction">The Func to execute before anything is done</param>
+        /// <returns>The connected entity</returns>
+        public virtual TEntity Create(TEntity entity, Func<TEntity, TContext, Task> beforeSaveAction)
+        {
+            using (TContext ctx = Context)
+            {
+                beforeSaveAction(entity, ctx);
+
+                ctx.Entry(entity).State = EntityState.Added;
+                EntityEntry<TEntity> createdItem = ctx.Set<TEntity>().Add(entity);
+                SaveChanges(ctx);
+
+                return createdItem.Entity;
+            }
+        }
+
+        /// <summary>
+        /// Save a new item to the data store
+        /// </summary>
+        /// <param name="entity">The disconnected entity to store</param>
+        /// <param name="commit">Indicates whether or not SaveChanges should be executed</param>
+        /// <returns>The connected entity</returns>
+        public virtual TEntity Create(TEntity entity, bool commit)
+        {
+            using (TContext ctx = Context)
+            {
+                ctx.Entry(entity).State = EntityState.Added;
+                EntityEntry<TEntity> createdItem = ctx.Set<TEntity>().Add(entity);
+
+                if (commit)
+                    SaveChanges(ctx);
+
+                return createdItem.Entity;
+            }
+        }
+
+        /// <summary>
+        /// Save new items to the data store
+        /// </summary>
+        /// <param name="entities">The disconnected entities to store</param>
+        /// <returns>The connected entities</returns>
+        public virtual IQueryable<TEntity> Create(IQueryable<TEntity> entities)
+        {
+            if (!entities.Any())
+                return entities;
+
+            List<TEntity> newEntities = new List<TEntity>();
+            List<TEntity> entitiesToCreate = entities.ToList();
+            using (TContext ctx = Context)
+            {
+                foreach (TEntity entity in entitiesToCreate)
+                {
+                    ctx.Entry(entity).State = EntityState.Added;
+                    EntityEntry<TEntity> newEntity = ctx.Set<TEntity>().Add(entity);
+                    newEntities.Add(newEntity.Entity);
+                }
+
+                SaveChanges(ctx);
+            }
+
+            return newEntities.AsQueryable();
         }
     }
 }

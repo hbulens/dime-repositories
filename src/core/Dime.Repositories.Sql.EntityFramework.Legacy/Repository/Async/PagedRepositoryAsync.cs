@@ -1,10 +1,10 @@
-﻿using LinqKit;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using LinqKit;
 
 namespace Dime.Repositories
 {
@@ -36,7 +36,7 @@ namespace Dime.Repositories
             params string[] includes)
             where TResult : class
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TResult> query =
                     ctx.Set<TEntity>()
@@ -48,7 +48,7 @@ namespace Dime.Repositories
                     .With(pageSize)
                     .WithSelect(select);
 
-                IQueryable<TResult> fullGraphQuery = await Task.Run(() => this.Include<TResult>(query, includes));
+                IQueryable<TResult> fullGraphQuery = await Task.Run(() => Include<TResult>(query, includes));
                 return new Page<TResult>(
                     fullGraphQuery.ToList().AsQueryable(),
                     ctx.Set<TEntity>().AsExpandable().With(where).Count());
@@ -78,7 +78,7 @@ namespace Dime.Repositories
             int? pageSize = default(int?),
             params string[] includes) where TResult : class, new()
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TResult> query =
                 ctx.Set<TEntity>()
@@ -91,7 +91,7 @@ namespace Dime.Repositories
                 .WithGroup(groupBy)
                 .WithSelect<TEntity, TResult, object>(select);
 
-                IQueryable<TResult> fullGraphQuery = await Task.Run(() => this.Include<TResult>(query, includes));
+                IQueryable<TResult> fullGraphQuery = await Task.Run(() => Include<TResult>(query, includes));
 
                 return new Page<TResult>(
                     fullGraphQuery.ToList().AsQueryable(),
@@ -122,7 +122,7 @@ namespace Dime.Repositories
             int? pageSize = default(int?),
             params string[] includes) where TResult : class
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TResult> query =
                 ctx.Set<TEntity>()
@@ -166,7 +166,7 @@ namespace Dime.Repositories
             int? pageSize = default(int?),
             params string[] includes) where TResult : class
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TResult> query =
                     ctx.Set<TEntity>()
@@ -208,7 +208,7 @@ namespace Dime.Repositories
             int? pageSize = default(int?),
             params string[] includes)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
@@ -248,7 +248,7 @@ namespace Dime.Repositories
             int? pageSize = default(int?),
             params string[] includes)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
@@ -285,7 +285,7 @@ namespace Dime.Repositories
             int? pageSize = default(int?),
             params string[] includes)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TEntity> query =
                     ctx.Set<TEntity>()
@@ -320,7 +320,7 @@ namespace Dime.Repositories
             int? pageSize = default(int?),
             params string[] includes)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TEntity> query =
                  ctx.Set<TEntity>()
@@ -356,7 +356,7 @@ namespace Dime.Repositories
             int? pageSize = default(int?),
             params string[] includes)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IQueryable<TEntity> query =
                  ctx.Set<TEntity>()

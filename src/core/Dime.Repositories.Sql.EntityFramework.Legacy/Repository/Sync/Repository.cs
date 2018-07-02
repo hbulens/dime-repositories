@@ -24,7 +24,7 @@ namespace Dime.Repositories
         /// <param name="dbContext"></param>
         public EfRepository(TContext dbContext)
         {
-            this.Context = dbContext;
+            Context = dbContext;
         }
 
         /// <summary>
@@ -34,8 +34,8 @@ namespace Dime.Repositories
         /// <param name="configuration"></param>
         public EfRepository(TContext dbContext, IMultiTenantRepositoryConfiguration configuration)
         {
-            this.Context = dbContext;
-            this.Configuration = configuration;
+            Context = dbContext;
+            Configuration = configuration;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Dime.Repositories
         /// <param name="dbContextFactory"></param>
         public EfRepository(IMultiTenantDbContextFactory<TContext> dbContextFactory)
         {
-            this.Factory = dbContextFactory;
+            Factory = dbContextFactory;
         }
 
         /// <summary>
@@ -54,8 +54,8 @@ namespace Dime.Repositories
         /// <param name="configuration"></param>
         public EfRepository(IMultiTenantDbContextFactory<TContext> dbContextFactory, IMultiTenantRepositoryConfiguration configuration)
         {
-            this.Factory = dbContextFactory;
-            this.Configuration = configuration;
+            Factory = dbContextFactory;
+            Configuration = configuration;
         }
 
         #endregion Constructor
@@ -68,7 +68,7 @@ namespace Dime.Repositories
         {
             get
             {
-                return _context == null ? this.Factory.Create() : _context;
+                return _context == null ? Factory.Create() : _context;
             }
             set
             {
@@ -76,7 +76,7 @@ namespace Dime.Repositories
             }
         }
 
-        private IMultiTenantDbContextFactory<TContext> Factory { get; set; }
+        private IMultiTenantDbContextFactory<TContext> Factory { get; }
         public IMultiTenantRepositoryConfiguration Configuration { get; set; }
 
         #endregion Properties
@@ -98,7 +98,7 @@ namespace Dime.Repositories
             {
                 try
                 {
-                    if (!this.Configuration.SaveInBatch)
+                    if (!Configuration.SaveInBatch)
                     {
                         int result = context.SaveChanges();
                         return 0 < result;
@@ -124,7 +124,7 @@ namespace Dime.Repositories
                 }
                 catch (DbUpdateConcurrencyException dbUpdateConcurrencyEx)
                 {
-                    if (this.Configuration.SaveStrategy == ConcurrencyStrategy.ClientFirst)
+                    if (Configuration.SaveStrategy == ConcurrencyStrategy.ClientFirst)
                     {
                         foreach (DbEntityEntry failedEnttry in dbUpdateConcurrencyEx.Entries)
                         {
@@ -132,7 +132,7 @@ namespace Dime.Repositories
                             if (dbValues != null)
                             {
                                 failedEnttry.OriginalValues.SetValues(dbValues);
-                                return this.SaveChanges(context);
+                                return SaveChanges(context);
                             }
                         }
                         return true;
@@ -195,13 +195,12 @@ namespace Dime.Repositories
         /// </summary>
         public void Dispose()
         {
-            if (this.Context != null)
+            if (Context != null)
             {
-                if (this.Context.Database != null && this.Context.Database.Connection != null)
-                    this.Context.Database.Connection.Dispose();
+                Context.Database?.Connection?.Dispose();
 
-                this.Context.Dispose();
-                this.Context = null;
+                Context.Dispose();
+                Context = null;
             }
         }
 

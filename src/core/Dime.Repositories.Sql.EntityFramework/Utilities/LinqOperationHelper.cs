@@ -12,9 +12,9 @@ namespace Dime.Repositories
 
         internal LinqOrderHelper(string methodName, string propertyName)
         {
-            this.Method = methodName;
-            this.ParentParameterExpression = Expression.Parameter(typeof(TSource), "x");
-            this.MemberExpression = this.SetMember(this.Parse(propertyName));
+            Method = methodName;
+            ParentParameterExpression = Expression.Parameter(typeof(TSource), "x");
+            MemberExpression = SetMember(Parse(propertyName));
         }
 
         #endregion Constructor
@@ -22,25 +22,25 @@ namespace Dime.Repositories
         #region Properties
 
         private IOrderedEnumerable<KeyValuePair<int, string>> Properties { get; set; }
-        private string Method { get; set; }
-        private ParameterExpression ParentParameterExpression { get; set; }
-        private MemberExpression MemberExpression { get; set; }
+        private string Method { get; }
+        private ParameterExpression ParentParameterExpression { get; }
+        private MemberExpression MemberExpression { get; }
 
         internal IOrderedQueryable<TSource> GetAsQueryable(IEnumerable<TSource> query)
         {
-            LambdaExpression selector = Expression.Lambda(this.MemberExpression, new ParameterExpression[] { this.ParentParameterExpression });
-            MethodInfo methodInfo = this.GetMethodInfo(this.Method, this.MemberExpression.Type);
+            LambdaExpression selector = Expression.Lambda(MemberExpression, new ParameterExpression[] { ParentParameterExpression });
+            MethodInfo methodInfo = GetMethodInfo(Method, MemberExpression.Type);
 
-            var newQuery = (IOrderedQueryable<TSource>)methodInfo.Invoke(methodInfo, new object[] { query, selector });
+            IOrderedQueryable<TSource> newQuery = (IOrderedQueryable<TSource>)methodInfo.Invoke(methodInfo, new object[] { query, selector });
             return newQuery;
         }
 
         internal IOrderedEnumerable<TSource> GetAsEnumerable(IEnumerable<TSource> query)
         {
-            LambdaExpression selector = Expression.Lambda(this.MemberExpression, new ParameterExpression[] { this.ParentParameterExpression });
-            MethodInfo methodInfo = this.GetMethodInfo(this.Method, this.MemberExpression.Type);
+            LambdaExpression selector = Expression.Lambda(MemberExpression, new ParameterExpression[] { ParentParameterExpression });
+            MethodInfo methodInfo = GetMethodInfo(Method, MemberExpression.Type);
 
-            var newQuery = (IOrderedEnumerable<TSource>)methodInfo.Invoke(methodInfo, new object[] { query, selector });
+            IOrderedEnumerable<TSource> newQuery = (IOrderedEnumerable<TSource>)methodInfo.Invoke(methodInfo, new object[] { query, selector });
             return newQuery;
         }
 
@@ -57,14 +57,9 @@ namespace Dime.Repositories
                 string dataIndex = orderedList.ElementAt(i).Value;
 
                 // If this is the first iteration, just set the variable - else append the expa
-                if (i == 0)
-                {
-                    memberExpression = Expression.PropertyOrField(this.ParentParameterExpression, dataIndex);
-                }
-                else
-                {
-                    memberExpression = Expression.PropertyOrField(memberExpression, dataIndex);
-                }
+                memberExpression = i == 0 
+                    ? Expression.PropertyOrField(ParentParameterExpression, dataIndex) 
+                    : Expression.PropertyOrField(memberExpression, dataIndex);
             }
 
             return memberExpression;
@@ -73,12 +68,12 @@ namespace Dime.Repositories
         private MethodInfo GetMethodInfo(string methodName, Type type)
         {
             //Get System.Linq.Queryable.OrderBy() method.
-            var enumarableType = typeof(System.Linq.Queryable);
-            var method = enumarableType.GetMethods()
+            Type enumarableType = typeof(Queryable);
+            MethodInfo method = enumarableType.GetMethods()
                  .Where(m => m.Name == methodName && m.IsGenericMethodDefinition)
                  .Where(m =>
                  {
-                     var parameters = m.GetParameters().ToList();
+                     List<ParameterInfo> parameters = m.GetParameters().ToList();
                      //Put more restriction here to ensure selecting the right overload
                      return parameters.Count == 2;//overload that has 2 parameters
                  }).Single();

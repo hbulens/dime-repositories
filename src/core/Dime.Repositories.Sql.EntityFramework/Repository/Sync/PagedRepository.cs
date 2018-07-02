@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +12,7 @@ namespace Dime.Repositories
         #region Projected Pages
 
         /// <summary>
-        /// Finds all asynchronous.
+        /// Finds all hronous.
         /// </summary>
         /// <typeparam name="TResult">The type of the result.</typeparam>
         /// <param name="where">The where.</param>
@@ -24,7 +23,7 @@ namespace Dime.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="includes">The includes.</param>
         /// <returns></returns>
-        public virtual Task<IPage<TResult>> FindAllPagedAsync<TResult>(
+        public virtual IPage<TResult> FindAllPaged<TResult>(
             Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, TResult>> select = null,
             Expression<Func<TEntity, dynamic>> orderBy = null,
@@ -47,11 +46,7 @@ namespace Dime.Repositories
                     .WithSelect(select);
 
                 IQueryable<TResult> fullGraphQuery = Include(query, includes);
-                IPage<TResult> p = new Page<TResult>(
-                    fullGraphQuery.ToList(),
-                    ctx.Set<TEntity>().AsNoTracking().AsExpandable().Count(where));
-
-                return Task.FromResult(p);
+                return new Page<TResult>(fullGraphQuery.ToList(), ctx.Count(where));
             }
         }
 
@@ -68,7 +63,7 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public Task<IPage<TResult>> FindAllPagedAsync<TResult>(
+        public IPage<TResult> FindAllPaged<TResult>(
             Expression<Func<TEntity, bool>> where = null,
             Func<TEntity, object> groupBy = null,
             Expression<Func<IGrouping<object, TEntity>, IEnumerable<TResult>>> select = null,
@@ -92,12 +87,7 @@ namespace Dime.Repositories
                 .WithSelect<TEntity, TResult, object>(select);
 
                 IQueryable<TResult> fullGraphQuery = Include(query, includes);
-
-                IPage<TResult> p = new Page<TResult>(
-                    fullGraphQuery.ToList(),
-                    ctx.Set<TEntity>().AsNoTracking().AsExpandable().Count(where));
-
-                return Task.FromResult(p);
+                return new Page<TResult>(fullGraphQuery.ToList(), ctx.Count(where));
             }
         }
 
@@ -114,8 +104,8 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public async Task<IPage<TResult>> FindAllPagedAsync<TResult>(
-            Expression<Func<TEntity, bool>> where = null,
+        public IPage<TResult> FindAllPaged<TResult>(
+           Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, TResult>> select = null,
             IEnumerable<IOrder<TEntity>> orderBy = null,
             Expression<Func<TEntity, object>> groupBy = null,
@@ -137,9 +127,7 @@ namespace Dime.Repositories
                 .With(pageSize)
                 .WithSelect(select);
 
-                return await Task.FromResult(
-                    new Page<TResult>(query.ToList(),
-                    ctx.Count(where)));
+                return new Page<TResult>(query.ToList(), ctx.Count(where));
             }
         }
 
@@ -157,8 +145,8 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public async Task<IPage<TResult>> FindAllPagedAsync<TResult>(
-            Expression<Func<TEntity, bool>> where = null,
+        public IPage<TResult> FindAllPaged<TResult>(
+           Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, bool>> count = null,
             Expression<Func<TEntity, TResult>> select = null,
             IEnumerable<IOrder<TEntity>> orderBy = null,
@@ -175,13 +163,14 @@ namespace Dime.Repositories
                     .Include(ctx, includes)
                     .AsNoTracking()
                     .AsExpandable()
+                    .AsQueryable()
                     .With(where)
                     .WithOrder(orderBy)
                     .With(page, pageSize, orderBy)
                     .With(pageSize)
                     .WithSelect(select);
 
-                return await Task.FromResult(new Page<TResult>(query.ToList(), ctx.Count(count)));
+                return new Page<TResult>(query.ToList(), ctx.Count(count));
             }
         }
 
@@ -199,13 +188,13 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public async Task<IPage<TEntity>> FindAllPagedAsync(
-            Expression<Func<TEntity, bool>> where = null,
-            Expression<Func<TEntity, dynamic>> orderBy = null,
-            bool? ascending = null,
-            int? page = default(int?),
-            int? pageSize = default(int?),
-            params string[] includes)
+        public IPage<TEntity> FindAllPaged(
+           Expression<Func<TEntity, bool>> where = null,
+           Expression<Func<TEntity, dynamic>> orderBy = null,
+           bool? ascending = null,
+           int? page = default(int?),
+           int? pageSize = default(int?),
+           params string[] includes)
         {
             using (TContext ctx = Context)
             {
@@ -220,10 +209,7 @@ namespace Dime.Repositories
                 .With(pageSize)
                 .AsQueryable();
 
-                // TODO: shouldn't where clause also be applied to the count?
-                return await Task.FromResult(
-                    new Page<TEntity>(query.ToList(),
-                        ctx.Count(where)));
+                return new Page<TEntity>(query.ToList(), ctx.Count(where));
             }
         }
 
@@ -238,14 +224,14 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public async Task<IPage<TEntity>> FindAllPagedAsync(
-            Expression<Func<TEntity, bool>> where = null,
-            Expression<Func<TEntity, dynamic>> orderBy = null,
-            Expression<Func<TEntity, object>> groupBy = null,
-            bool? ascending = default(bool?),
-            int? page = default(int?),
-            int? pageSize = default(int?),
-            params string[] includes)
+        public IPage<TEntity> FindAllPaged(
+           Expression<Func<TEntity, bool>> where = null,
+           Expression<Func<TEntity, dynamic>> orderBy = null,
+           Expression<Func<TEntity, object>> groupBy = null,
+           bool? ascending = default(bool?),
+           int? page = default(int?),
+           int? pageSize = default(int?),
+           params string[] includes)
         {
             using (TContext ctx = Context)
             {
@@ -259,10 +245,7 @@ namespace Dime.Repositories
                 .With(page, pageSize, orderBy)
                 .With(pageSize);
 
-                return await Task.FromResult(
-                    new Page<TEntity>(
-                        query.ToList(),
-                        ctx.Count(where)));
+                return new Page<TEntity>(query.ToList(), ctx.Count(where));
             }
         }
 
@@ -276,13 +259,13 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public async Task<IPage<TEntity>> FindAllPagedAsync(
-            Expression<Func<TEntity, bool>> where = null,
-            Expression<Func<TEntity, bool>> count = null,
-            IEnumerable<IOrder<TEntity>> orderBy = null,
-            int? page = default(int?),
-            int? pageSize = default(int?),
-            params string[] includes)
+        public IPage<TEntity> FindAllPaged(
+           Expression<Func<TEntity, bool>> where = null,
+           Expression<Func<TEntity, bool>> count = null,
+           IEnumerable<IOrder<TEntity>> orderBy = null,
+           int? page = default(int?),
+           int? pageSize = default(int?),
+           params string[] includes)
         {
             using (TContext ctx = Context)
             {
@@ -296,12 +279,12 @@ namespace Dime.Repositories
                     .With(page, pageSize, orderBy)
                     .With(pageSize);
 
-                return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(count)));
+                return new Page<TEntity>(query.ToList(), ctx.Count(count));
             }
         }
 
         /// <summary>
-        /// Gets the items asynchronously.
+        /// Gets the items hronously.
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="where">The where.</param>
@@ -310,12 +293,12 @@ namespace Dime.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="includes">The includes.</param>
         /// <returns></returns>
-        public async Task<IPage<TEntity>> FindAllPagedAsync(
-            Expression<Func<TEntity, bool>> where = null,
-            IEnumerable<IOrder<TEntity>> orderBy = null,
-            int? page = default(int?),
-            int? pageSize = default(int?),
-            params string[] includes)
+        public IPage<TEntity> FindAllPaged(
+           Expression<Func<TEntity, bool>> where = null,
+           IEnumerable<IOrder<TEntity>> orderBy = null,
+           int? page = default(int?),
+           int? pageSize = default(int?),
+           params string[] includes)
         {
             using (TContext ctx = Context)
             {
@@ -329,7 +312,7 @@ namespace Dime.Repositories
                  .With(page, pageSize, orderBy)
                  .With(pageSize);
 
-                return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where)));
+                return new Page<TEntity>(query.ToList(), ctx.Count(where));
             }
         }
 
@@ -343,13 +326,13 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public async Task<IPage<TEntity>> FindAllPagedAsync(
-            Expression<Func<TEntity, bool>> where = null,
-            IEnumerable<Expression<Func<TEntity, object>>> orderBy = null,
-            bool? ascending = default(bool?),
-            int? page = default(int?),
-            int? pageSize = default(int?),
-            params string[] includes)
+        public IPage<TEntity> FindAllPaged(
+           Expression<Func<TEntity, bool>> where = null,
+           IEnumerable<Expression<Func<TEntity, object>>> orderBy = null,
+           bool? ascending = default(bool?),
+           int? page = default(int?),
+           int? pageSize = default(int?),
+           params string[] includes)
         {
             using (TContext ctx = Context)
             {
@@ -364,7 +347,7 @@ namespace Dime.Repositories
                  .With(pageSize)
                  .AsQueryable();
 
-                return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where)));
+                return new Page<TEntity>(query.ToList(), ctx.Count(where));
             }
         }
 

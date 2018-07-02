@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
 
 namespace Dime.Repositories
 {
@@ -25,7 +25,7 @@ namespace Dime.Repositories
         /// <param name="connectionString"></param>
         protected MultiTenantContextFactory(string connectionString) : this()
         {
-            this.Connection = connectionString;
+            Connection = connectionString;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Dime.Repositories
         /// <param name="tenant"></param>
         protected MultiTenantContextFactory(string connectionString, string tenant) : this(connectionString)
         {
-            this.Tenant = tenant;
+            Tenant = tenant;
         }
 
         #endregion Constructor
@@ -52,12 +52,9 @@ namespace Dime.Repositories
         /// </summary>
         /// <returns></returns>
         public virtual TContext Create()
-        {
-            if (!string.IsNullOrEmpty(this.Tenant) && !string.IsNullOrEmpty(this.Connection))
-                return this.Create(this.Tenant, this.Connection);
-            else
-                return this.Create("dbo", this.Connection);
-        }
+            => !string.IsNullOrEmpty(Tenant) && !string.IsNullOrEmpty(Connection)
+                ? Create(Tenant, Connection)
+                : Create("dbo", Connection);
 
         /// <summary>
         /// Creates the specified connection.
@@ -65,31 +62,25 @@ namespace Dime.Repositories
         /// <param name="connection">The connection.</param>
         /// <returns></returns>
         public virtual TContext Create(string connection)
-        {
-            return this.Create("dbo", connection);
-        }
+            => Create("dbo", connection);
 
         /// <summary>
         /// Creates the specified tenant.
         /// </summary>
         /// <param name="tenant">The tenant.</param>
         /// <param name="connection">The connection.</param>
-        /// <returns></returns>        
+        /// <returns></returns>
         public TContext Create(string tenant, string connection, string context)
-        {
-            return this.Create(tenant, connection);
-        }
+            => Create(tenant, connection);
 
         /// <summary>
         /// Creates the specified tenant.
         /// </summary>
         /// <param name="tenant">The tenant.</param>
         /// <param name="connection">The connection.</param>
-        /// <returns></returns>      
+        /// <returns></returns>
         public TContext Create(string tenant, string connection)
-        {
-            return new TContext();
-        }
+            => new TContext();
 
         /// <summary>
         ///
@@ -99,12 +90,12 @@ namespace Dime.Repositories
         public TContext Create(DbContextFactoryOptions options)
         {
             DbContextOptionsBuilder<TContext> optionsBuilder = new DbContextOptionsBuilder<TContext>();
-            optionsBuilder.UseSqlServer(this.Connection);
+            optionsBuilder.UseSqlServer(Connection);
             return Activator.CreateInstance(typeof(TContext), new object[] { optionsBuilder.Options }) as TContext;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>

@@ -25,8 +25,8 @@ namespace Dime.Repositories
             {
                 try
                 {
-                    if (!this.Configuration.SaveInBatch)
-                        return 0 < await this.Context.SaveChangesAsync();
+                    if (!Configuration.SaveInBatch)
+                        return 0 < await Context.SaveChangesAsync();
                     else
                         return false;
                 }
@@ -46,7 +46,7 @@ namespace Dime.Repositories
                 }
                 catch (DbUpdateConcurrencyException dbUpdateConcurrencyEx)
                 {
-                    if (this.Configuration.SaveStrategy == ConcurrencyStrategy.ClientFirst)
+                    if (Configuration.SaveStrategy == ConcurrencyStrategy.ClientFirst)
                     {
                         foreach (DbEntityEntry failedEnttry in dbUpdateConcurrencyEx.Entries)
                         {
@@ -54,7 +54,7 @@ namespace Dime.Repositories
                             if (dbValues != null)
                             {
                                 failedEnttry.OriginalValues.SetValues(dbValues);
-                                return await this.SaveChangesAsync();
+                                return await SaveChangesAsync();
                             }
                         }
                         return true;
@@ -72,10 +72,9 @@ namespace Dime.Repositories
                 {
                     if (dbUpdateEx != null)
                     {
-                        if (dbUpdateEx != null && dbUpdateEx.InnerException != null && dbUpdateEx.InnerException.InnerException != null)
+                        if (dbUpdateEx?.InnerException != null && dbUpdateEx.InnerException.InnerException != null)
                         {
-                            SqlException sqlException = dbUpdateEx.InnerException.InnerException as SqlException;
-                            if (sqlException != null)
+                            if (dbUpdateEx.InnerException.InnerException is SqlException sqlException)
                             {
                                 switch (sqlException.Number)
                                 {
@@ -120,7 +119,7 @@ namespace Dime.Repositories
             {
                 try
                 {
-                    if (!this.Configuration.SaveInBatch)
+                    if (!Configuration.SaveInBatch)
                     {
                         int result = await context.SaveChangesAsync();
                         return 0 < result;
@@ -146,7 +145,7 @@ namespace Dime.Repositories
                 }
                 catch (DbUpdateConcurrencyException dbUpdateConcurrencyEx)
                 {
-                    if (this.Configuration.SaveStrategy == ConcurrencyStrategy.ClientFirst)
+                    if (Configuration.SaveStrategy == ConcurrencyStrategy.ClientFirst)
                     {
                         bool retried = false;
                         foreach (DbEntityEntry failedEnttry in dbUpdateConcurrencyEx.Entries)
@@ -156,7 +155,7 @@ namespace Dime.Repositories
                             {
                                 retried = true;
                                 failedEnttry.OriginalValues.SetValues(dbValues);
-                                return await this.SaveChangesAsync(context);
+                                return await SaveChangesAsync(context);
                             }
                         }
 
@@ -180,8 +179,7 @@ namespace Dime.Repositories
                     {
                         if (dbUpdateEx != null && dbUpdateEx.InnerException != null && dbUpdateEx.InnerException.InnerException != null)
                         {
-                            SqlException sqlException = dbUpdateEx.InnerException.InnerException as SqlException;
-                            if (sqlException != null)
+                            if (dbUpdateEx.InnerException.InnerException is SqlException sqlException)
                             {
                                 switch (sqlException.Number)
                                 {

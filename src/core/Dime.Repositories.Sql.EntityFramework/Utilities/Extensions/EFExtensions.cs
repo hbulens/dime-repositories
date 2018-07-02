@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dime.Repositories
 {
@@ -36,7 +35,7 @@ namespace Dime.Repositories
                 return query;
 
             List<string> includeList = new List<string>();
-            if (includes.Count() == 0)
+            if (!includes.Any())
             {
                 //ReadOnlyMetadataCollection<NavigationProperty> navigationProperties = GetEntityType<TEntity>(context)?.NavigationProperties;
                 //if (navigationProperties != null)
@@ -53,15 +52,10 @@ namespace Dime.Repositories
 
                 return query;
             }
-            else
-            {
-                foreach (string include in includes.Where(x => !string.IsNullOrEmpty(x) && !includeList.Contains(x)))
-                {
-                    query = query.Include(include);
-                }
 
-                return query;
-            }
+            return includes
+                .Where(x => !string.IsNullOrEmpty(x) && !includeList.Contains(x))
+                .Aggregate(query, (current, include) => current.Include(include));
         }
     }
 }

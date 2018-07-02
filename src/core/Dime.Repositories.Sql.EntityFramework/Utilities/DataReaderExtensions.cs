@@ -13,10 +13,10 @@ namespace Dime.Repositories
         {
             if (dr != null && dr.HasRows)
             {
-                var entity = typeof(T);
-                var entities = new List<T>();
-                var propDict = new Dictionary<string, PropertyInfo>();
-                var props = entity.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+                Type entity = typeof(T);
+                List<T> entities = new List<T>();
+                Dictionary<string, PropertyInfo> propDict = new Dictionary<string, PropertyInfo>();
+                PropertyInfo[] props = entity.GetProperties(BindingFlags.Instance | BindingFlags.Public);
                 propDict = props.ToDictionary(p => p.Name.ToUpper(), p => p);
 
                 while (dr.Read())
@@ -24,14 +24,14 @@ namespace Dime.Repositories
                     T newObject = new T();
                     for (int index = 0; index < dr.FieldCount; index++)
                     {
-                        if (propDict.ContainsKey(dr.GetName(index).ToUpper()))
+                        if (!propDict.ContainsKey(dr.GetName(index).ToUpper()))
+                            continue;
+
+                        PropertyInfo info = propDict[dr.GetName(index).ToUpper()];
+                        if (info != null && info.CanWrite)
                         {
-                            var info = propDict[dr.GetName(index).ToUpper()];
-                            if ((info != null) && info.CanWrite)
-                            {
-                                var val = dr.GetValue(index);
-                                info.SetValue(newObject, (val == DBNull.Value) ? null : val, null);
-                            }
+                            object val = dr.GetValue(index);
+                            info.SetValue(newObject, val == DBNull.Value ? null : val, null);
                         }
                     }
                     entities.Add(newObject);
@@ -52,7 +52,7 @@ namespace Dime.Repositories
             List<T> result = new List<T>();
             while (reader.Read())
             {
-                T t = (T)(typeof(T).GetConstructor(System.Type.EmptyTypes).Invoke(new object[0]));
+                T t = (T)typeof(T).GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
                 PropertyInfo[] props = t.GetType().GetProperties();
                 object[] indexer = null;
                 foreach (PropertyInfo p in props)

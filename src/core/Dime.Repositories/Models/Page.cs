@@ -26,8 +26,8 @@ namespace Dime.Repositories
         /// <param name="data"></param>
         public Page(IEnumerable<T> data)
         {
-            this.Data = data;
-            this.Summary = new List<dynamic>();
+            Data = data;
+            Summary = new List<dynamic>();
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Dime.Repositories
         /// <param name="message"></param>
         public Page(IEnumerable<T> data, int total) : this(data)
         {
-            this.Total = total;
+            Total = total;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Dime.Repositories
         /// <param name="summary"></param>
         public Page(IEnumerable<T> data, int total, string message) : this(data, total)
         {
-            this.Message = message;
+            Message = message;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Dime.Repositories
         /// <param name="total"></param>
         public Page(IEnumerable<T> data, int total, string message, IEnumerable<dynamic> summary) : this(data, total, message)
         {
-            this.Summary = summary != null ? summary.ToList() : new List<dynamic>();
+            Summary = summary != null ? summary.ToList() : new List<dynamic>();
         }
 
         #endregion Constructor

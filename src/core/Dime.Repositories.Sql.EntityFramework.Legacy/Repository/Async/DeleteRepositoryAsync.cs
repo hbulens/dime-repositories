@@ -19,13 +19,13 @@ namespace Dime.Repositories
         /// </history>
         public virtual async Task DeleteAsync(long id)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 TEntity item = await ctx.Set<TEntity>().FindAsync(id);
                 if (item != default(TEntity))
                 {
                     ctx.Set<TEntity>().Remove(item);
-                    await this.SaveChangesAsync(ctx);
+                    await SaveChangesAsync(ctx);
                 }
             }
         }
@@ -41,14 +41,14 @@ namespace Dime.Repositories
         /// </history>
         public virtual async Task DeleteAsync(long id, bool commit)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 TEntity item = await ctx.Set<TEntity>().FindAsync(id);
                 if (item != default(TEntity))
                 {
                     ctx.Set<TEntity>().Remove(item);
                     if (commit)
-                        await this.SaveChangesAsync(ctx);
+                        await SaveChangesAsync(ctx);
                 }
             }
         }
@@ -60,11 +60,11 @@ namespace Dime.Repositories
         /// <returns>Void</returns>
         public virtual async Task DeleteAsync(TEntity entity)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Set<TEntity>().Attach(entity);
                 ctx.Set<TEntity>().Remove(entity);
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Dime.Repositories
         /// <returns>Void</returns>
         public async Task DeleteAsync(IEnumerable<TEntity> entities)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 foreach (TEntity entity in entities)
                 {
@@ -83,7 +83,7 @@ namespace Dime.Repositories
                     ctx.Set<TEntity>().Remove(entity);
                 }
 
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
             }
         }
 
@@ -95,13 +95,13 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual async Task DeleteAsync(TEntity entity, bool commit)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Set<TEntity>().Attach(entity);
                 ctx.Set<TEntity>().Remove(entity);
 
                 if (commit)
-                    await this.SaveChangesAsync(ctx);
+                    await SaveChangesAsync(ctx);
             }
         }
 
@@ -112,7 +112,7 @@ namespace Dime.Repositories
         /// <returns>Void</returns>
         public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> where)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IEnumerable<TEntity> entities = ctx.Set<TEntity>().With(where).AsNoTracking().ToList();
                 if (entities != null)
@@ -123,7 +123,7 @@ namespace Dime.Repositories
                     }
 
                     ctx.Set<TEntity>().RemoveRange(entities);
-                    await this.SaveChangesAsync(ctx);
+                    await SaveChangesAsync(ctx);
                 }
             }
         }

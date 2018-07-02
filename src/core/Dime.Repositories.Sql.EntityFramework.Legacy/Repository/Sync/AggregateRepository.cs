@@ -1,8 +1,6 @@
-﻿
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Dime.Repositories
 {
@@ -11,22 +9,22 @@ namespace Dime.Repositories
         /// <summary>
         /// Counts the amount of records in the data store for the table that corresponds to the entity type <typeparamref name="TEntity"/>.
         /// </summary>
-        /// <returns>A number of the amount of records</returns>        
+        /// <returns>A number of the amount of records</returns>
         public long Count()
         {
-            using (TContext ctx = this.Context)            
-                return ctx.Set<TEntity>().Count();            
+            using (TContext ctx = Context)
+                return ctx.Set<TEntity>().Count();
         }
 
         /// <summary>
         /// Counts the amount of records in the data store for the table that corresponds to the entity type <typeparamref name="TEntity"/>.
         /// </summary>
         /// <returns>A number of the amount of records</returns>
-        /// <param name="where">The expression to execute against the data store</param>        
+        /// <param name="where">The expression to execute against the data store</param>
         public long Count(Expression<Func<TEntity, bool>> where)
         {
-            using (TContext ctx = this.Context)            
-                return ctx.Set<TEntity>().Count(where);            
+            using (TContext ctx = Context)
+                return ctx.Set<TEntity>().Count(where);
         }
     }
 }

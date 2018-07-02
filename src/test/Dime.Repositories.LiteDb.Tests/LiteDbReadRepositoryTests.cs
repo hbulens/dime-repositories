@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Dime.Repositories.LiteDb.Tests
 {
-    /// <summary>
-    ///
-    /// </summary>
+    [TestClass]
     public class LiteDbReadRepositoryTests
     {
         #region Constructor
@@ -16,7 +14,7 @@ namespace Dime.Repositories.LiteDb.Tests
         /// </summary>
         public LiteDbReadRepositoryTests()
         {
-            this.Factory = new LiteDbRepositoryFactory(@"C:\Temp\MyData.db");
+            Factory = new LiteDbRepositoryFactory(@"C:\Temp\MyData.db");
         }
 
         #endregion Constructor
@@ -29,24 +27,24 @@ namespace Dime.Repositories.LiteDb.Tests
 
         #region Methods
 
-        [Fact]
+        [TestMethod]
         public async Task FindAllPagedAsyncReturnNotNull()
         {
-            using (IRepository<TestModel> repository = this.Factory.Create<TestModel>())
+            using (IRepository<TestModel> repository = Factory.Create<TestModel>())
             {
                 IPage<TestModel> pagedItems = await repository.FindAllPagedAsync((x) => x.Id > 0, null, 1, 10);
-                Assert.NotNull(pagedItems);
+                Assert.IsNotNull(pagedItems);
             }
         }
 
-        [Fact]
+        [TestMethod]
         public async Task FindAllPagedAsyncReturnNotEmpty()
         {
-            using (IRepository<TestModel> repository = this.Factory.Create<TestModel>())
+            using (IRepository<TestModel> repository = Factory.Create<TestModel>())
             {
                 TestModel item = await repository.CreateAsync(new TestModel() { Id = new Random().Next(0, 10000000) });
                 IPage<TestModel> pagedItems = await repository.FindAllPagedAsync((x) => x.Id > 0, null, 1, 10);
-                Assert.NotEmpty(pagedItems.Data);
+                Assert.IsNotNull(pagedItems.Data);
             }
         }
 

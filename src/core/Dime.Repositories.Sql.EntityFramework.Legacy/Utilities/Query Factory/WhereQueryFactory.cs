@@ -1,7 +1,7 @@
-﻿using LinqKit;
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using LinqKit;
 
 namespace Dime.Repositories
 {
@@ -19,10 +19,7 @@ namespace Dime.Repositories
         /// </history>
         internal static IQueryable<TSource> With<TSource>(this IQueryable<TSource> source, Expression<Func<TSource, bool>> predicate)
         {
-            if (predicate == null)
-                return source;
-            else
-                return source.Where(predicate.Expand());
+            return predicate == null ? source : source.Where(predicate.Expand());
         }
 
         /// <summary>
@@ -37,10 +34,7 @@ namespace Dime.Repositories
         /// </history>
         internal static TSource WithFirst<TSource>(this IQueryable<TSource> source, Expression<Func<TSource, bool>> predicate)
         {
-            if (predicate == null)
-                return source.FirstOrDefault();
-            else
-                return source.FirstOrDefault(predicate.Expand());
+            return predicate == null ? source.FirstOrDefault() : source.FirstOrDefault(predicate.Expand());
         }
     }
 }

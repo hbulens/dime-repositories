@@ -1,39 +1,41 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using LiteDB;
+using ServiceStack.Redis;
 
-namespace Dime.Repositories
+namespace Dime.Repositories.Redis
 {
     /// <summary>
     ///
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public partial class LiteDbRepository<T> : IRepository<T> where T : class, new()
+    /// <typeparam name="T"></typeparam>    
+    public partial class RedisRepository<T> : IRepository<T> where T : class
     {
         #region Constructor
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="connection">Connection path to the database</param>
-        public LiteDbRepository(string connection)
+        /// <param name="redisContext"></param>
+        ///  <history>
+        /// [HB] 06/01/2016 - Create
+        /// </history>
+        public RedisRepository(IRedisClientsManager redisContext, string contextKey)
         {
-            Db = new LiteDatabase(connection);
-
-            Regex rgx = new Regex("[^a-zA-Z0-9 -]");
-            CollectionName = rgx.Replace(typeof(T).Name.EndsWith("s") ? typeof(T).Name : $"{typeof(T).Name}s", "");
+            RedisManager = redisContext;
+            ContextKey = contextKey;
         }
 
         #endregion Constructor
 
         #region Properties
 
-        private readonly string CollectionName;
-        private static readonly object _padlock = new object();
-        private readonly LiteDatabase Db;
+        private IRedisClientsManager RedisManager { get; }
+        private string ContextKey { get; }
 
+        /// <summary>
+        ///
+        /// </summary>
         public IMultiTenantRepositoryConfiguration Configuration
         {
             get
@@ -51,19 +53,14 @@ namespace Dime.Repositories
 
         #region Methods
 
-        /// <summary>
-        ///
-        /// </summary>
-        public void Dispose()
+        #region Get
+
+        public Task<bool> SaveChangesAsync()
         {
-            Db.Dispose();
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        public Task<bool> SaveChangesAsync()
+        public void Dispose()
         {
             throw new NotImplementedException();
         }
@@ -103,14 +100,7 @@ namespace Dime.Repositories
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="repository"></param>
-        public static explicit operator LiteDatabase(LiteDbRepository<T> repository)
-        {
-            return repository.Db;
-        }
+        #endregion Get
 
         #endregion Methods
     }

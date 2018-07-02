@@ -17,7 +17,7 @@ namespace Dime.Repositories
                 _workspace = ((IObjectContextAdapter)context).ObjectContext.MetadataWorkspace;
 
             if (_itemCollection == default(ObjectItemCollection))
-                _itemCollection = (ObjectItemCollection)(_workspace.GetItemCollection(DataSpace.OSpace));
+                _itemCollection = (ObjectItemCollection)_workspace.GetItemCollection(DataSpace.OSpace);
 
             EntityType entityType = _itemCollection.OfType<EntityType>().FirstOrDefault(e => _itemCollection.GetClrType(e) == typeof(T));
             return entityType;
@@ -37,7 +37,7 @@ namespace Dime.Repositories
                 return query;
 
             List<string> includeList = new List<string>();
-            if (includes.Count() == 0)
+            if (!includes.Any())
             {
                 ReadOnlyMetadataCollection<NavigationProperty> navigationProperties = GetEntityType<TEntity>(context)?.NavigationProperties;
                 if (navigationProperties != null)
@@ -54,15 +54,10 @@ namespace Dime.Repositories
 
                 return query;
             }
-            else
-            {
-                foreach (string include in includes.Where(x => !string.IsNullOrEmpty(x) && !includeList.Contains(x)))
-                {
-                    query = query.Include(include);
-                }
 
-                return query;
-            }
+            return includes
+                .Where(x => !string.IsNullOrEmpty(x) && !includeList.Contains(x))
+                .Aggregate(query, (current, include) => current.Include(include));
         }
 
         /// <summary>
@@ -74,26 +69,17 @@ namespace Dime.Repositories
         /// <returns></returns>
         internal static IQueryable<TResult> IncludeView<TEntity, TResult>(this IQueryable<TResult> query, DbContext context, params string[] includes) where TEntity : class
         {
-            if (includes == null || includes.Count() == 0)
+            if (includes == null || !includes.Any())
             {
                 foreach (NavigationProperty navigationProperty in GetEntityType<TEntity>(context).NavigationProperties)
-                {
                     query = query.Include(navigationProperty.Name);
-                }
 
                 return query;
             }
-            else
-            {
-                foreach (var include in includes)
-                {
-                    if (include != null)
-                    {
-                        query = query.Include(include);
-                    }
-                }
-                return query;
-            }
+
+            return includes
+                .Where(include => include != null)
+                .Aggregate(query, (current, include) => current.Include(include));
         }
     }
 }

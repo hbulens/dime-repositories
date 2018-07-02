@@ -35,7 +35,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ServiceStack.Redis" Version="5.0.2" />
+    <PackageReference Include="ServiceStack.Redis" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>

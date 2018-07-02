@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.Entit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.Tests", "test\Dime.Repositories.Sql.EntityFramework.Tests\Dime.Repositories.Sql.EntityFramework.Tests.csproj", "{752C2101-5877-4C29-9EFF-D868D1C82426}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dime.Repositories.Sql.EntityFramework.NetCore.Tests", "Dime.Repositories.Sql.EntityFramework.NetCore.Tests\Dime.Repositories.Sql.EntityFramework.NetCore.Tests.csproj", "{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dime.Repositories.Redis.Core", "Dime.Repositories.Redis.Core\Dime.Repositories.Redis.Core.csproj", "{EB8BED75-82B0-4997-89BB-92BD6E324F35}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +69,14 @@ Global
 		{752C2101-5877-4C29-9EFF-D868D1C82426}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{752C2101-5877-4C29-9EFF-D868D1C82426}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{752C2101-5877-4C29-9EFF-D868D1C82426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB8BED75-82B0-4997-89BB-92BD6E324F35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB8BED75-82B0-4997-89BB-92BD6E324F35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB8BED75-82B0-4997-89BB-92BD6E324F35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB8BED75-82B0-4997-89BB-92BD6E324F35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +85,7 @@ Global
 		{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
 		{79D70F03-970F-4E07-B9BD-60C7098A4D8C} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
 		{752C2101-5877-4C29-9EFF-D868D1C82426} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
+		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EFEF8275-DA5B-4493-8BB7-32E760B05267}

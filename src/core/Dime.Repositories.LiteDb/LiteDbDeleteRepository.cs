@@ -1,8 +1,8 @@
-﻿using LiteDB;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using LiteDB;
 
 namespace Dime.Repositories
 {
@@ -14,7 +14,7 @@ namespace Dime.Repositories
         /// <param name="where"></param>
         public void Delete(Expression<Func<T, bool>> where)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             collection.Delete(where);
         }
 
@@ -33,7 +33,7 @@ namespace Dime.Repositories
         /// <param name="id"></param>
         public void Delete(long id)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             collection.Delete(id);
         }
 
@@ -74,7 +74,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public async Task DeleteAsync(long id)
         {
-            LiteCollection<T> collection = this.Db.GetCollection<T>(this.CollectionName);
+            LiteCollection<T> collection = Db.GetCollection<T>(CollectionName);
             collection.Delete(id);
             await Task.FromResult(0);
         }

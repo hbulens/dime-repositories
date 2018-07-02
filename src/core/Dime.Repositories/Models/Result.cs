@@ -17,7 +17,7 @@ namespace Dime.Repositories
         /// </summary>
         public Result()
         {
-            this.Data = new HashSet<T>();
+            Data = new HashSet<T>();
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Dime.Repositories
         /// <param name="data"></param>
         public Result(IEnumerable<T> data) : this()
         {
-            this.Data = data;
+            Data = data;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Dime.Repositories
         /// <param name="message"></param>
         public Result(IEnumerable<T> data, string message) : this(data)
         {
-            this.Message = message;
+            Message = message;
         }
 
         #endregion Constructor

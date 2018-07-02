@@ -2,28 +2,19 @@
 
 namespace Dime.Repositories
 {
-    internal static partial class TakeQueryFactory
+    internal static class TakeQueryFactory
     {
         /// <summary>
-        /// Wrapper around LINQ TAKE
+        /// Returns a specified number of contiguous elements from the start of a sequence.
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
-        /// <param name="source">The source.</param>
-        /// <param name="takeCount">The count.</param>
-        /// <returns></returns>
-        /// <history>
-        /// [HB] 17/08/2015 - Create
-        /// </history>
+        /// <param name="source">The sequence to return elements from.</param>
+        /// <param name="takeCount">The number of elements to return.</param>
+        /// <returns>An System.Linq.IQueryable`1 that contains the specified number of elements from the start of source.</returns>
         internal static IQueryable<TSource> With<TSource>(this IQueryable<TSource> source, int? takeCount)
         {
-            if ((takeCount ?? 0) == 0)
-            {
-                return source;
-            }
-            else
-            {
-                return source.Take((int)takeCount);
-            }
+            int itemsToTake = takeCount.GetValueOrDefault();
+            return itemsToTake == 0 ? source : source.Take(takeCount.GetValueOrDefault());
         }
     }
 }

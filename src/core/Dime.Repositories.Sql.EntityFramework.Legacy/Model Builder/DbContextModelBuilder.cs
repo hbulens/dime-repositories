@@ -25,7 +25,8 @@ namespace Dime.Repositories
         {
             Type foundType = Assembly.GetCallingAssembly().GetTypes().FirstOrDefault(x => typeof(IModelBuilder<T>).IsAssignableFrom(x) && !x.IsAbstract && !x.IsInterface);
             if (foundType == null)
-                throw new ArgumentException(string.Format("No model builder found for context in assembly {0}", Assembly.GetCallingAssembly().FullName));
+                throw new ArgumentException(
+                    $"No model builder found for context in assembly {Assembly.GetCallingAssembly().FullName}");
 
             object o = Activator.CreateInstance(foundType);
             IModelBuilder<T> concreteModelBuilder = (IModelBuilder<T>)o;

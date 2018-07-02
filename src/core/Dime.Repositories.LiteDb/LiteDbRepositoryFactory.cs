@@ -13,7 +13,7 @@
         /// <param name="connectionPath"></param>
         public LiteDbRepositoryFactory(string connectionPath)
         {
-            this.ConnectionPath = connectionPath;
+            ConnectionPath = connectionPath;
         }
 
         #endregion Constructor
@@ -33,7 +33,7 @@
         /// <returns></returns>
         public IRepository<T> Create<T>() where T : class, new()
         {
-            return new LiteDbRepository<T>(this.ConnectionPath);
+            return new LiteDbRepository<T>(ConnectionPath);
         }
 
         #endregion Methods

@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dime.Repositories
 {
@@ -14,19 +14,38 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="id">The identifier of the entity</param>
         /// <returns>Void</returns>
-        /// <history>
-        /// [HB] 18/01/2016 - Only delete if records exists in data store
-        /// </history>
         public virtual async Task DeleteAsync(long id)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 TEntity item = await ctx.Set<TEntity>().FindAsync(id);
                 if (item != default(TEntity))
                 {
                     ctx.Set<TEntity>().Remove(item);
-                    await this.SaveChangesAsync(ctx);
+                    await SaveChangesAsync(ctx);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Removes the record from the data store by its identifiers
+        /// </summary>
+        /// <param name="ids">The identifiers of the entities</param>
+        /// <returns>Void</returns>
+        public virtual async Task DeleteAsync(IEnumerable<long> ids)
+        {
+            using (TContext ctx = Context)
+            {
+                foreach (long id in ids.Distinct().ToList())
+                {
+                    TEntity item = await ctx.Set<TEntity>().FindAsync(id);
+                    if (item == default(TEntity))
+                        continue;
+
+                    ctx.Set<TEntity>().Remove(item);
+                }
+
+                await SaveChangesAsync(ctx);
             }
         }
 
@@ -36,19 +55,16 @@ namespace Dime.Repositories
         /// <param name="id">The identifier of the entity</param>
         /// <param name="commit">Indicates whether or not SaveChangesAsync should be called during this call</param>
         /// <returns>Void</returns>
-        /// <history>
-        /// [HB] 18/01/2016 - Only delete if records exists in data store
-        /// </history>
         public virtual async Task DeleteAsync(long id, bool commit)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 TEntity item = await ctx.Set<TEntity>().FindAsync(id);
                 if (item != default(TEntity))
                 {
                     ctx.Set<TEntity>().Remove(item);
                     if (commit)
-                        await this.SaveChangesAsync(ctx);
+                        await SaveChangesAsync(ctx);
                 }
             }
         }
@@ -60,11 +76,11 @@ namespace Dime.Repositories
         /// <returns>Void</returns>
         public virtual async Task DeleteAsync(TEntity entity)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Set<TEntity>().Attach(entity);
                 ctx.Set<TEntity>().Remove(entity);
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
             }
         }
 
@@ -75,7 +91,10 @@ namespace Dime.Repositories
         /// <returns>Void</returns>
         public async Task DeleteAsync(IEnumerable<TEntity> entities)
         {
-            using (TContext ctx = this.Context)
+            if (!entities.Any())
+                return;
+
+            using (TContext ctx = Context)
             {
                 foreach (TEntity entity in entities)
                 {
@@ -83,7 +102,7 @@ namespace Dime.Repositories
                     ctx.Set<TEntity>().Remove(entity);
                 }
 
-                await this.SaveChangesAsync(ctx);
+                await SaveChangesAsync(ctx);
             }
         }
 
@@ -95,13 +114,13 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual async Task DeleteAsync(TEntity entity, bool commit)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 ctx.Set<TEntity>().Attach(entity);
                 ctx.Set<TEntity>().Remove(entity);
 
                 if (commit)
-                    await this.SaveChangesAsync(ctx);
+                    await SaveChangesAsync(ctx);
             }
         }
 
@@ -112,18 +131,16 @@ namespace Dime.Repositories
         /// <returns>Void</returns>
         public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> where)
         {
-            using (TContext ctx = this.Context)
+            using (TContext ctx = Context)
             {
                 IEnumerable<TEntity> entities = ctx.Set<TEntity>().With(where).AsNoTracking().ToList();
-                if (entities != null)
+                if (entities.Any())
                 {
                     foreach (TEntity item in entities)
-                    {
                         ctx.Set<TEntity>().Attach(item);
-                    }
 
                     ctx.Set<TEntity>().RemoveRange(entities);
-                    await this.SaveChangesAsync(ctx);
+                    await SaveChangesAsync(ctx);
                 }
             }
         }

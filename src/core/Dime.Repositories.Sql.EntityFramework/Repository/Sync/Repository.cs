@@ -1,61 +1,58 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Data.SqlClient;
-using System.Linq.Expressions;
 
 namespace Dime.Repositories
 {
     /// <summary>
-    ///
+    /// Represents a repository with Entity Framework as the backbone for connecting to SQL databases
     /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    public partial class EfRepository<TEntity, TContext> : ISqlRepository<TEntity>, IDisposable
+    /// <typeparam name="TEntity">The domain model that is registered in the underlying DbContext</typeparam>
+    /// <typeparam name="TContext"></typeparam>
+    public partial class EfRepository<TEntity, TContext> : ISqlRepository<TEntity>
         where TEntity : class, new()
         where TContext : DbContext
     {
         #region Constructor
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
         /// </summary>
-        /// <param name="dbContext"></param>
+        /// <param name="dbContext">The DbContext instance</param>
         public EfRepository(TContext dbContext)
         {
-            this.Context = dbContext;
+            Context = dbContext;
         }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
         /// </summary>
-        /// <param name="dbContext"></param>
-        /// <param name="configuration"></param>
+        /// <param name="dbContext">The DbContext instance</param>
+        /// <param name="configuration">Repository behavior configuration</param>
         public EfRepository(TContext dbContext, IMultiTenantRepositoryConfiguration configuration)
         {
-            this.Context = dbContext;
-            this.Configuration = configuration;
+            Context = dbContext;
+            Configuration = configuration;
         }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
         /// </summary>
-        /// <param name="dbContextFactory"></param>
+        /// <param name="dbContextFactory">Context factory</param>
         public EfRepository(IMultiTenantDbContextFactory<TContext> dbContextFactory)
         {
-            this.Factory = dbContextFactory;
+            Factory = dbContextFactory;
         }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
         /// </summary>
-        /// <param name="dbContextFactory"></param>
-        /// <param name="configuration"></param>
+        /// <param name="dbContextFactory">Context factory</param>
+        /// <param name="configuration">Repository behavior configuration</param>
         public EfRepository(IMultiTenantDbContextFactory<TContext> dbContextFactory, IMultiTenantRepositoryConfiguration configuration)
         {
-            this.Factory = dbContextFactory;
-            this.Configuration = configuration;
+            Factory = dbContextFactory;
+            Configuration = configuration;
         }
 
         #endregion Constructor
@@ -66,17 +63,11 @@ namespace Dime.Repositories
 
         protected TContext Context
         {
-            get
-            {
-                return _context == null ? this.Factory.Create(new DbContextFactoryOptions()) : _context;
-            }
-            set
-            {
-                _context = value;
-            }
+            get => _context ?? Factory.Create("");
+            set => _context = value;
         }
 
-        private IMultiTenantDbContextFactory<TContext> Factory { get; set; }
+        private IMultiTenantDbContextFactory<TContext> Factory { get; }
         public IMultiTenantRepositoryConfiguration Configuration { get; set; }
 
         #endregion Properties
@@ -98,7 +89,7 @@ namespace Dime.Repositories
             {
                 try
                 {
-                    if (!this.Configuration.SaveInBatch)
+                    if (!Configuration?.SaveInBatch ?? true)
                     {
                         int result = context.SaveChanges();
                         return 0 < result;
@@ -108,18 +99,26 @@ namespace Dime.Repositories
                         return false;
                     }
                 }
+                //catch (DbEntityValidationException validationEx)
+                //{
+                //    foreach (DbEntityValidationResult entityValidationResult in validationEx.EntityValidationErrors)
+                //        foreach (DbValidationError validationError in entityValidationResult.ValidationErrors)
+                //            Debug.WriteLine("Property: \"{0}\", Error: \"{1}\"", validationError.PropertyName, validationError.ErrorMessage);
+
+                //    throw;
+                //}
                 catch (DbUpdateConcurrencyException dbUpdateConcurrencyEx)
                 {
-                    if (this.Configuration.SaveStrategy == ConcurrencyStrategy.ClientFirst)
+                    if (Configuration.SaveStrategy == ConcurrencyStrategy.ClientFirst)
                     {
                         foreach (EntityEntry failedEnttry in dbUpdateConcurrencyEx.Entries)
                         {
-                            var dbValues = failedEnttry.GetDatabaseValues();
-                            if (dbValues != null)
-                            {
-                                failedEnttry.OriginalValues.SetValues(dbValues);
-                                return this.SaveChanges(context);
-                            }
+                            PropertyValues dbValues = failedEnttry.GetDatabaseValues();
+                            if (dbValues == null)
+                                continue;
+
+                            failedEnttry.OriginalValues.SetValues(dbValues);
+                            return SaveChanges(context);
                         }
                         return true;
                     }
@@ -134,39 +133,29 @@ namespace Dime.Repositories
                 }
                 catch (DbUpdateException dbUpdateEx)
                 {
-                    if (dbUpdateEx != null)
+                    if (dbUpdateEx.InnerException?.InnerException == null)
+                        throw;
+
+                    if (!(dbUpdateEx.InnerException.InnerException is SqlException sqlException))
+                        throw new DatabaseAccessException(dbUpdateEx.Message, dbUpdateEx.InnerException);
+
+                    switch (sqlException.Number)
                     {
-                        if (dbUpdateEx != null && dbUpdateEx.InnerException != null && dbUpdateEx.InnerException.InnerException != null)
-                        {
-                            SqlException sqlException = dbUpdateEx.InnerException.InnerException as SqlException;
-                            if (sqlException != null)
-                            {
-                                switch (sqlException.Number)
-                                {
-                                    // Unique constraint error
-                                    case 2627:
-                                        throw new ConcurrencyException(sqlException.Message, sqlException);
+                        // Unique constraint error
+                        case 2627:
+                            throw new ConcurrencyException(sqlException.Message, sqlException);
 
-                                    // Constraint check violation
-                                    // Duplicated key row error
-                                    case 547:
-                                    case 2601:
-                                        throw new ConstraintViolationException(sqlException.Message, sqlException);   // A custom exception of yours for concurrency issues
-
-                                    default:
-                                        // A custom exception of yours for other DB issues
-                                        throw new DatabaseAccessException(sqlException.Message, sqlException);
-                                }
-                            }
-
-                            throw new DatabaseAccessException(dbUpdateEx.Message, dbUpdateEx.InnerException);
-                        }
+                        // Constraint check violation
+                        // Duplicated key row error
+                        case 547:
+                        case 2601:
+                            throw new ConstraintViolationException(sqlException.Message, sqlException);   // A custom exception of yours for concurrency issues
+                        default:
+                            // A custom exception of yours for other DB issues
+                            throw new DatabaseAccessException(sqlException.Message, sqlException);
                     }
-                    throw;
-                }
-                catch (RetryLimitExceededException)
-                {
-                    throw;
+
+                    throw new DatabaseAccessException(dbUpdateEx.Message, dbUpdateEx.InnerException);
                 }
             }
             while (saveFailed && retryMax <= 3);
@@ -181,19 +170,12 @@ namespace Dime.Repositories
         /// </summary>
         public void Dispose()
         {
-            if (this.Context != null)
-            {
-                if (this.Context.Database != null && this.Context.Database.GetDbConnection() != null)
-                    this.Context.Database.CloseConnection();
+            if (Context == null)
+                return;
 
-                this.Context.Dispose();
-                this.Context = null;
-            }
-        }
-
-        public System.Collections.Generic.IEnumerable<TResult> FindAll<TResult>(Expression<Func<TEntity, bool>> where = null, Expression<Func<TEntity, TResult>> select = null, Expression<Func<TEntity, object>> orderBy = null, bool? ascending = null, int? page = null, int? pageSize = null, params string[] includes)
-        {
-            throw new NotImplementedException();
+            //Context.Database?.GetDbConnection()?.Dispose();
+            Context.Dispose();
+            Context = null;
         }
 
         #endregion Dispose region
@@ -203,9 +185,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="repository"></param>
         public static explicit operator TContext(EfRepository<TEntity, TContext> repository)
-        {
-            return repository.Context;
-        }
+            => repository.Context;
 
         #endregion Methods
     }
