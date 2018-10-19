@@ -18,12 +18,12 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <Version>1.2.1.0</Version>
+    <Version>1.2.2</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <NeutralLanguage>english</NeutralLanguage>
+    <NeutralLanguage>en</NeutralLanguage>
     <Description>Repository contracts with support for SQL databases</Description>
-    <FileVersion>1.2.1.0</FileVersion>
-    <AssemblyVersion>1.2.1.0</AssemblyVersion>
+    <FileVersion>1.2.2.0</FileVersion>
+    <AssemblyVersion>1.2.2.0</AssemblyVersion>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
     <Copyright>Copyright © 2018</Copyright>

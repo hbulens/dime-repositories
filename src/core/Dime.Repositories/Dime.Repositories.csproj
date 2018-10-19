@@ -18,7 +18,7 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <Version>1.2.1.0</Version>
+    <Version>1.2.2</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Contracts of generic repositories</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -28,8 +28,9 @@
     <PackageProjectUrl>http://www.dimenics.com/products/dime-scheduler/</PackageProjectUrl>
     <RepositoryUrl>https://dimenicsbe.visualstudio.com/DefaultCollection/Dime.Scheduler V2</RepositoryUrl>
     <RepositoryType>Visual Studio Team Services</RepositoryType>
-    <AssemblyVersion>1.2.1.0</AssemblyVersion>
-    <FileVersion>1.2.1.0</FileVersion>
+    <AssemblyVersion>1.2.2.0</AssemblyVersion>
+    <FileVersion>1.2.2.0</FileVersion>
+    <PackageReleaseNotes>- 1.2.2: Add delete by multiple contract</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
