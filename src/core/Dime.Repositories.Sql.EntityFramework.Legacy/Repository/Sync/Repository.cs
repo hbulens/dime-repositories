@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Dime.Repositories
 {
@@ -221,5 +223,10 @@ namespace Dime.Repositories
         }
 
         #endregion Methods
+
+        public Task DeleteAsync(IEnumerable<long> ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

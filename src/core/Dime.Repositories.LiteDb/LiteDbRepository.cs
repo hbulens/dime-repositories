@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -113,5 +114,10 @@ namespace Dime.Repositories
         }
 
         #endregion Methods
+
+        public Task DeleteAsync(IEnumerable<long> ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

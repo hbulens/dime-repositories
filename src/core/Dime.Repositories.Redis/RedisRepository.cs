@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ServiceStack.Redis;
@@ -106,5 +107,10 @@ namespace Dime.Repositories.Redis
         #endregion Get
 
         #endregion Methods
+
+        public Task DeleteAsync(IEnumerable<long> ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
