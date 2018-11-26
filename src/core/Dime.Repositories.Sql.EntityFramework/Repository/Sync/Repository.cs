@@ -50,8 +50,8 @@ namespace Dime.Repositories
         /// <param name="dbContextFactory">Context factory</param>
         /// <param name="configuration">Repository behavior configuration</param>
         public EfRepository(IMultiTenantDbContextFactory<TContext> dbContextFactory, IMultiTenantRepositoryConfiguration configuration)
+        : this(dbContextFactory)
         {
-            Factory = dbContextFactory;
             Configuration = configuration;
         }
 
@@ -63,7 +63,7 @@ namespace Dime.Repositories
 
         protected TContext Context
         {
-            get => _context ?? Factory.Create("");
+            get => _context ?? Factory.Create(Factory.Connection);
             set => _context = value;
         }
 

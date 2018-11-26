@@ -8,7 +8,8 @@ namespace Dime.Repositories
     ///
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
-    public abstract partial class MultiTenantContextFactory<TContext> : IMultiTenantDbContextFactory<TContext> where TContext : DbContext, new()
+    public abstract partial class MultiTenantContextFactory<TContext> : IMultiTenantDbContextFactory<TContext>
+        where TContext : DbContext, new()
     {
         #region Constructor
 
@@ -62,7 +63,7 @@ namespace Dime.Repositories
         /// <param name="connection">The connection.</param>
         /// <returns></returns>
         public virtual TContext Create(string connection)
-            => Create("dbo", connection);
+            => Create("dbo", !string.IsNullOrEmpty(connection) ? connection : Connection);
 
         /// <summary>
         /// Creates the specified tenant.
@@ -80,7 +81,7 @@ namespace Dime.Repositories
         /// <param name="connection">The connection.</param>
         /// <returns></returns>
         public TContext Create(string tenant, string connection)
-            => new TContext();
+            => Create(new DbContextFactoryOptions(), connection);
 
         /// <summary>
         ///
@@ -88,9 +89,17 @@ namespace Dime.Repositories
         /// <param name="options"></param>
         /// <returns></returns>
         public TContext Create(DbContextFactoryOptions options)
+            => Create(options, Connection);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public TContext Create(DbContextFactoryOptions options, string connection)
         {
             DbContextOptionsBuilder<TContext> optionsBuilder = new DbContextOptionsBuilder<TContext>();
-            optionsBuilder.UseSqlServer(Connection);
+            optionsBuilder.UseSqlServer(connection);
             return Activator.CreateInstance(typeof(TContext), new object[] { optionsBuilder.Options }) as TContext;
         }
 

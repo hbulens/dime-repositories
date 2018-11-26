@@ -1,30 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Dime.Repositories
 {
     internal static class EFExtensions
     {
-        //private static MetadataWorkspace _workspace;
-        //private static ObjectItemCollection _itemCollection;
-
-        //private static EntityType GetEntityType<T>(DbContext context)
-        //{
-        //    if (_workspace == default(MetadataWorkspace))
-        //        _workspace = ((IObjectContextAdapter)context).ObjectContext.MetadataWorkspace;
-
-        //    if (_itemCollection == default(ObjectItemCollection))
-        //        _itemCollection = (ObjectItemCollection)(_workspace.GetItemCollection(DataSpace.OSpace));
-
-        //    EntityType entityType = _itemCollection.OfType<EntityType>().FirstOrDefault(e => _itemCollection.GetClrType(e) == typeof(T));
-        //    return entityType;
-        //}
-
         /// <summary>
         ///
         /// </summary>
-        /// <typeparam name="TResult"></typeparam>
         /// <param name="query"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
@@ -35,27 +20,26 @@ namespace Dime.Repositories
                 return query;
 
             List<string> includeList = new List<string>();
-            if (!includes.Any())
-            {
-                //ReadOnlyMetadataCollection<NavigationProperty> navigationProperties = GetEntityType<TEntity>(context)?.NavigationProperties;
-                //if (navigationProperties != null)
-                //{
-                //    foreach (NavigationProperty navigationProperty in navigationProperties)
-                //    {
-                //        if (!includeList.Contains(navigationProperty.Name))
-                //        {
-                //            includeList.Add(navigationProperty.Name);
-                //            query = query.Include(navigationProperty.Name);
-                //        }
-                //    }
-                //}
+            if (includes.Any())
+                return includes
+                    .Where(x => !string.IsNullOrEmpty(x) && !includeList.Contains(x))
+                    .Aggregate(query, (current, include) => current.Include(include));
 
+            IEnumerable<INavigation> navigationProperties = context.Model.FindEntityType(typeof(TEntity)).GetNavigations();
+            if (navigationProperties == null)
                 return query;
+
+            foreach (INavigation navigationProperty in navigationProperties)
+            {
+                if (includeList.Contains(navigationProperty.Name))
+                    continue;
+
+                includeList.Add(navigationProperty.Name);
+                query = query.Include(navigationProperty.Name);
             }
 
-            return includes
-                .Where(x => !string.IsNullOrEmpty(x) && !includeList.Contains(x))
-                .Aggregate(query, (current, include) => current.Include(include));
+            return query;
+
         }
     }
 }
