@@ -10,7 +10,7 @@
   <PropertyGroup>
     <VersionPrefix>1.0.6</VersionPrefix>
     <Authors>Dimenics</Authors>
-    <TargetFrameworks>netstandard2.0;netcoreapp2.0;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netcoreapp2.2;net461</TargetFrameworks>
     <AssemblyName>Dime.Repositories.Sql</AssemblyName>
     <PackageId>Dime.Repositories.Sql</PackageId>
     <PackageIconUrl>http://dimenuget.azurewebsites.net/Images/dimenuget.png</PackageIconUrl>
@@ -18,12 +18,12 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <Version>1.2.2</Version>
+    <Version>1.2.3</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Repository contracts with support for SQL databases</Description>
-    <FileVersion>1.2.2.0</FileVersion>
-    <AssemblyVersion>1.2.2.0</AssemblyVersion>
+    <FileVersion>1.2.3.0</FileVersion>
+    <AssemblyVersion>1.2.3.0</AssemblyVersion>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
     <Copyright>Copyright © 2018</Copyright>
@@ -39,7 +39,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
 

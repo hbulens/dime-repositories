@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>Dime.Repositories.Redis.Tests</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>Dime.Repositories.Redis.Tests</PackageId>
