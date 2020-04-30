@@ -99,10 +99,8 @@ namespace Dime.Repositories
                         int result = context.SaveChanges();
                         return 0 < result;
                     }
-                    else
-                    {
-                        return false;
-                    }
+
+                    return false;
                 }
                 catch (DbEntityValidationException validationEx)
                 {
@@ -127,14 +125,12 @@ namespace Dime.Repositories
                         }
                         return true;
                     }
-                    else
+
+                    foreach (DbEntityEntry failedEntry in dbUpdateConcurrencyEx.Entries)
                     {
-                        foreach (DbEntityEntry failedEntry in dbUpdateConcurrencyEx.Entries)
-                        {
-                            failedEntry.Reload();
-                        }
-                        return true;
+                        failedEntry.Reload();
                     }
+                    return true;
                 }
                 catch (DbUpdateException dbUpdateEx)
                 {
