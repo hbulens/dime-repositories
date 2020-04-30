@@ -15,7 +15,7 @@ steps:
     displayName: 'NuGet restore'
     inputs:
       feedsToUse: config
-      nugetConfigPath: tools/Nuget.config
+      nugetConfigPath: src/Nuget.config
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet restore'
