@@ -1,33 +1,32 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories", "core\Dime.Repositories\Dime.Repositories.csproj", "{72A74CEB-EC06-43A8-85C2-E4CFDA8DFCE9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F753A01F-2E0C-4036-9DEF-6047253255D2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.LiteDb", "core\Dime.Repositories.LiteDb\Dime.Repositories.LiteDb.csproj", "{B2730D85-205F-4798-9BAC-0809A29C8BFA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.LiteDb.Tests", "test\Dime.Repositories.LiteDb.Tests\Dime.Repositories.LiteDb.Tests.csproj", "{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Redis.Tests", "test\Dime.Repositories.Redis.Tests\Dime.Repositories.Redis.Tests.csproj", "{79D70F03-970F-4E07-B9BD-60C7098A4D8C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Redis", "core\Dime.Repositories.Redis\Dime.Repositories.Redis.csproj", "{6FE577DC-F4A5-4B8E-A77B-6B10C4FC7973}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql", "core\Dime.Repositories.Sql\Dime.Repositories.Sql.csproj", "{0FB51C4F-7198-40CF-8442-9A09BF016C42}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.NetCore", "core\Dime.Repositories.Sql.EntityFramework\Dime.Repositories.Sql.EntityFramework.NetCore.csproj", "{B501E673-CC10-4BFF-A086-CFF1DF482816}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.NetCore", "providers\EntityFramework.NetCore\Dime.Repositories.Sql.EntityFramework.NetCore.csproj", "{B501E673-CC10-4BFF-A086-CFF1DF482816}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.NetFull", "core\Dime.Repositories.Sql.EntityFramework.Legacy\Dime.Repositories.Sql.EntityFramework.NetFull.csproj", "{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.NetFramework", "providers\EntityFramework.NetFramework\Dime.Repositories.Sql.EntityFramework.NetFramework.csproj", "{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.Tests", "test\Dime.Repositories.Sql.EntityFramework.Tests\Dime.Repositories.Sql.EntityFramework.Tests.csproj", "{752C2101-5877-4C29-9EFF-D868D1C82426}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dime.Repositories.Sql.EntityFramework.NetCore.Tests", "Dime.Repositories.Sql.EntityFramework.NetCore.Tests\Dime.Repositories.Sql.EntityFramework.NetCore.Tests.csproj", "{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.NetCore.Tests", "test\Dime.Repositories.Sql.EntityFramework.NetCore.Tests\Dime.Repositories.Sql.EntityFramework.NetCore.Tests.csproj", "{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dime.Repositories.Redis.Core", "Dime.Repositories.Redis.Core\Dime.Repositories.Redis.Core.csproj", "{EB8BED75-82B0-4997-89BB-92BD6E324F35}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "providers", "providers", "{BF5B6AB2-33CF-494B-9D49-1A00ACF42729}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Dime.Repositories.Sql.EntityFramework.Shared", "providers\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.shproj", "{E2C7ADE6-23D8-4897-A156-05DCD901E2D0}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		providers\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.projitems*{4536c116-0c7b-40ad-a2fc-3ed6d0eb1149}*SharedItemsImports = 5
+		providers\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.projitems*{b501e673-cc10-4bff-a086-cff1df482816}*SharedItemsImports = 5
+		providers\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.projitems*{e2c7ade6-23d8-4897-a156-05dcd901e2d0}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -37,22 +36,6 @@ Global
 		{72A74CEB-EC06-43A8-85C2-E4CFDA8DFCE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72A74CEB-EC06-43A8-85C2-E4CFDA8DFCE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72A74CEB-EC06-43A8-85C2-E4CFDA8DFCE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2730D85-205F-4798-9BAC-0809A29C8BFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2730D85-205F-4798-9BAC-0809A29C8BFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2730D85-205F-4798-9BAC-0809A29C8BFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2730D85-205F-4798-9BAC-0809A29C8BFA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79D70F03-970F-4E07-B9BD-60C7098A4D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79D70F03-970F-4E07-B9BD-60C7098A4D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79D70F03-970F-4E07-B9BD-60C7098A4D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79D70F03-970F-4E07-B9BD-60C7098A4D8C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6FE577DC-F4A5-4B8E-A77B-6B10C4FC7973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FE577DC-F4A5-4B8E-A77B-6B10C4FC7973}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FE577DC-F4A5-4B8E-A77B-6B10C4FC7973}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FE577DC-F4A5-4B8E-A77B-6B10C4FC7973}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0FB51C4F-7198-40CF-8442-9A09BF016C42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0FB51C4F-7198-40CF-8442-9A09BF016C42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FB51C4F-7198-40CF-8442-9A09BF016C42}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -73,19 +56,16 @@ Global
 		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB8BED75-82B0-4997-89BB-92BD6E324F35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB8BED75-82B0-4997-89BB-92BD6E324F35}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB8BED75-82B0-4997-89BB-92BD6E324F35}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB8BED75-82B0-4997-89BB-92BD6E324F35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{282FFA41-16EC-4C28-BBC6-B8B07EAF7FEC} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
-		{79D70F03-970F-4E07-B9BD-60C7098A4D8C} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
+		{B501E673-CC10-4BFF-A086-CFF1DF482816} = {BF5B6AB2-33CF-494B-9D49-1A00ACF42729}
+		{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149} = {BF5B6AB2-33CF-494B-9D49-1A00ACF42729}
 		{752C2101-5877-4C29-9EFF-D868D1C82426} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
 		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
+		{E2C7ADE6-23D8-4897-A156-05DCD901E2D0} = {BF5B6AB2-33CF-494B-9D49-1A00ACF42729}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EFEF8275-DA5B-4493-8BB7-32E760B05267}

@@ -8,39 +8,41 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>1.0.8</VersionPrefix>
+    <AssemblyTitle>Dime Redis Repository</AssemblyTitle>
+    <VersionPrefix>1.0.5</VersionPrefix>
     <Authors>Dimenics</Authors>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
-    <AssemblyName>Dime.Repositories</AssemblyName>
-    <PackageId>Dime.Repositories</PackageId>
+    <TargetFrameworks>net461</TargetFrameworks>
+    <AssemblyName>Dime.Repositories.Redis</AssemblyName>
+    <PackageId>Dime.Repositories.Redis</PackageId>
     <PackageIconUrl>http://dimenuget.azurewebsites.net/Images/dimenuget.png</PackageIconUrl>
     <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">1.1.1</RuntimeFrameworkVersion>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <Version>1.2.3</Version>
+    <Version>1.2.0.0</Version>
     <NeutralLanguage>en</NeutralLanguage>
-    <Description>Contracts of generic repositories</Description>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes />
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>Repository implementation for Redis</Description>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
     <Copyright>Copyright © 2018</Copyright>
     <PackageProjectUrl>http://www.dimenics.com/products/dime-scheduler/</PackageProjectUrl>
     <RepositoryUrl>https://dimenicsbe.visualstudio.com/DefaultCollection/Dime.Scheduler V2</RepositoryUrl>
     <RepositoryType>Visual Studio Team Services</RepositoryType>
-    <AssemblyVersion>1.2.3.0</AssemblyVersion>
-    <FileVersion>1.2.3.0</FileVersion>
-    <PackageReleaseNotes>- 1.2.2: Add delete by multiple contract
-      - 1.2.3: .NET Core 2.2
-</PackageReleaseNotes>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.Common" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
+    <PackageReference Include="ServiceStack.Redis" Version="5.8.0" />
   </ItemGroup>
 
-   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+  <ItemGroup>
+    <ProjectReference Include="..\..\core\Dime.Repositories\Dime.Repositories.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>

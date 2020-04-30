@@ -1,20 +1,47 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Dime.Repositories
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+![Build Status](https://dev.azure.com/dimenicsbe/Utilities/_apis/build/status/Repositories%20-%20MAIN%20-%20CI?branchName=master)
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## Introduction
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Implementation of the repository pattern with Entity Framework (Core).
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://www.visualstudio.com/en-us/docs/git/create-a-readme). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## Getting Started
+
+- You must have Visual Studio 2019 Community or higher.
+- The dotnet cli is also highly recommended.
+
+## About this project
+
+Generic repository pattern with an implementation using Entity Framework.
+
+## Build and Test
+
+- Run dotnet restore
+- Run dotnet build
+- Run dotnet test
+
+## Installation
+
+Use the package manager NuGet to install Dime.Repositories:
+
+`dotnet add package Dime.Repositories`
+
+## Usage
+
+``` csharp
+[HttpPost]
+[Route(Routes.Appointments.Get)]
+public async Task<IPage<BackOfficeAppointmentDto>> Get([FromBody]DataSourceRequest request)
+    => await Service.GetAsync(request.Take, request.Skip, request.Page, request.PageSize, request.Filter, request.Sort);
+```
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)

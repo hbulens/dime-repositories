@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>e2c7ade6-23d8-4897-a156-05dcd901e2d0</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Dime.Repositories.Sql.EntityFramework.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Core\UnitOfWork.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ConcurrencyException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ConstraintViolationException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\DatabaseAccessException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IEfMultiTenantRepositoryFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\Async\AggregateRepositoryAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\Async\DeleteRepositoryAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\Async\GetRepositoryAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\Async\PagedRepositoryAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\Sync\AggregateRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\Sync\DeleteRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\Sync\GetRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\Sync\PagedRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\Sync\UpdateRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\DataReaderExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\DbContextExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\LinqOperationExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\LinqOperationHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Query Factory\GroupByQueryFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Query Factory\SelectQueryFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Query Factory\SkipQueryFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Query Factory\SortingQueryFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Query Factory\TakeQueryFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Query Factory\WhereQueryFactory.cs" />
+  </ItemGroup>
+</Project>
