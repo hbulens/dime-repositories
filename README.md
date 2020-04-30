@@ -30,10 +30,14 @@ Use the package manager NuGet to install Dime.Repositories:
 ## Usage
 
 ``` csharp
-[HttpPost]
-[Route(Routes.Appointments.Get)]
-public async Task<IPage<BackOfficeAppointmentDto>> Get([FromBody]DataSourceRequest request)
-    => await Service.GetAsync(request.Take, request.Skip, request.Page, request.PageSize, request.Filter, request.Sort);
+using Dime.Repositories;
+...
+public async IEnumerable<Customer> GetCustomers()
+{
+    IRepository<Customer> customerRepository = new EfRepository<Customer, CustomerDbContext>();
+    return await customerRepository.FindAllAsync(x => x.IsActive == true);
+}
+
 ```
 
 ## Contributing
