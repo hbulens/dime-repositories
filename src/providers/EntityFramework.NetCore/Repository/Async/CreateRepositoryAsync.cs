@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 
 #else
+
 using Microsoft.EntityFrameworkCore;
+
 #endif
 
 namespace Dime.Repositories

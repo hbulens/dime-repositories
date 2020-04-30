@@ -58,13 +58,11 @@ namespace Dime.Repositories
                         }
                         return true;
                     }
-                    else
-                    {
-                        foreach (DbEntityEntry failedEntry in dbUpdateConcurrencyEx.Entries)
-                            await failedEntry.ReloadAsync().ConfigureAwait(false);
 
-                        return true;
-                    }
+                    foreach (DbEntityEntry failedEntry in dbUpdateConcurrencyEx.Entries)
+                        await failedEntry.ReloadAsync().ConfigureAwait(false);
+
+                    return true;
                 }
                 catch (DbUpdateException dbUpdateEx)
                 {
@@ -110,8 +108,8 @@ namespace Dime.Repositories
                         int result = await context.SaveChangesAsync().ConfigureAwait(false);
                         return 0 < result;
                     }
-                    else
-                        return false;
+
+                    return false;
                 }
                 catch (DbEntityValidationException validationEx)
                 {
@@ -149,13 +147,11 @@ namespace Dime.Repositories
 
                         return retried;
                     }
-                    else
-                    {
-                        foreach (DbEntityEntry failedEntry in dbUpdateConcurrencyEx.Entries)
-                            await failedEntry.ReloadAsync().ConfigureAwait(false);
 
-                        return true;
-                    }
+                    foreach (DbEntityEntry failedEntry in dbUpdateConcurrencyEx.Entries)
+                        await failedEntry.ReloadAsync().ConfigureAwait(false);
+
+                    return true;
                 }
                 catch (DbUpdateException dbUpdateEx)
                 {

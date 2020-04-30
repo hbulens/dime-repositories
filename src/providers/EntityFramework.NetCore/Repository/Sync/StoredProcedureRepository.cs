@@ -8,7 +8,9 @@ using System.Linq;
 using System.Data.Entity;
 
 #else
+
 using Microsoft.EntityFrameworkCore;
+
 #endif
 
 namespace Dime.Repositories

@@ -61,7 +61,7 @@ namespace Dime.Repositories
             ctx.Set<TEntity>().Attach(entity);
             EntityEntry<TEntity> entry = ctx.Entry(entity);
 
-            foreach (string property in properties) 
+            foreach (string property in properties)
                 entry.Property(property).IsModified = true;
 
             ctx.Entry(entity).State = EntityState.Modified;

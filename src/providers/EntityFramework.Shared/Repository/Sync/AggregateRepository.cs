@@ -5,7 +5,9 @@ using System.Linq.Expressions;
 #if NET461
 
 #else
+
 using Microsoft.EntityFrameworkCore;
+
 #endif
 
 namespace Dime.Repositories

@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 
 #if NET461
+
 using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
+
 #else
+
 using Microsoft.EntityFrameworkCore;
+
 #endif
 
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using LinqKit;
-
 
 namespace Dime.Repositories
 {

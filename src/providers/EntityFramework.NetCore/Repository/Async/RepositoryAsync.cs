@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -86,13 +85,11 @@ namespace Dime.Repositories
             {
                 try
                 {
-                    if (!Configuration.SaveInBatch)
-                    {
-                        int result = await context.SaveChangesAsync().ConfigureAwait(false);
-                        return 0 < result;
-                    }
-                    else
+                    if (!((!Configuration?.SaveInBatch) ?? true)) 
                         return false;
+
+                    int result = await context.SaveChangesAsync().ConfigureAwait(false);
+                    return 0 < result;
                 }
                 catch (DbUpdateConcurrencyException dbUpdateConcurrencyEx)
                 {

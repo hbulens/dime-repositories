@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 
 #if NET461
+
 using System.Data.Entity;
-#else 
+
+#else
+
 using Microsoft.EntityFrameworkCore;
+
 #endif
 
 using System.Linq;

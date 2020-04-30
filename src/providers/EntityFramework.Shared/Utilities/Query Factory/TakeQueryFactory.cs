@@ -1,5 +1,7 @@
 ﻿#if NET461
+
 using System.Data.Entity;
+
 #endif
 
 using System.Diagnostics.CodeAnalysis;

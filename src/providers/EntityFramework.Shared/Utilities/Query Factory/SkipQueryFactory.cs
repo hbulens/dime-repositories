@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 
 #if NET461
+
 using System.Data.Entity;
-#else 
+
+#else
+
 using Microsoft.EntityFrameworkCore;
+
 #endif
 
 using System.Linq;
@@ -33,8 +37,8 @@ namespace Dime.Repositories
 
             int itemsToSkip = (pageToApply - 1) * pageSizeToApply;
 
-            return orderBy == null 
-                ?  source.OrderBy(x => true).Skip(itemsToSkip) 
+            return orderBy == null
+                ? source.OrderBy(x => true).Skip(itemsToSkip)
                 : source.Skip(itemsToSkip);
         }
 

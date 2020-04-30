@@ -1,9 +1,13 @@
 ﻿using System;
 
 #if NET461
+
 using System.Data.Entity;
+
 #else
+
 using Microsoft.EntityFrameworkCore;
+
 #endif
 
 using System.Diagnostics.CodeAnalysis;

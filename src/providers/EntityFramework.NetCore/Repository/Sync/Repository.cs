@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -46,6 +45,7 @@ namespace Dime.Repositories
         public EfRepository(IMultiTenantDbContextFactory<TContext> dbContextFactory)
         {
             Factory = dbContextFactory;
+            Configuration = new RepositoryConfiguration();
         }
 
         /// <summary>
@@ -93,16 +93,15 @@ namespace Dime.Repositories
             {
                 try
                 {
-                    if (Configuration.SaveInBatch) 
+                    if (Configuration?.SaveInBatch ?? false)
                         return false;
 
                     int result = context.SaveChanges();
                     return 0 < result;
-
                 }
                 catch (DbUpdateConcurrencyException dbUpdateConcurrencyEx)
                 {
-                    if (Configuration.SaveStrategy == ConcurrencyStrategy.ClientFirst)
+                    if (Configuration?.SaveStrategy == ConcurrencyStrategy.ClientFirst)
                     {
                         foreach (EntityEntry failedEntry in dbUpdateConcurrencyEx.Entries)
                         {

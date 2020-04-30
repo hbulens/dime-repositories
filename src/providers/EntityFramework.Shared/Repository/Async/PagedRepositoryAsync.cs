@@ -5,10 +5,11 @@ using System.Collections.Generic;
 
 using System.Data.Entity;
 
-#else 
-using Microsoft.EntityFrameworkCore;
-#endif
+#else
 
+using Microsoft.EntityFrameworkCore;
+
+#endif
 
 using System.Linq;
 using System.Linq.Expressions;

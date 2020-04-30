@@ -4,6 +4,7 @@ using System.Collections.Generic;
 #if NET461
 
 using System.Data.Entity;
+
 #else
 
 using Microsoft.EntityFrameworkCore;

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Dime.Repositories
 {
@@ -112,7 +109,6 @@ namespace Dime.Repositories
 
             return default;
         }
-
 
         /// <summary>
         /// Constructs the context.
