@@ -1,6 +1,6 @@
 # Dime.Repositories
 
-![Build Status](https://dev.azure.com/dimenicsbe/Utilities/_apis/build/status/Repositories%20-%20MAIN%20-%20CI?branchName=master)
+![Build Status](https://dev.azure.com/dimenicsbe/Utilities/_apis/build/status/Dime.Repositories?branchName=master)
 
 ## Introduction
 
