@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.Entit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.NetFramework", "providers\EntityFramework.NetFramework\Dime.Repositories.Sql.EntityFramework.NetFramework.csproj", "{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.Tests", "test\Dime.Repositories.Sql.EntityFramework.Tests\Dime.Repositories.Sql.EntityFramework.Tests.csproj", "{752C2101-5877-4C29-9EFF-D868D1C82426}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dime.Repositories.Sql.EntityFramework.NetCore.Tests", "test\Dime.Repositories.Sql.EntityFramework.NetCore.Tests\Dime.Repositories.Sql.EntityFramework.NetCore.Tests.csproj", "{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "providers", "providers", "{BF5B6AB2-33CF-494B-9D49-1A00ACF42729}"
@@ -48,10 +46,6 @@ Global
 		{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}.Release|Any CPU.Build.0 = Release|Any CPU
-		{752C2101-5877-4C29-9EFF-D868D1C82426}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{752C2101-5877-4C29-9EFF-D868D1C82426}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{752C2101-5877-4C29-9EFF-D868D1C82426}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{752C2101-5877-4C29-9EFF-D868D1C82426}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,7 +57,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B501E673-CC10-4BFF-A086-CFF1DF482816} = {BF5B6AB2-33CF-494B-9D49-1A00ACF42729}
 		{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149} = {BF5B6AB2-33CF-494B-9D49-1A00ACF42729}
-		{752C2101-5877-4C29-9EFF-D868D1C82426} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
 		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
 		{E2C7ADE6-23D8-4897-A156-05DCD901E2D0} = {BF5B6AB2-33CF-494B-9D49-1A00ACF42729}
 	EndGlobalSection
