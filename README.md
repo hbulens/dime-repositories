@@ -2,7 +2,7 @@
 
 # Repositories
 
-![Build Status](https://dev.azure.com/dimenicsbe/Utilities/_apis/build/status/dimenics.dime-repositories?branchName=master) ![Code coverage](https://img.shields.io/azure-devops/coverage/dimenicsbe/utilities/149/master)
+[![Build Status](https://dev.azure.com/dimenicsbe/Utilities/_apis/build/status/dimenics.repository?branchName=master)](https://dev.azure.com/dimenicsbe/Utilities/_build/latest?definitionId=182&branchName=master)
 
 ## Introduction
 
