@@ -57,7 +57,7 @@ namespace Dime.Repositories
 
             string execQueryString = ExecQuery(name, parameters);
             using DbContext context = Context;
-            return context.Database.ExecuteSqlCommand(execQueryString, parameters);
+            return context.Database.ExecuteSqlRaw(execQueryString, parameters);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Dime.Repositories
 
             string execQueryString = ExecQuery(name, parameters);
             using DbContext context = Context;
-            return context.Database.ExecuteSqlCommand(execQueryString, parameters);
+            return context.Database.ExecuteSqlRaw(execQueryString, parameters);
         }
 
         /// <summary>

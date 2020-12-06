@@ -59,7 +59,7 @@ namespace Dime.Repositories
                 Func<TSource, dynamic> orderBy = orderByExpression.ElementAt(0).Compile();
                 Func<TSource, dynamic> orderByThen = orderByExpression.ElementAt(1).Compile();
 
-                return @ascending
+                return ascending
                     ? source.OrderBy(orderBy).ThenBy(orderByThen).AsQueryable()
                     : source.OrderBy(orderBy).ThenByDescending(orderByThen).AsQueryable();
             }
@@ -67,7 +67,7 @@ namespace Dime.Repositories
             {
                 Func<TSource, dynamic> orderBy = orderByExpression.ElementAt(0).Compile();
 
-                return @ascending
+                return ascending
                     ? source.OrderBy(orderBy).AsQueryable()
                     : source.OrderByDescending(orderBy).AsQueryable();
             }
@@ -86,7 +86,7 @@ namespace Dime.Repositories
             if (orderByExpression == null)
                 return source;
             Func<TSource, dynamic> compiledExpression = orderByExpression.Compile();
-            return @ascending
+            return ascending
                 ? source.OrderBy(compiledExpression).AsQueryable()
                 : source.OrderByDescending(compiledExpression).AsQueryable();
         }
@@ -108,7 +108,7 @@ namespace Dime.Repositories
                     source.OrderByDescending(defaultSorting).AsQueryable();
             }
 
-            return @ascending ? source.OrderBy(orderByExpression).AsQueryable() :
+            return ascending ? source.OrderBy(orderByExpression).AsQueryable() :
                 source.OrderByDescending(orderByExpression).AsQueryable();
         }
     }

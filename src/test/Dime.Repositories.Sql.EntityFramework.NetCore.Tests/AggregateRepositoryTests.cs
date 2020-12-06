@@ -33,11 +33,9 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     context.SaveChanges();
                 }
 
-                using (IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(options)))
-                {
-                    long result = repo.Count();
-                    Assert.AreEqual(3, result);
-                }
+                using IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(options));
+                long result = repo.Count();
+                Assert.AreEqual(3, result);
             }
             finally
             {
@@ -49,7 +47,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
         public async Task Repository_CountAsync_NoPredicate_ShouldCountAll()
         {
             // In-memory database only exists while the connection is open
-            using SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
+            await using SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
 
             try
@@ -59,11 +57,11 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     .Options;
 
                 // Create the schema in the database
-                using (BloggingContext context = new BloggingContext(options))
+                await using (BloggingContext context = new BloggingContext(options))
                     context.Database.EnsureCreated();
 
                 // Insert seed data into the database using one instance of the context
-                using (BloggingContext context = new BloggingContext(options))
+                await using (BloggingContext context = new BloggingContext(options))
                 {
                     context.Blogs.Add(new Blog { Url = "http://sample.com/cats" });
                     context.Blogs.Add(new Blog { Url = "http://sample.com/catfish" });
@@ -71,11 +69,9 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     context.SaveChanges();
                 }
 
-                using (IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(options)))
-                {
-                    long result = await repo.CountAsync();
-                    Assert.AreEqual(3, result);
-                }
+                using IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(options));
+                long result = await repo.CountAsync();
+                Assert.AreEqual(3, result);
             }
             finally
             {
@@ -87,7 +83,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
         public async Task Repository_CountAsync_Predicate_ShouldCountCorrectly()
         {
             // In-memory database only exists while the connection is open
-            using SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
+            await using SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
 
             try
@@ -97,13 +93,13 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     .Options;
 
                 // Create the schema in the database
-                using (BloggingContext context = new BloggingContext(options))
+                await using (BloggingContext context = new BloggingContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
 
                 // Insert seed data into the database using one instance of the context
-                using (BloggingContext context = new BloggingContext(options))
+                await using (BloggingContext context = new BloggingContext(options))
                 {
                     context.Blogs.Add(new Blog { Url = "http://sample.com/cats" });
                     context.Blogs.Add(new Blog { Url = "http://sample.com/catfish" });
@@ -111,11 +107,9 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     context.SaveChanges();
                 }
 
-                using (IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(options)))
-                {
-                    long result = await repo.CountAsync(x => x.Url.Contains("cat"));
-                    Assert.AreEqual(2, result);
-                }
+                using IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(options));
+                long result = await repo.CountAsync(x => x.Url.Contains("cat"));
+                Assert.AreEqual(2, result);
             }
             finally
             {

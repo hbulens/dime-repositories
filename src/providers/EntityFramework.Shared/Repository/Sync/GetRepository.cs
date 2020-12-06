@@ -27,7 +27,7 @@ namespace Dime.Repositories
         public bool Exists(Expression<Func<TEntity, bool>> where)
         {
             using TContext ctx = Context;
-            return ctx.Set<TEntity>().AsNoTracking().Any(@where);
+            return ctx.Set<TEntity>().AsNoTracking().Any(where);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Dime.Repositories
             TEntity query = ctx.Set<TEntity>()
                 .AsNoTracking()
                 .AsExpandable()
-                .With(@where)
+                .With(where)
                 .FirstOrDefault();
 
             return query;
@@ -86,7 +86,7 @@ namespace Dime.Repositories
                 .Include(ctx, includes)
                 .AsNoTracking()
                 .AsExpandable()
-                .With(@where);
+                .With(where);
 
             return query.FirstOrDefault();
         }
@@ -107,9 +107,9 @@ namespace Dime.Repositories
            Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, TResult>> select = null,
             Expression<Func<TEntity, dynamic>> orderBy = null,
-            bool? ascending = default(bool?),
-            int? page = default(int?),
-            int? pageSize = default(int?),
+            bool? ascending = default,
+            int? page = default,
+            int? pageSize = default,
             params string[] includes) where TResult : class
         {
             using TContext ctx = Context;
@@ -117,11 +117,11 @@ namespace Dime.Repositories
                 .AsExpandable()
                 .AsQueryable()
                 .AsNoTracking()
-                .With(@where)
-                .WithOrder(orderBy, @ascending ?? true)
+                .With(where)
+                .WithOrder(orderBy, ascending ?? true)
                 .With(page, pageSize, orderBy)
                 .With(pageSize)
-                .WithSelect(@select)
+                .WithSelect(select)
                 .Include(Context, includes);
 
             return query.FirstOrDefault();
@@ -140,7 +140,7 @@ namespace Dime.Repositories
                 .AsExpandable()
                 .AsQueryable()
                 .AsNoTracking()
-                .With(@where);
+                .With(where);
 
             return query.ToList();
         }
@@ -159,7 +159,7 @@ namespace Dime.Repositories
                 .AsExpandable()
                 .AsQueryable()
                 .AsNoTracking()
-                .With(@where);
+                .With(where);
 
             return query.ToList();
         }
@@ -179,7 +179,7 @@ namespace Dime.Repositories
                 .AsExpandable()
                 .AsQueryable()
                 .AsNoTracking()
-                .With(@where);
+                .With(where);
 
             return query.ToList();
         }
@@ -199,7 +199,7 @@ namespace Dime.Repositories
                 .AsExpandable()
                 .AsQueryable()
                 .AsNoTracking()
-                .With(@where)
+                .With(where)
                 .With(page, pageSize, default(IEnumerable<Expression<Func<TEntity, object>>>))
                 .With(pageSize)
                 .Include(Context, includes);
@@ -231,11 +231,11 @@ namespace Dime.Repositories
                 .Include(ctx, includes)
                 .AsNoTracking()
                 .AsExpandable()
-                .With(@where)
-                .WithOrder(orderBy, @ascending ?? true)
+                .With(where)
+                .WithOrder(orderBy, ascending ?? true)
                 .With(page, pageSize, orderBy)
                 .With(pageSize)
-                .WithSelect(@select);
+                .WithSelect(select);
 
             return query.ToList();
         }
@@ -263,8 +263,8 @@ namespace Dime.Repositories
                 .Include(ctx, includes)
                 .AsExpandable()
                 .AsNoTracking()
-                .With(@where)
-                .WithOrder(orderBy, @ascending ?? true)
+                .With(where)
+                .WithOrder(orderBy, ascending ?? true)
                 .With(page, pageSize, orderBy)
                 .With(pageSize);
 

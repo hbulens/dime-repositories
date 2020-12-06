@@ -37,7 +37,7 @@ namespace Dime.Repositories
 
             string execQueryString = ExecQuery(name, parameters);
             using TContext ctx = Context;
-            return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
+            return await ctx.Database.ExecuteSqlRawAsync(execQueryString, parameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Dime.Repositories
 
             string execQueryString = ExecQuery(name, parameters);
             using TContext ctx = Context;
-            return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
+            return await ctx.Database.ExecuteSqlRawAsync(execQueryString, parameters).ConfigureAwait(false);
         }
 
         /// <summary>

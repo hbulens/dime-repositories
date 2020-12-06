@@ -19,7 +19,7 @@ namespace Dime.Repositories
         internal static IQueryable<TResult> WithSelect<TSource, TResult, TKey>(
             this IQueryable<IGrouping<TKey, TSource>> source,
             Expression<Func<IGrouping<TKey, TSource>, IEnumerable<TResult>>> selector)
-            => selector == null ? default(IQueryable<TResult>) : source.SelectMany(selector);
+            => selector == null ? default : source.SelectMany(selector);
 
         /// <summary>
         /// Withes the specified selector.
@@ -32,7 +32,7 @@ namespace Dime.Repositories
         internal static IQueryable<TResult> WithSelect<TSource, TResult>(
             this IQueryable<IGrouping<object, TSource>> source,
             Expression<Func<IGrouping<object, TSource>, int, TResult>> selector)
-            => selector == null ? default(IQueryable<TResult>) : source.Select(selector);
+            => selector == null ? default : source.Select(selector);
 
         /// <summary>
         /// Withes the specified selector.
@@ -46,7 +46,7 @@ namespace Dime.Repositories
             Func<TSource, TResult> selector)
             where TSource : class
             where TResult : class
-            => selector == null ? default(IQueryable<TResult>) : source.Select(selector).AsQueryable();
+            => selector == null ? default : source.Select(selector).AsQueryable();
 
         /// <summary>
         /// Withes the specified selector.
@@ -59,7 +59,7 @@ namespace Dime.Repositories
         internal static IQueryable<TResult> WithSelect<TSource, TResult>(this IQueryable<TSource> source,
             Expression<Func<TSource, TResult>> selector)
             where TSource : class
-            => selector == null ? default(IQueryable<TResult>) : source.Select(selector).AsQueryable();
+            => selector == null ? default : source.Select(selector).AsQueryable();
 
         /// <summary>
         /// Withes the specified selector.
@@ -73,7 +73,7 @@ namespace Dime.Repositories
             Func<TSource, TResult> selector)
             where TSource : class
             where TResult : class
-            => selector == null ? default(IQueryable<TResult>) : source.Select(selector).AsQueryable();
+            => selector == null ? default : source.Select(selector).AsQueryable();
 
         /// <summary>
         ///
@@ -88,7 +88,7 @@ namespace Dime.Repositories
             where TSource : class
             where TResult : class
             => selector == null
-                ? default(TResult)
+                ? default
                 : new List<TSource> { source }.AsQueryable().Select(selector).FirstOrDefault();
     }
 }

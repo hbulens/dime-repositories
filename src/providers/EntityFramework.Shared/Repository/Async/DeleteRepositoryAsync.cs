@@ -130,7 +130,7 @@ namespace Dime.Repositories
         public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> where)
         {
             using TContext ctx = Context;
-            IEnumerable<TEntity> entities = ctx.Set<TEntity>().With(@where).AsNoTracking().ToList();
+            IEnumerable<TEntity> entities = ctx.Set<TEntity>().With(where).AsNoTracking().ToList();
             if (entities.Any())
             {
                 foreach (TEntity item in entities)

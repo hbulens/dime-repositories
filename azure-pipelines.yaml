@@ -27,4 +27,4 @@ steps:
   inputs:
     command: test
     projects: '**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) --collect "Code coverage"'
+    arguments: '--configuration $(BuildConfiguration) --collect "Code coverage" -s "src/test.runsettings"'

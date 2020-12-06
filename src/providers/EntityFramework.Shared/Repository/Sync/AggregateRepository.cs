@@ -34,7 +34,7 @@ namespace Dime.Repositories
         public long Count(Expression<Func<TEntity, bool>> where)
         {
             using TContext ctx = Context;
-            int count = ctx.Set<TEntity>().AsNoTracking().Count(@where);
+            int count = ctx.Set<TEntity>().AsNoTracking().Count(where);
 
             return count;
         }

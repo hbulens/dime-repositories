@@ -65,7 +65,7 @@ namespace Dime.Repositories
         /// <param name="orderedList"></param>
         private MemberExpression SetMember(IOrderedEnumerable<KeyValuePair<int, string>> orderedList)
         {
-            MemberExpression memberExpression = default(MemberExpression);
+            MemberExpression memberExpression = default;
             for (int i = 0; i < orderedList.Count(); i++)
             {
                 // Get the current record in the loop
@@ -86,7 +86,7 @@ namespace Dime.Repositories
         /// <param name="methodName"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        private MethodInfo GetMethodInfo(string methodName, Type type)
+        private static MethodInfo GetMethodInfo(string methodName, Type type)
         {
             //Get System.Linq.Queryable.OrderBy() method.
             Type enumarableType = typeof(Queryable);
@@ -110,7 +110,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        private IOrderedEnumerable<KeyValuePair<int, string>> Parse(string propertyName)
+        private static IOrderedEnumerable<KeyValuePair<int, string>> Parse(string propertyName)
         {
             int c = 1;
             IDictionary<int, string> properties = new Dictionary<int, string>();

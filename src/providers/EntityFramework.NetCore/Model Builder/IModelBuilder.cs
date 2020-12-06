@@ -15,7 +15,7 @@ namespace Dime.Repositories
         void BuildContext(ModelBuilder builder);
 
         /// <summary>
-        /// Builds the context for a schema other than the default dbo schame
+        /// Builds the context for a schema other than the default dbo schema
         /// </summary>
         /// <param name="builder">The code first model builder</param>
         /// <param name="schema">The schema name</param>
