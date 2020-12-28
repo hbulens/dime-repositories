@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "providers", "providers", "{
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Dime.Repositories.Sql.EntityFramework.Shared", "providers\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.shproj", "{E2C7ADE6-23D8-4897-A156-05DCD901E2D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dime.Repositories.Sql.EntityFramework.NetFramework.Tests", "test\Dime.Repositories.Sql.EntityFramework.NetFramework.Tests\Dime.Repositories.Sql.EntityFramework.NetFramework.Tests.csproj", "{395C168C-20A4-4CB8-9C08-F836F8DC02DC}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		providers\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.projitems*{b501e673-cc10-4bff-a086-cff1df482816}*SharedItemsImports = 5
@@ -49,6 +51,10 @@ Global
 		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833}.Release|Any CPU.Build.0 = Release|Any CPU
+		{395C168C-20A4-4CB8-9C08-F836F8DC02DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{395C168C-20A4-4CB8-9C08-F836F8DC02DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{395C168C-20A4-4CB8-9C08-F836F8DC02DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{395C168C-20A4-4CB8-9C08-F836F8DC02DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149} = {BF5B6AB2-33CF-494B-9D49-1A00ACF42729}
 		{4C40805D-D4F3-4D49-B2C4-F464FE4CD833} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
 		{E2C7ADE6-23D8-4897-A156-05DCD901E2D0} = {BF5B6AB2-33CF-494B-9D49-1A00ACF42729}
+		{395C168C-20A4-4CB8-9C08-F836F8DC02DC} = {F753A01F-2E0C-4036-9DEF-6047253255D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EFEF8275-DA5B-4493-8BB7-32E760B05267}

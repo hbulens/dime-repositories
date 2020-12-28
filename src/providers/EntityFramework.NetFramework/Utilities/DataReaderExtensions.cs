@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Dime.Repositories
 {
-    internal static class DataReaderExtensions
+    public static class DataReaderExtensions
     {
         /// <summary>
         ///
@@ -13,7 +13,7 @@ namespace Dime.Repositories
         /// <typeparam name="T"></typeparam>
         /// <param name="reader"></param>
         /// <returns></returns>
-        internal static List<T> GetRecords<T>(this IDataReader reader)
+        public static List<T> GetRecords<T>(this IDataReader reader)
         {
             List<T> result = new List<T>();
             while (reader.Read())
