@@ -26,8 +26,6 @@
     <PackageLicenseExpression>UNLICENSED</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Dime.Repositories" Version="1.2.4" />
-    <PackageReference Include="Dime.Repositories.Sql" Version="1.2.4" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="LinqKit" Version="1.1.21" />
     <PackageReference Include="Microsoft.CodeAnalysis.VersionCheckAnalyzer" Version="3.3.2">
@@ -45,5 +43,9 @@
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\core\Dime.Repositories.Sql\Dime.Repositories.Sql.csproj" />
+    <ProjectReference Include="..\..\core\Dime.Repositories\Dime.Repositories.csproj" />
   </ItemGroup>
 </Project>
