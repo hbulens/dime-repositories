@@ -31,7 +31,7 @@
     <PackageReference Include="Dime.Repositories" Version="1.2.4" />
     <PackageReference Include="Dime.Repositories.Sql" Version="1.2.4" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="LinqKit" Version="1.1.17" />
+    <PackageReference Include="LinqKit" Version="1.1.21" />
     <PackageReference Include="Microsoft.CodeAnalysis.VersionCheckAnalyzer" Version="3.3.2">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
