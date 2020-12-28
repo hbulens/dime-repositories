@@ -1,14 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{395C168C-20A4-4CB8-9C08-F836F8DC02DC}</ProjectGuid>
     <TargetFramework>net461</TargetFramework>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <AssemblyTitle>Dime.Repositories.Sql.EntityFramework.NetFramework.Tests</AssemblyTitle>
-    <Product>Dime.Repositories.Sql.EntityFramework.NetFramework.Tests</Product>
-    <Copyright>Copyright © 2020</Copyright>
     <LangVersion>latest</LangVersion>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
  
   <ItemGroup>
@@ -19,10 +13,9 @@
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
     <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Configuration" />
-  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\providers\EntityFramework.NetFramework\Dime.Repositories.Sql.EntityFramework.NetFramework.csproj" />
   </ItemGroup>
+  
 </Project>
