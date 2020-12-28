@@ -7,6 +7,7 @@ namespace Dime.Repositories
     /// Exception to indicate an error with constraints such as PK and FK
     /// </summary>
     [Serializable]
+    [Obsolete("Use shared project")]
     public class ConstraintViolationException : Exception
     {
         /// <summary>

@@ -8,7 +8,7 @@ namespace Dime.Repositories
     /// </summary>
     /// <typeparam name="TContext">The DbContext implementation</typeparam>
     [ExcludeFromCodeCoverage]
-    public class EfRepositoryFactory<TContext> : IMultiTenantEfRepositoryFactory where TContext : DbContext
+    public class EfRepositoryFactory<TContext> : IMultiTenantRepositoryFactory where TContext : DbContext
     {
         #region Constructor
 
@@ -40,8 +40,6 @@ namespace Dime.Repositories
 
         protected IMultiTenantDbContextFactory<TContext> ContextFactory { get; }
         public IMultiTenantRepositoryConfiguration RepositoryConfiguration { get; set; }
-
-        public DbContext Context { get; private set; }
 
         #endregion Properties
 

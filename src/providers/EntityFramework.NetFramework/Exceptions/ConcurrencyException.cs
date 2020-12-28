@@ -7,6 +7,7 @@ namespace Dime.Repositories
     /// Exception to indicate an error with concurrency
     /// </summary>
     [Serializable]
+    [Obsolete("Use shared project")]
     public class ConcurrencyException : Exception
     {
         /// <summary>

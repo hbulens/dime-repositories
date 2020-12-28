@@ -18,68 +18,20 @@ namespace Dime.Repositories
         where TEntity : class, new()
         where TContext : DbContext
     {
-        #region Constructor
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
-        /// </summary>
-        /// <param name="dbContext">The DbContext instance</param>
-        public EfRepository(TContext dbContext)
-        {
-            Context = dbContext;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
         /// </summary>
         /// <param name="dbContext">The DbContext instance</param>
         /// <param name="configuration">Repository behavior configuration</param>
-        public EfRepository(TContext dbContext, IMultiTenantRepositoryConfiguration configuration)
+        public EfRepository(TContext dbContext, IMultiTenantRepositoryConfiguration configuration = null)
         {
             Context = dbContext;
             Configuration = configuration;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
-        /// </summary>
-        /// <param name="dbContextFactory">Context factory</param>
-        public EfRepository(IMultiTenantDbContextFactory<TContext> dbContextFactory)
-        {
-            Factory = dbContextFactory;
-        }
+        protected TContext Context { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
-        /// </summary>
-        /// <param name="dbContextFactory">Context factory</param>
-        /// <param name="configuration">Repository behavior configuration</param>
-        public EfRepository(IMultiTenantDbContextFactory<TContext> dbContextFactory, IMultiTenantRepositoryConfiguration configuration)
-        {
-            Factory = dbContextFactory;
-            Configuration = configuration;
-        }
-
-        #endregion Constructor
-
-        #region Properties
-
-        private TContext _context;
-
-        protected TContext Context
-        {
-            get => _context ?? Factory.Create();
-            set => _context = value;
-        }
-
-        private IMultiTenantDbContextFactory<TContext> Factory { get; }
         public IMultiTenantRepositoryConfiguration Configuration { get; set; }
-
-        #endregion Properties
-
-        #region Methods
-
-        #region Save Changes Region
 
         /// <summary>
         ///
@@ -160,10 +112,6 @@ namespace Dime.Repositories
             while (saveFailed && retryMax <= 3);
         }
 
-        #endregion Save Changes Region
-
-        #region Dispose region
-
         /// <summary>
         /// Releases all resources used by the Entities
         /// </summary>
@@ -176,8 +124,6 @@ namespace Dime.Repositories
             Context = null;
         }
 
-        #endregion Dispose region
-
         /// <summary>
         ///
         /// </summary>
@@ -185,6 +131,5 @@ namespace Dime.Repositories
         public static explicit operator TContext(EfRepository<TEntity, TContext> repository)
             => repository.Context;
 
-        #endregion Methods
     }
 }

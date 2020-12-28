@@ -22,8 +22,8 @@ namespace Dime.Repositories
         /// <summary>
         /// Creates the context by name
         /// </summary>
-        /// <param name="name">The name</param>
+        /// <param name="nameOrConnectionString">The name</param>
         /// <returns>The instantiated context</returns>
-        TContext Create(string name);
+        TContext Create(string nameOrConnectionString);
     }
 }

@@ -7,6 +7,7 @@ namespace Dime.Repositories
     /// Exception to indicate a general error with the database
     /// </summary>
     [Serializable]
+    [Obsolete("Use shared project")]
     public class DatabaseAccessException : Exception
     {
         /// <summary>

@@ -48,20 +48,6 @@ namespace Dime.Repositories
         /// <summary>
         ///
         /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        internal IOrderedEnumerable<TSource> GetAsEnumerable(IEnumerable<TSource> query)
-        {
-            LambdaExpression selector = Expression.Lambda(MemberExpression, ParentParameterExpression);
-            MethodInfo methodInfo = GetMethodInfo(Method, MemberExpression.Type);
-
-            IOrderedEnumerable<TSource> newQuery = (IOrderedEnumerable<TSource>)methodInfo.Invoke(methodInfo, new object[] { query, selector });
-            return newQuery;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
         /// <param name="orderedList"></param>
         private MemberExpression SetMember(IOrderedEnumerable<KeyValuePair<int, string>> orderedList)
         {

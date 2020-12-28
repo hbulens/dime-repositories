@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Data.Common;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
 
 namespace Dime.Repositories
 {
@@ -12,22 +12,20 @@ namespace Dime.Repositories
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
     [ExcludeFromCodeCoverage]
-    public abstract class MultiTenantContextFactory<TContext> : IMultiTenantDbContextFactory<TContext> where TContext : DbContext
+    public abstract class MultiTenantDbContextFactory<TContext> : IMultiTenantDbContextFactory<TContext> where TContext : DbContext
     {
-        #region Constructor
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="MultiTenantContextFactory{TContext}"/> class
+        /// Initializes a new instance of the <see cref="MultiTenantDbContextFactory{TContext}"/> class
         /// </summary>
-        protected MultiTenantContextFactory()
+        protected MultiTenantDbContextFactory()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MultiTenantContextFactory{TContext}"/> class
+        /// Initializes a new instance of the <see cref="MultiTenantDbContextFactory{TContext}"/> class
         /// </summary>
         /// <param name="connectionString">The connection string</param>
-        protected MultiTenantContextFactory(string connectionString) : this()
+        protected MultiTenantDbContextFactory(string connectionString) : this()
         {
             Connection = connectionString;
         }
@@ -37,22 +35,16 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="connectionString"></param>
         /// <param name="tenant"></param>
-        protected MultiTenantContextFactory(string connectionString, string tenant) : this(connectionString)
+        protected MultiTenantDbContextFactory(string connectionString, string tenant) : this(connectionString)
         {
             Tenant = tenant;
         }
-
-        #endregion Constructor
-
-        #region Properties
 
         protected static ConcurrentDictionary<Tuple<string, string>, DbCompiledModel> ModelCache = new ConcurrentDictionary<Tuple<string, string>, DbCompiledModel>();
         protected static ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel> NamedModelCache = new ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel>();
 
         public string Connection { get; set; }
         public string Tenant { get; set; }
-
-        #endregion Properties
 
         /// <summary>
         /// Creates the instance of <typeparamref name="TContext"/> with the default settings
@@ -66,9 +58,9 @@ namespace Dime.Repositories
         /// <summary>
         /// Creates the specified connection.
         /// </summary>
-        /// <param name="connection">The connection.</param>
+        /// <param name="nameOrConnectionString">The connection.</param>
         /// <returns></returns>
-        public virtual TContext Create(string connection) => Create("dbo", connection);
+        public virtual TContext Create(string nameOrConnectionString) => Create("dbo", nameOrConnectionString);
 
         /// <summary>
         /// Creates the specified tenant.
@@ -84,10 +76,11 @@ namespace Dime.Repositories
 
             SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
             DbConnection dbConnection = connectionFactory.CreateConnection(connection);
+            Database.SetInitializer<TContext>(null);
 
             DbCompiledModel compiledModel = NamedModelCache.GetOrAdd(
                 Tuple.Create(tenant, dbConnection.ConnectionString, context),
-                t => GetContextModel(dbConnection, tenant));
+                _ => GetContextModel(dbConnection, tenant));
 
             return ConstructContext(dbConnection, compiledModel, false);
         }
@@ -96,16 +89,17 @@ namespace Dime.Repositories
         /// Creates the specified tenant.
         /// </summary>
         /// <param name="tenant">The tenant.</param>
-        /// <param name="connection">The connection.</param>
+        /// <param name="nameOrConnectionString">The connection.</param>
         /// <returns></returns>
-        public virtual TContext Create(string tenant, string connection)
+        public virtual TContext Create(string tenant, string nameOrConnectionString)
         {
             SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
-            DbConnection dbConnection = connectionFactory.CreateConnection(connection);
+            DbConnection dbConnection = connectionFactory.CreateConnection(nameOrConnectionString);
+            Database.SetInitializer<TContext>(null);
 
             DbCompiledModel compiledModel = ModelCache.GetOrAdd(
                Tuple.Create(tenant, dbConnection.ConnectionString),
-               t => GetContextModel(dbConnection, tenant));
+               _ => GetContextModel(dbConnection, tenant));
 
             return ConstructContext(dbConnection, compiledModel, false);
         }
@@ -123,10 +117,5 @@ namespace Dime.Repositories
         /// <param name="schema"></param>
         /// <returns></returns>
         protected abstract DbCompiledModel GetContextModel(DbConnection dbConnection, string schema);
-
-        public TContext CreateDbContext(string[] args)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

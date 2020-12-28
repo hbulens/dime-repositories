@@ -9,11 +9,9 @@
     <Import_RootNamespace>Dime.Repositories.Sql.EntityFramework.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Core\UnitOfWork.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ConcurrencyException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ConstraintViolationException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\DatabaseAccessException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IEfMultiTenantRepositoryFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\Async\AggregateRepositoryAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\Async\DeleteRepositoryAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\Async\GetRepositoryAsync.cs" />

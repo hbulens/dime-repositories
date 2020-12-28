@@ -9,10 +9,8 @@ namespace Dime.Repositories
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [KnownType(typeof(Page<>))]
-    public class Page<T> : IPage<T>
+    public class Page<T>
     {
-        #region Constructor
-
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -34,8 +32,9 @@ namespace Dime.Repositories
         ///
         /// </summary>
         /// <param name="data"></param>
-        /// <param name="message"></param>
-        public Page(IEnumerable<T> data, int total) : this(data)
+        /// <param name="total"></param>
+        public Page(IEnumerable<T> data, int total)
+            : this(data)
         {
             Total = total;
         }
@@ -44,9 +43,10 @@ namespace Dime.Repositories
         ///
         /// </summary>
         /// <param name="data"></param>
+        /// <param name="total"></param>
         /// <param name="message"></param>
-        /// <param name="summary"></param>
-        public Page(IEnumerable<T> data, int total, string message) : this(data, total)
+        public Page(IEnumerable<T> data, int total, string message)
+            : this(data, total)
         {
             Message = message;
         }
@@ -58,35 +58,31 @@ namespace Dime.Repositories
         /// <param name="message"></param>
         /// <param name="summary"></param>
         /// <param name="total"></param>
-        public Page(IEnumerable<T> data, int total, string message, IEnumerable<dynamic> summary) : this(data, total, message)
+        public Page(IEnumerable<T> data, int total, string message, IEnumerable<dynamic> summary)
+            : this(data, total, message)
         {
             Summary = summary != null ? summary.ToList() : new List<dynamic>();
         }
 
-        #endregion Constructor
-
-        #region Properties
+        /// <summary>
+        ///
+        /// </summary>
+        public IEnumerable<T> Data { get; }
 
         /// <summary>
         ///
         /// </summary>
-        public IEnumerable<T> Data { get; set; }
+        public int Total { get; }
 
         /// <summary>
         ///
         /// </summary>
-        public int Total { get; set; }
+        public string Message { get; }
 
         /// <summary>
         ///
         /// </summary>
-        public string Message { get; set; }
+        public List<dynamic> Summary { get; }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public List<dynamic> Summary { get; set; }
-
-        #endregion Properties
     }
 }

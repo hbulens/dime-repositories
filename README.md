@@ -56,7 +56,6 @@ public class CustomerService
       return await customerRepository.FindAllAsync(x => x.IsActive == true);
   }
 }
-
 ```
 
 This is an example of the dependency injection registration in Unity:
@@ -87,7 +86,6 @@ public class MyDbContextEfContextFactory : MultiTenantContextFactory<MyDbContext
         return ctx;
     }
 }
-
 ```
 
 ## Contributing

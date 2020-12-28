@@ -32,7 +32,7 @@ namespace Dime.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="includes">The includes.</param>
         /// <returns></returns>
-        public virtual IPage<TResult> FindAllPaged<TResult>(
+        public virtual Page<TResult> FindAllPaged<TResult>(
             Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, TResult>> select = null,
             Expression<Func<TEntity, dynamic>> orderBy = null,
@@ -70,7 +70,7 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public IPage<TResult> FindAllPaged<TResult>(
+        public Page<TResult> FindAllPaged<TResult>(
             Expression<Func<TEntity, bool>> where = null,
             Func<TEntity, object> groupBy = null,
             Expression<Func<IGrouping<object, TEntity>, IEnumerable<TResult>>> select = null,
@@ -109,7 +109,7 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public IPage<TResult> FindAllPaged<TResult>(
+        public Page<TResult> FindAllPaged<TResult>(
            Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, TResult>> select = null,
             IEnumerable<IOrder<TEntity>> orderBy = null,
@@ -148,7 +148,7 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public IPage<TResult> FindAllPaged<TResult>(
+        public Page<TResult> FindAllPaged<TResult>(
            Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, bool>> count = null,
             Expression<Func<TEntity, TResult>> select = null,
@@ -189,7 +189,7 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public IPage<TEntity> FindAllPaged(
+        public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            Expression<Func<TEntity, dynamic>> orderBy = null,
            bool? ascending = null,
@@ -223,7 +223,7 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public IPage<TEntity> FindAllPaged(
+        public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            Expression<Func<TEntity, dynamic>> orderBy = null,
            Expression<Func<TEntity, object>> groupBy = null,
@@ -256,7 +256,7 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public IPage<TEntity> FindAllPaged(
+        public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            Expression<Func<TEntity, bool>> count = null,
            IEnumerable<IOrder<TEntity>> orderBy = null,
@@ -288,7 +288,7 @@ namespace Dime.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="includes">The includes.</param>
         /// <returns></returns>
-        public IPage<TEntity> FindAllPaged(
+        public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            IEnumerable<IOrder<TEntity>> orderBy = null,
            int? page = default,
@@ -319,7 +319,7 @@ namespace Dime.Repositories
         /// <param name="pageSize"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public IPage<TEntity> FindAllPaged(
+        public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            IEnumerable<Expression<Func<TEntity, object>>> orderBy = null,
            bool? ascending = default,
