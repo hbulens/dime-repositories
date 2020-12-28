@@ -13,8 +13,6 @@ steps:
   inputs:
     command: restore
     projects: '**/*.csproj'
-    feedsToUse: 'config'
-    nugetConfigPath: 'src/Nuget.config'
 
 - task: DotNetCoreCLI@2
   displayName: Build

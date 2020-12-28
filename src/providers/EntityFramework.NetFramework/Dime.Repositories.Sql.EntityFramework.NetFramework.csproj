@@ -1,24 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}</ProjectGuid>
-    <RootNamespace>Dime.Repositories.EF</RootNamespace>
-    <AssemblyName>Dime.Repositories.EF</AssemblyName>
+    <RootNamespace>Dime.Repositories.Sql.EntityFramework.NetFramework</RootNamespace>
+    <AssemblyName>Dime.Repositories.Sql.EntityFramework.NetFramework</AssemblyName>
     <TargetFrameworks>net461;netstandard2.1</TargetFrameworks>
     <RuntimeIdentifier>win</RuntimeIdentifier>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <AssemblyTitle>Dime.Repositories.EF</AssemblyTitle>
+    <AssemblyTitle>Dime.Repositories.Sql.EntityFramework.NetFramework</AssemblyTitle>
     <Company>Dimenics</Company>
-    <Product>Dime.Repositories.EF</Product>
+    <Product>Dime.Repositories.Sql.EntityFramework.NetFramework</Product>
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Implementation of the repository pattern with Entity Framework</Description>
     <Copyright>Copyright © 2020</Copyright>
     <Version>2.0.0.0-alpha.2</Version>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
     <LangVersion>latest</LangVersion>
     <Authors>Dimenics</Authors>
     <PackageIconUrl>http://dimenuget.azurewebsites.net/Images/dimenuget.png</PackageIconUrl>
