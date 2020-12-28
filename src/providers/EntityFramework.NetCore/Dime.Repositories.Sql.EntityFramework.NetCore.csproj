@@ -1,42 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Label="Globals">
-    <SccProjectName>SAK</SccProjectName>
-    <SccProvider>SAK</SccProvider>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccLocalPath>SAK</SccLocalPath>
+    <VersionPrefix>1.2.3.1</VersionPrefix>
+    <AssemblyVersion>1.2.3.1</AssemblyVersion>
+    <FileVersion>1.2.3.1</FileVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>1.1.1</VersionPrefix>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <NeutralLanguage>en</NeutralLanguage>
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Authors>Dimenics</Authors>
     <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
     <AssemblyName>Dime.Repositories.Sql.EntityFramework</AssemblyName>
     <PackageId>Dime.Repositories.Sql.EntityFramework</PackageId>
     <PackageTags>Entity Framework;Repository;SQL</PackageTags>
-    <PackageIconUrl>http://dimenuget.azurewebsites.net/Images/dimenuget.png</PackageIconUrl>
-    <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">1.1.1</RuntimeFrameworkVersion>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <Version>1.2.3.0</Version>
+    <PackageIconUrl>https://github.com/dimenics/dimenics/blob/master/assets/dimenicslogo.png?raw=true</PackageIconUrl>
+    <Version>1.2.3.3</Version>
     <Description>Implementation of the repository pattern with Microsoft SQL using Entity Framework Core</Description>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <NeutralLanguage>en</NeutralLanguage>
-    <IncludeSource>True</IncludeSource>
-    <IncludeSymbols>True</IncludeSymbols>
-    <Copyright>Copyright © 2018</Copyright>
-    <PackageProjectUrl>http://www.dimenics.com/products/dime-scheduler/</PackageProjectUrl>
-    <RepositoryUrl>https://dimenicsbe.visualstudio.com/DefaultCollection/Dime.Scheduler V2</RepositoryUrl>
-    <RepositoryType>Visual Studio Team Services</RepositoryType>
-    <AssemblyVersion>1.2.3.0</AssemblyVersion>
-    <FileVersion>1.2.3.0</FileVersion>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netcoreapp1.1|AnyCPU'">
-    <DefineConstants>TRACE;RELEASE;NETCOREAPP2_0</DefineConstants>
-    <OutputPath>bin\Release\netcoreapp2.0\</OutputPath>
+    <Copyright>Copyright © 2020</Copyright>
+    <PackageProjectUrl>https://github.com/dimenics/repository</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dimenics/repository</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -44,22 +37,13 @@
     <PackageReference Include="Dime.Repositories" Version="1.2.4" />
     <PackageReference Include="Dime.Repositories.Sql" Version="1.2.4" />
     <PackageReference Include="Microsoft.Data.Edm" Version="5.8.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
   </ItemGroup>
-
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <PackageReference Include="Microsoft.Data.Edm" Version="5.8.4" />
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  
   <Import Project="..\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.projitems" Label="Shared" />
 
 </Project>

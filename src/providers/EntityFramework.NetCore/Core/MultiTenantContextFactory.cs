@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Data.Common;
+using System.Data.Entity.Infrastructure;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,6 +46,9 @@ namespace Dime.Repositories
 
         #region Properties
 
+        protected static ConcurrentDictionary<Tuple<string, string>, DbCompiledModel> ModelCache = new ConcurrentDictionary<Tuple<string, string>, DbCompiledModel>();
+        protected static ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel> NamedModelCache = new ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel>();
+
         public string Connection { get; set; }
         public string Tenant { get; set; }
 
@@ -73,20 +79,17 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TContext Create(string tenant, string connection, string context)
         {
-            //if (string.IsNullOrEmpty(context))
-            //    return Create(tenant, connection);
+            if (string.IsNullOrEmpty(context))
+                return Create(tenant, connection);
 
-            //SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
-            //DbConnection dbConnection = connectionFactory.CreateConnection(connection);
-            //Database.SetInitializer<TContext>(null);
+            SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
+            DbConnection dbConnection = connectionFactory.CreateConnection(connection);
 
-            //DbCompiledModel compiledModel = NamedModelCache.GetOrAdd(
-            //    Tuple.Create(tenant, dbConnection.ConnectionString, context),
-            //    t => GetContextModel(dbConnection, tenant));
+            DbCompiledModel compiledModel = NamedModelCache.GetOrAdd(
+                Tuple.Create(tenant, dbConnection.ConnectionString, context),
+                t => GetContextModel(dbConnection, tenant));
 
-            //return ConstructContext(dbConnection, compiledModel, false);
-
-            return default;
+            return ConstructContext(dbConnection, compiledModel, false);
         }
 
         /// <summary>
@@ -97,24 +100,29 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TContext Create(string tenant, string connection)
         {
-            //SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
-            //DbConnection dbConnection = connectionFactory.CreateConnection(connection);
-            //Database.SetInitializer<TContext>(null);
+            SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
+            DbConnection dbConnection = connectionFactory.CreateConnection(connection);
 
-            //DbCompiledModel compiledModel = ModelCache.GetOrAdd(
-            //   Tuple.Create(tenant, dbConnection.ConnectionString),
-            //   t => GetContextModel(dbConnection, tenant));
+            DbCompiledModel compiledModel = ModelCache.GetOrAdd(
+               Tuple.Create(tenant, dbConnection.ConnectionString),
+               t => GetContextModel(dbConnection, tenant));
 
-            //return ConstructContext(dbConnection, compiledModel, false);
-
-            return default;
+            return ConstructContext(dbConnection, compiledModel, false);
         }
 
         /// <summary>
         /// Constructs the context.
         /// </summary>
         /// <returns></returns>
-        protected abstract TContext ConstructContext();
+        protected abstract TContext ConstructContext(DbConnection existingConnection, DbCompiledModel model, bool contextOwnsConnection);
+
+        /// <summary>
+        /// Gets the scheduler context model.
+        /// </summary>
+        /// <param name="dbConnection">The database connection.</param>
+        /// <param name="schema"></param>
+        /// <returns></returns>
+        protected abstract DbCompiledModel GetContextModel(DbConnection dbConnection, string schema);
 
         public TContext CreateDbContext(string[] args)
         {

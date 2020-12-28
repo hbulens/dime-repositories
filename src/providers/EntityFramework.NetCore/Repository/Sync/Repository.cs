@@ -67,7 +67,7 @@ namespace Dime.Repositories
 
         protected TContext Context
         {
-            get => _context ?? Factory.Create("");
+            get => _context ?? Factory.Create(Configuration.Connection);
             set => _context = value;
         }
 
