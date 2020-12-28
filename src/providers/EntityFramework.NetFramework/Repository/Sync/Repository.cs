@@ -99,8 +99,10 @@ namespace Dime.Repositories
                         int result = context.SaveChanges();
                         return 0 < result;
                     }
-
-                    return false;
+                    else
+                    {
+                        return false;
+                    }
                 }
                 catch (DbEntityValidationException validationEx)
                 {
@@ -114,22 +116,21 @@ namespace Dime.Repositories
                 {
                     if (Configuration.SaveStrategy == ConcurrencyStrategy.ClientFirst)
                     {
-                        foreach (DbEntityEntry failedEntry in dbUpdateConcurrencyEx.Entries)
+                        foreach (DbEntityEntry failedEnttry in dbUpdateConcurrencyEx.Entries)
                         {
-                            DbPropertyValues dbValues = failedEntry.GetDatabaseValues();
+                            DbPropertyValues dbValues = failedEnttry.GetDatabaseValues();
                             if (dbValues == null)
                                 continue;
 
-                            failedEntry.OriginalValues.SetValues(dbValues);
+                            failedEnttry.OriginalValues.SetValues(dbValues);
                             return SaveChanges(context);
                         }
                         return true;
                     }
 
                     foreach (DbEntityEntry failedEntry in dbUpdateConcurrencyEx.Entries)
-                    {
                         failedEntry.Reload();
-                    }
+
                     return true;
                 }
                 catch (DbUpdateException dbUpdateEx)
@@ -143,7 +144,7 @@ namespace Dime.Repositories
                     throw sqlException.Number switch
                     {
                         // Unique constraint error
-                        2627 => (Exception)new ConcurrencyException(sqlException.Message, sqlException),
+                        2627 => new ConcurrencyException(sqlException.Message, sqlException),
                         // Constraint check violation
                         // Duplicated key row error
                         547 => new ConstraintViolationException(sqlException.Message,

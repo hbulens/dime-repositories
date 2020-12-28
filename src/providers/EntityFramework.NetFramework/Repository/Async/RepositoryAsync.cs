@@ -58,11 +58,13 @@ namespace Dime.Repositories
                         }
                         return true;
                     }
+                    else
+                    {
+                        foreach (DbEntityEntry failedEnttry in dbUpdateConcurrencyEx.Entries)
+                            await failedEnttry.ReloadAsync().ConfigureAwait(false);
 
-                    foreach (DbEntityEntry failedEntry in dbUpdateConcurrencyEx.Entries)
-                        await failedEntry.ReloadAsync().ConfigureAwait(false);
-
-                    return true;
+                        return true;
+                    }
                 }
                 catch (DbUpdateException dbUpdateEx)
                 {
@@ -75,7 +77,7 @@ namespace Dime.Repositories
                     throw sqlException.Number switch
                     {
                         // Unique constraint error
-                        2627 => (Exception)new ConcurrencyException(sqlException.Message, sqlException),
+                        2627 => new ConcurrencyException(sqlException.Message, sqlException),
                         // Constraint check violation
                         // Duplicated key row error
                         547 => new ConstraintViolationException(sqlException.Message,
@@ -108,8 +110,8 @@ namespace Dime.Repositories
                         int result = await context.SaveChangesAsync().ConfigureAwait(false);
                         return 0 < result;
                     }
-
-                    return false;
+                    else
+                        return false;
                 }
                 catch (DbEntityValidationException validationEx)
                 {
@@ -147,11 +149,13 @@ namespace Dime.Repositories
 
                         return retried;
                     }
+                    else
+                    {
+                        foreach (DbEntityEntry failedEnttry in dbUpdateConcurrencyEx.Entries)
+                            await failedEnttry.ReloadAsync().ConfigureAwait(false);
 
-                    foreach (DbEntityEntry failedEntry in dbUpdateConcurrencyEx.Entries)
-                        await failedEntry.ReloadAsync().ConfigureAwait(false);
-
-                    return true;
+                        return true;
+                    }
                 }
                 catch (DbUpdateException dbUpdateEx)
                 {
@@ -164,7 +168,7 @@ namespace Dime.Repositories
                     throw sqlException.Number switch
                     {
                         // Unique constraint error
-                        2627 => (Exception)new ConcurrencyException(sqlException.Message, sqlException),
+                        2627 => new ConcurrencyException(sqlException.Message, sqlException),
                         // Constraint check violation
                         // Duplicated key row error
                         547 => new ConstraintViolationException(sqlException.Message,

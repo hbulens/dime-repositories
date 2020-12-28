@@ -17,7 +17,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="where">The expression to execute against the data store</param>
         /// <param name="orderBy">The sorting expression to execute against the data store</param>
-        /// <param name="page">The page number which is multiplied by the pagesize to calculate the amount of items to skip</param>
+        /// <param name="page">The page number which is multiplied by the page size to calculate the amount of items to skip</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns></returns>
@@ -33,7 +33,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="where">The expression to execute against the data store</param>
         /// <param name="orderBy">The sorting expression to execute against the data store</param>
-        /// <param name="page">The page number which is multiplied by the pagesize to calculate the amount of items to skip</param>
+        /// <param name="page">The page number which is multiplied by the page size to calculate the amount of items to skip</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns></returns>
@@ -50,7 +50,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="where">The expression to execute against the data store</param>
         /// <param name="orderBy">The sorting expression to execute against the data store</param>
-        /// <param name="page">The page number which is multiplied by the pagesize to calculate the amount of items to skip</param>
+        /// <param name="page">The page number which is multiplied by the page size to calculate the amount of items to skip</param>
         /// <param name="pageSize">The size of the batch of items that must be retrieved</param>
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns></returns>
@@ -67,7 +67,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="where">The expression to execute against the data store</param>
         /// <param name="orderBy">The sorting expression to execute against the data store</param>
-        /// <param name="page">The page number which is multiplied by the pagesize to calculate the amount of items to skip</param>
+        /// <param name="page">The page number which is multiplied by the page size to calculate the amount of items to skip</param>
         /// <param name="pageSize">The size of the batch of items that must be retrieved</param>
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns></returns>
@@ -85,7 +85,7 @@ namespace Dime.Repositories
         /// <typeparam name="TResult">The type of the result.</typeparam>
         /// <param name="where">The expression to execute against the data store</param>
         /// <param name="orderBy">The sorting expression to execute against the data store</param>
-        /// <param name="page">The page number which is multiplied by the pagesize to calculate the amount of items to skip</param>
+        /// <param name="page">The page number which is multiplied by the page size to calculate the amount of items to skip</param>
         /// <param name="pageSize">The size of the batch of items that must be retrieved</param>
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns></returns>
@@ -105,7 +105,7 @@ namespace Dime.Repositories
         /// <param name="where">The expression to execute against the data store</param>
         /// <param name="select">The expression for the projection of type <typeparamref name="TResult"/> that should be executed against the data store</param>
         /// <param name="orderBy">The sorting expression to execute against the data store</param>
-        /// <param name="page">The page number which is multiplied by the pagesize to calculate the amount of items to skip</param>
+        /// <param name="page">The page number which is multiplied by the page size to calculate the amount of items to skip</param>
         /// <param name="pageSize">The size of the batch of items that must be retrieved</param>
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns></returns>
@@ -127,7 +127,7 @@ namespace Dime.Repositories
         /// <param name="where">The expression to execute against the data store</param>
         /// <param name="select">The expression for the projection of type <typeparamref name="TResult"/> that should be executed against the data store</param>
         /// <param name="orderBy">The sorting expression to execute against the data store</param>
-        /// <param name="page">The page number which is multiplied by the pagesize to calculate the amount of items to skip</param>
+        /// <param name="page">The page number which is multiplied by the page size to calculate the amount of items to skip</param>
         /// <param name="pageSize">The size of the batch of items that must be retrieved</param>
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns></returns>
@@ -150,7 +150,7 @@ namespace Dime.Repositories
         /// <param name="where">The expression to execute against the data store</param>
         /// <param name="select">The expression for the projection of type <typeparamref name="TResult"/> that should be executed against the data store</param>
         /// <param name="orderBy">The sorting expression to execute against the data store</param>
-        /// <param name="page">The page number which is multiplied by the pagesize to calculate the amount of items to skip</param>
+        /// <param name="page">The page number which is multiplied by the page size to calculate the amount of items to skip</param>
         /// <param name="pageSize">The size of the batch of items that must be retrieved</param>
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns></returns>
@@ -171,7 +171,7 @@ namespace Dime.Repositories
         /// <param name="where">The expression to execute against the data store</param>
         /// <param name="select">The expression for the projection of type <typeparamref name="TResult"/> that should be executed against the data store</param>
         /// <param name="orderBy">The sorting expression to execute against the data store</param>
-        /// <param name="page">The page number which is multiplied by the pagesize to calculate the amount of items to skip</param>
+        /// <param name="page">The page number which is multiplied by the page size to calculate the amount of items to skip</param>
         /// <param name="pageSize">The size of the batch of items that must be retrieved</param>
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns></returns>

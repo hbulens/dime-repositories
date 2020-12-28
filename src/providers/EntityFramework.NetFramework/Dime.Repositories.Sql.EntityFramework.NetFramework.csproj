@@ -3,7 +3,8 @@
     <ProjectGuid>{4536C116-0C7B-40AD-A2FC-3ED6D0EB1149}</ProjectGuid>
     <RootNamespace>Dime.Repositories.EF</RootNamespace>
     <AssemblyName>Dime.Repositories.EF</AssemblyName>
-    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.1</TargetFrameworks>
+    <RuntimeIdentifier>win</RuntimeIdentifier>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -14,7 +15,7 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Implementation of the repository pattern with Entity Framework</Description>
     <Copyright>Copyright © 2020</Copyright>
-    <Version>2.0.0.0-alpha.1</Version>
+    <Version>2.0.0.0-alpha.2</Version>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
@@ -27,17 +28,10 @@
     <PackageLicenseExpression>UNLICENSED</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Properties\**" />
-    <EmbeddedResource Remove="Properties\**" />
-    <None Remove="Properties\**" />
-  </ItemGroup>
-  <ItemGroup>
+    <PackageReference Include="Dime.Repositories" Version="1.2.4" />
+    <PackageReference Include="Dime.Repositories.Sql" Version="1.2.4" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="LinqKit" Version="1.1.21" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="LinqKit" Version="1.1.17" />
     <PackageReference Include="Microsoft.CodeAnalysis.VersionCheckAnalyzer" Version="3.3.2">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -54,9 +48,4 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\core\Dime.Repositories.Sql\Dime.Repositories.Sql.csproj" />
-    <ProjectReference Include="..\..\core\Dime.Repositories\Dime.Repositories.csproj" />
-  </ItemGroup>
-  <Import Project="..\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.projitems" Label="Shared" />
 </Project>

@@ -29,8 +29,8 @@ namespace Dime.Repositories
         {
             string ExecQuery(string x, DbParameter[] y)
             {
-                string parameterString = string.Join(",", parameters.Select(z => $"{z.ParameterName}={z.Value}"));
-                return $"EXEC {name} {parameterString}";
+                string parameterString = string.Join(",", y.Select(z => $"{z.ParameterName}={z.Value}"));
+                return $"EXEC {x} {parameterString}";
             }
 
             string execQueryString = ExecQuery(name, parameters);
@@ -49,8 +49,8 @@ namespace Dime.Repositories
         {
             string ExecQuery(string x, DbParameter[] y)
             {
-                string parameterString = string.Join(",", parameters.Select(z => $"{z.ParameterName}={z.Value}"));
-                return $"EXEC {schema}.{name} {parameterString}";
+                string parameterString = string.Join(",", y.Select(z => $"{z.ParameterName}={z.Value}"));
+                return $"EXEC {schema}.{x} {parameterString}";
             }
 
             string execQueryString = ExecQuery(name, parameters);
@@ -89,8 +89,8 @@ namespace Dime.Repositories
         {
             string ExecQuery(string x, DbParameter[] y)
             {
-                string parameterString = string.Join(",", parameters.Select(z => $"{z.ParameterName}={z.Value}"));
-                return $"EXEC {schema}.{nameof(name)} {parameterString}";
+                string parameterString = string.Join(",", y.Select(z => $"{z.ParameterName}={z.Value}"));
+                return $"EXEC {schema}.{nameof(x)} {parameterString}";
             }
 
             string execQueryString = ExecQuery(nameof(name), parameters);
@@ -109,8 +109,8 @@ namespace Dime.Repositories
         {
             string ExecQuery(string x, DbParameter[] y)
             {
-                string parameterString = string.Join(",", parameters.Select(z => $"@{z.ParameterName}={z.Value}"));
-                return $"EXEC {command} {parameterString}";
+                string parameterString = string.Join(",", y.Select(z => $"@{z.ParameterName}={z.Value}"));
+                return $"EXEC {x} {parameterString}";
             }
 
             return await Task.Run(() =>

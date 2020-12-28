@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
-#if NET461
-
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-
-#endif
-
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;

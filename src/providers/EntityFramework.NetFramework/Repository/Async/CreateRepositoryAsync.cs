@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-
-#if NET461
-
-using System.Data.Entity;
-
-#else
-using Microsoft.EntityFrameworkCore;
-#endif
 
 namespace Dime.Repositories
 {

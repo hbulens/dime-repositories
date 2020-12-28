@@ -21,7 +21,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Dime.Repositories.Sql.Entit
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		providers\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.projitems*{4536c116-0c7b-40ad-a2fc-3ed6d0eb1149}*SharedItemsImports = 5
 		providers\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.projitems*{b501e673-cc10-4bff-a086-cff1df482816}*SharedItemsImports = 5
 		providers\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.projitems*{e2c7ade6-23d8-4897-a156-05dcd901e2d0}*SharedItemsImports = 13
 	EndGlobalSection
