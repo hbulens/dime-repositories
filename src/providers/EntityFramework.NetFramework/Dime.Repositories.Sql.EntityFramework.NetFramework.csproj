@@ -3,27 +3,23 @@
     <RootNamespace>Dime.Repositories.Sql.EntityFramework.NetFramework</RootNamespace>
     <AssemblyName>Dime.Repositories.Sql.EntityFramework.NetFramework</AssemblyName>
     <TargetFrameworks>net461;netstandard2.1</TargetFrameworks>
-    <RuntimeIdentifier>win</RuntimeIdentifier>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
     <AssemblyTitle>Dime.Repositories.Sql.EntityFramework.NetFramework</AssemblyTitle>
     <Company>Dimenics</Company>
     <Product>Dime.Repositories.Sql.EntityFramework.NetFramework</Product>
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Implementation of the repository pattern with Entity Framework</Description>
     <Copyright>Copyright © 2020</Copyright>
-    <Version>2.0.0.0-alpha.2</Version>
+    <Version>2.0.0.0-alpha.3</Version>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <LangVersion>latest</LangVersion>
     <Authors>Dimenics</Authors>
-    <PackageIconUrl>http://dimenuget.azurewebsites.net/Images/dimenuget.png</PackageIconUrl>
-    <PackageProjectUrl>http://www.dimenics.com</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/dimenics/dimenics/blob/master/assets/dimenicslogo.png?raw=true</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/dimenics/repository</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dimenics/repository</RepositoryUrl>
     <PackageTags>Dime.Scheduler</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseExpression>UNLICENSED</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />

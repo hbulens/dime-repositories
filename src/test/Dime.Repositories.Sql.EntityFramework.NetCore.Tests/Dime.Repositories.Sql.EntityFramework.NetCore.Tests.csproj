@@ -15,8 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\core\Dime.Repositories.Sql\Dime.Repositories.Sql.csproj" />
-    <ProjectReference Include="..\..\core\Dime.Repositories\Dime.Repositories.csproj" />
     <ProjectReference Include="..\..\providers\EntityFramework.NetCore\Dime.Repositories.Sql.EntityFramework.NetCore.csproj" />
   </ItemGroup>
 

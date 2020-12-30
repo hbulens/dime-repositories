@@ -88,7 +88,7 @@ namespace Dime.Repositories
         /// <param name="schema"></param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        public async Task<int> ExecuteStoredProcedureAsync<T>(T name, string schema = "dbo", params DbParameter[] parameters) where T : IStoredProcedure
+        public async Task<int> ExecuteStoredProcedureAsync<T>(T name, string schema = "dbo", params DbParameter[] parameters)
         {
             string ExecQuery(string x, DbParameter[] y)
             {

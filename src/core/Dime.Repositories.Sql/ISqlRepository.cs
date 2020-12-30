@@ -29,6 +29,7 @@ namespace Dime.Repositories
         /// Executes the stored procedure asynchronous.
         /// </summary>
         /// <param name="command">The name of the stored procedure.</param>
+        /// <param name="schema"></param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
         Task<int> ExecuteStoredProcedureAsync(string command, string schema = "dbo", params DbParameter[] parameters);
@@ -37,9 +38,10 @@ namespace Dime.Repositories
         /// Executes the stored procedure asynchronous.
         /// </summary>
         /// <param name="command">The name of the stored procedure.</param>
+        /// <param name="schema"></param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
-        Task<int> ExecuteStoredProcedureAsync<TResult>(TResult command, string schema = "dbo", params DbParameter[] parameters) where TResult : IStoredProcedure;
+        Task<int> ExecuteStoredProcedureAsync<TResult>(TResult command, string schema = "dbo", params DbParameter[] parameters);
 
         /// <summary>
         /// Executes the stored procedure asynchronous.

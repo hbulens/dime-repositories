@@ -27,7 +27,7 @@ namespace Dime.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="orderBy"></param>
         /// <returns>An System.Linq.IQueryable`1 that contains elements that occur after the specified index in the input sequence.</returns>
-        internal static IQueryable<TSource> With<TSource>(this IQueryable<TSource> source, int? page, int? pageSize, IEnumerable<IOrder<TSource>> orderBy)
+        internal static IQueryable<TSource> With<TSource>(this IQueryable<TSource> source, int? page, int? pageSize, IEnumerable<Order<TSource>> orderBy)
         {
             int pageToApply = page.GetValueOrDefault();
             int pageSizeToApply = pageSize.GetValueOrDefault();

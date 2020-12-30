@@ -1,48 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup Label="Globals">
-    <SccProjectName>SAK</SccProjectName>
-    <SccProvider>SAK</SccProvider>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccLocalPath>SAK</SccLocalPath>
-  </PropertyGroup>
-
   <PropertyGroup>
-    <VersionPrefix>1.0.8</VersionPrefix>
+    <VersionPrefix>2.0.0.0</VersionPrefix>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
     <Authors>Dimenics</Authors>
+    <Version>2.0.0.0-alpha.3</Version>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0;net461</TargetFrameworks>
     <AssemblyName>Dime.Repositories</AssemblyName>
     <PackageId>Dime.Repositories</PackageId>
-    <PackageIconUrl>http://dimenuget.azurewebsites.net/Images/dimenuget.png</PackageIconUrl>
+    <PackageIconUrl>https://github.com/dimenics/dimenics/blob/master/assets/dimenicslogo.png?raw=true</PackageIconUrl>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <Version>1.2.3</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Contracts of generic repositories</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
     <Copyright>Copyright © 2020</Copyright>
-    <PackageProjectUrl>http://www.dimenics.com/products/dime-scheduler/</PackageProjectUrl>
-    <RepositoryUrl>https://dimenicsbe.visualstudio.com/DefaultCollection/Dime.Scheduler V2</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/dimenics/repository</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dimenics/repository</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.2.3.0</AssemblyVersion>
-    <FileVersion>1.2.3.0</FileVersion>
-    <PackageReleaseNotes>
-      - 1.2.2: Add delete by multiple contract
-      - 1.2.3: .NET Core 2.2
-    </PackageReleaseNotes>
+    <LangVersion>latest</LangVersion>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-  </ItemGroup>
-
-   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
 </Project>

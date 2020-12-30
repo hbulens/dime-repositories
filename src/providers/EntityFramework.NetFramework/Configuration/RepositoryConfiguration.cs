@@ -6,11 +6,6 @@
     public class RepositoryConfiguration
     {
         /// <summary>
-        /// Gets or sets the identifier of the tenant
-        /// </summary>
-        public string Tenant { get; set; }
-
-        /// <summary>
         /// Gets or sets the database connection
         /// </summary>
         public string Connection { get; set; }

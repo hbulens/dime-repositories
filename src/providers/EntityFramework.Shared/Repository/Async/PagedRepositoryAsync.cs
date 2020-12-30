@@ -122,7 +122,7 @@ namespace Dime.Repositories
         public async Task<Page<TResult>> FindAllPagedAsync<TResult>(
             Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, TResult>> select = null,
-            IEnumerable<IOrder<TEntity>> orderBy = null,
+            IEnumerable<Order<TEntity>> orderBy = null,
             Expression<Func<TEntity, object>> groupBy = null,
             bool? ascending = default,
             int? page = default,
@@ -164,7 +164,7 @@ namespace Dime.Repositories
             Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, bool>> count = null,
             Expression<Func<TEntity, TResult>> select = null,
-            IEnumerable<IOrder<TEntity>> orderBy = null,
+            IEnumerable<Order<TEntity>> orderBy = null,
             Expression<Func<TEntity, object>> groupBy = null,
             bool? ascending = default,
             int? page = default,
@@ -276,7 +276,7 @@ namespace Dime.Repositories
         public async Task<Page<TEntity>> FindAllPagedAsync(
             Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, bool>> count = null,
-            IEnumerable<IOrder<TEntity>> orderBy = null,
+            IEnumerable<Order<TEntity>> orderBy = null,
             int? page = default,
             int? pageSize = default,
             params string[] includes)
@@ -308,7 +308,7 @@ namespace Dime.Repositories
         public async Task<Page<TEntity>> FindAllPagedAsync(
             Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, bool>> count = null,
-            IEnumerable<IOrder<TEntity>> orderBy = null,
+            IEnumerable<Order<TEntity>> orderBy = null,
             int? page = default,
             int? pageSize = default,
             bool trackChanges = false,
@@ -342,7 +342,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public async Task<Page<TEntity>> FindAllPagedAsync(
             Expression<Func<TEntity, bool>> where = null,
-            IEnumerable<IOrder<TEntity>> orderBy = null,
+            IEnumerable<Order<TEntity>> orderBy = null,
             int? page = default,
             int? pageSize = default,
             params string[] includes)
