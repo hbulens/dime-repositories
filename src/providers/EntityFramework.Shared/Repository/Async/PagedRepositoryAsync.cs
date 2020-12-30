@@ -56,7 +56,7 @@ namespace Dime.Repositories
                     .WithSelect(select)
                     .Include(Context, includes);
 
-            Page<TResult> dataPage = new Page<TResult>(
+            Page<TResult> dataPage = new(
                 query.ToList(),
                 ctx.Set<TEntity>().AsNoTracking().AsExpandable().Count(where));
 
@@ -99,7 +99,7 @@ namespace Dime.Repositories
                     .WithSelect<TEntity, TResult, object>(select)
                     .Include(Context, includes);
 
-            Page<TResult> p = new Page<TResult>(
+            Page<TResult> p = new(
                 query.ToList(),
                 ctx.Set<TEntity>().AsNoTracking().AsExpandable().Count(where));
 

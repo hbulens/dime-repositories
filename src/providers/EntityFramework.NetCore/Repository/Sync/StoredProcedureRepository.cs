@@ -28,7 +28,7 @@ namespace Dime.Repositories
             DbConnection dbConnection = Context.Database.GetDbConnection();
             string connectionString = dbConnection.ConnectionString;
 
-            using SqlConnection connection = new SqlConnection(connectionString);
+            using SqlConnection connection = new(connectionString);
             connection.Open();
             using SqlCommand cmd = connection.CreateCommand();
             cmd.CommandText = $"{schema}.{name}";
@@ -92,7 +92,7 @@ namespace Dime.Repositories
             DbConnection dbConnection = Context.Database.GetDbConnection();
             string connectionString = dbConnection.ConnectionString;
 
-            using SqlConnection connection = new SqlConnection(connectionString);
+            using SqlConnection connection = new(connectionString);
             connection.Open();
             using DbCommand cmd = connection.CreateCommand();
             cmd.CommandText = $"{schema}.{name}";

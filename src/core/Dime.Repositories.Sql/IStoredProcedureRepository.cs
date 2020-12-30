@@ -18,6 +18,7 @@ namespace Dime.Repositories
         /// Executes the stored procedure asynchronous.
         /// </summary>
         /// <param name="command">The name of the stored procedure.</param>
+        /// <param name="schema">The schema</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
         int ExecuteStoredProcedure(string command, string schema = "dbo", params DbParameter[] parameters);

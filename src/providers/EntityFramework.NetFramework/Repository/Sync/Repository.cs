@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
@@ -12,7 +11,7 @@ namespace Dime.Repositories
     /// Represents a repository with Entity Framework as the backbone for connecting to SQL databases
     /// </summary>
     /// <typeparam name="TEntity">The domain model that is registered in the underlying DbContext</typeparam>
-    /// <typeparam name="TContext"></typeparam>
+    /// <typeparam name="TContext">The context type</typeparam>
     [ExcludeFromCodeCoverage]
     public partial class EfRepository<TEntity, TContext> : ISqlRepository<TEntity>
         where TEntity : class, new()
@@ -23,7 +22,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="dbContext">The DbContext instance</param>
         /// <param name="configuration">Repository behavior configuration</param>
-        public EfRepository(TContext dbContext, IMultiTenantRepositoryConfiguration configuration = null)
+        public EfRepository(TContext dbContext, RepositoryConfiguration configuration = null)
         {
             Context = dbContext;
             Configuration = configuration;
@@ -31,7 +30,7 @@ namespace Dime.Repositories
 
         protected TContext Context { get; set; }
 
-        public IMultiTenantRepositoryConfiguration Configuration { get; set; }
+        private RepositoryConfiguration Configuration { get; }
 
         /// <summary>
         ///
@@ -46,15 +45,11 @@ namespace Dime.Repositories
             {
                 try
                 {
-                    if (!Configuration.SaveInBatch)
-                    {
-                        int result = context.SaveChanges();
-                        return 0 < result;
-                    }
-                    else
-                    {
+                    if (Configuration.SaveInBatch)
                         return false;
-                    }
+
+                    int result = context.SaveChanges();
+                    return 0 < result;
                 }
                 catch (DbEntityValidationException validationEx)
                 {
@@ -68,13 +63,13 @@ namespace Dime.Repositories
                 {
                     if (Configuration.SaveStrategy == ConcurrencyStrategy.ClientFirst)
                     {
-                        foreach (DbEntityEntry failedEnttry in dbUpdateConcurrencyEx.Entries)
+                        foreach (DbEntityEntry failedEntry in dbUpdateConcurrencyEx.Entries)
                         {
-                            DbPropertyValues dbValues = failedEnttry.GetDatabaseValues();
+                            DbPropertyValues dbValues = failedEntry.GetDatabaseValues();
                             if (dbValues == null)
                                 continue;
 
-                            failedEnttry.OriginalValues.SetValues(dbValues);
+                            failedEntry.OriginalValues.SetValues(dbValues);
                             return SaveChanges(context);
                         }
                         return true;
@@ -130,6 +125,5 @@ namespace Dime.Repositories
         /// <param name="repository"></param>
         public static explicit operator TContext(EfRepository<TEntity, TContext> repository)
             => repository.Context;
-
     }
 }

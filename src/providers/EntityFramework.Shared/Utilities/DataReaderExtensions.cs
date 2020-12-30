@@ -15,7 +15,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         internal static List<T> GetRecords<T>(this IDataReader reader)
         {
-            List<T> result = new List<T>();
+            List<T> result = new();
             while (reader.Read())
             {
                 T t = (T)typeof(T).GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());

@@ -15,7 +15,6 @@ namespace Dime.Repositories
         /// Updates the existing entity.
         /// </summary>
         /// <param name="entity">The entity to update</param>
-        /// <param name="commitChanges">Indication whether or not the SaveChangesAsync should be called during this call</param>
         /// <returns>The updated entity</returns>
         TEntity Update(TEntity entity);
 

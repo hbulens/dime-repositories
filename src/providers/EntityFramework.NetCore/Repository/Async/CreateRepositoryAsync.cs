@@ -95,7 +95,7 @@ namespace Dime.Repositories
             if (!entities.Any())
                 return entities;
 
-            List<TEntity> newEntities = new List<TEntity>();
+            List<TEntity> newEntities = new();
             using TContext ctx = Context;
             foreach (TEntity entity in entities.ToList())
             {

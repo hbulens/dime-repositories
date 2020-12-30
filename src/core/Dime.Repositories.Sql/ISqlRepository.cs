@@ -52,7 +52,7 @@ namespace Dime.Repositories
         /// <summary>
         ///
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
         /// <param name="name"></param>
         /// <param name="schema"></param>
         /// <param name="parameters"></param>

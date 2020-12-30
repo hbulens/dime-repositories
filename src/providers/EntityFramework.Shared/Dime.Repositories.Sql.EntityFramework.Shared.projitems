@@ -9,6 +9,7 @@
     <Import_RootNamespace>Dime.Repositories.Sql.EntityFramework.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Configuration\RepositoryConfiguration.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ConcurrencyException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ConstraintViolationException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\DatabaseAccessException.cs" />

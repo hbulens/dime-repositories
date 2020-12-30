@@ -10,20 +10,10 @@ namespace Dime.Repositories
     public interface IMultiTenantDbContextFactory<out TContext> : IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
         /// <summary>
-        /// Gets or sets the tenant
-        /// </summary>
-        string Tenant { get; set; }
-
-        /// <summary>
-        /// Gets or sets the connection
-        /// </summary>
-        string Connection { get; set; }
-
-        /// <summary>
         /// Creates the context by name
         /// </summary>
-        /// <param name="name">The name</param>
+        /// <param name="nameOrConnectionString">The name or connection string</param>
         /// <returns>The instantiated context</returns>
-        TContext Create(string name);
+        TContext Create(string nameOrConnectionString);
     }
 }

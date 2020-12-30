@@ -12,22 +12,21 @@ namespace Dime.Repositories
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
     [ExcludeFromCodeCoverage]
-    public abstract class MultiTenantDbContextFactory<TContext> : IMultiTenantDbContextFactory<TContext> where TContext : DbContext
+    public abstract class SeparateSchemaMultiTenantCachedDbContextFactory<TContext> : IMultiTenantDbContextFactory<TContext> where TContext : DbContext
     {
-        #region Constructor
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="MultiTenantDbContextFactory{TContext}"/> class
+        /// Initializes a new instance of the <see cref="SeparateSchemaMultiTenantCachedDbContextFactory{TContext}"/> class
         /// </summary>
-        protected MultiTenantDbContextFactory()
+        protected SeparateSchemaMultiTenantCachedDbContextFactory()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MultiTenantDbContextFactory{TContext}"/> class
+        /// Initializes a new instance of the <see cref="SeparateSchemaMultiTenantCachedDbContextFactory{TContext}"/> class
         /// </summary>
         /// <param name="connectionString">The connection string</param>
-        protected MultiTenantDbContextFactory(string connectionString) : this()
+        protected SeparateSchemaMultiTenantCachedDbContextFactory(string connectionString) 
+            : this()
         {
             Connection = connectionString;
         }
@@ -37,22 +36,17 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="connectionString"></param>
         /// <param name="tenant"></param>
-        protected MultiTenantDbContextFactory(string connectionString, string tenant) : this(connectionString)
+        protected SeparateSchemaMultiTenantCachedDbContextFactory(string connectionString, string tenant) 
+            : this(connectionString)
         {
             Tenant = tenant;
         }
 
-        #endregion Constructor
+        protected static ConcurrentDictionary<Tuple<string, string>, DbCompiledModel> ModelCache = new();
+        protected static ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel> NamedModelCache = new();
 
-        #region Properties
-
-        protected static ConcurrentDictionary<Tuple<string, string>, DbCompiledModel> ModelCache = new ConcurrentDictionary<Tuple<string, string>, DbCompiledModel>();
-        protected static ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel> NamedModelCache = new ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel>();
-
-        public string Connection { get; set; }
-        public string Tenant { get; set; }
-
-        #endregion Properties
+        private string Connection { get; }
+        private string Tenant { get; }
 
         /// <summary>
         /// Creates the instance of <typeparamref name="TContext"/> with the default settings
@@ -82,12 +76,12 @@ namespace Dime.Repositories
             if (string.IsNullOrEmpty(context))
                 return Create(tenant, connection);
 
-            SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
+            SqlConnectionFactory connectionFactory = new();
             DbConnection dbConnection = connectionFactory.CreateConnection(connection);
 
             DbCompiledModel compiledModel = NamedModelCache.GetOrAdd(
                 Tuple.Create(tenant, dbConnection.ConnectionString, context),
-                t => GetContextModel(dbConnection, tenant));
+                _ => GetContextModel(dbConnection, tenant));
 
             return ConstructContext(dbConnection, compiledModel, false);
         }
@@ -100,12 +94,12 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TContext Create(string tenant, string connection)
         {
-            SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
+            SqlConnectionFactory connectionFactory = new();
             DbConnection dbConnection = connectionFactory.CreateConnection(connection);
 
             DbCompiledModel compiledModel = ModelCache.GetOrAdd(
                Tuple.Create(tenant, dbConnection.ConnectionString),
-               t => GetContextModel(dbConnection, tenant));
+               _ => GetContextModel(dbConnection, tenant));
 
             return ConstructContext(dbConnection, compiledModel, false);
         }

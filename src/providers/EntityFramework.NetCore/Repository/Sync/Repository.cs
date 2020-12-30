@@ -16,8 +16,6 @@ namespace Dime.Repositories
         where TEntity : class, new()
         where TContext : DbContext
     {
-        #region Constructor
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
         /// </summary>
@@ -32,7 +30,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="dbContext">The DbContext instance</param>
         /// <param name="configuration">Repository behavior configuration</param>
-        public EfRepository(TContext dbContext, IMultiTenantRepositoryConfiguration configuration)
+        public EfRepository(TContext dbContext, RepositoryConfiguration configuration)
         {
             Context = dbContext;
             Configuration = configuration;
@@ -53,15 +51,11 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="dbContextFactory">Context factory</param>
         /// <param name="configuration">Repository behavior configuration</param>
-        public EfRepository(IMultiTenantDbContextFactory<TContext> dbContextFactory, IMultiTenantRepositoryConfiguration configuration)
+        public EfRepository(IMultiTenantDbContextFactory<TContext> dbContextFactory, RepositoryConfiguration configuration)
         {
             Factory = dbContextFactory;
             Configuration = configuration;
         }
-
-        #endregion Constructor
-
-        #region Properties
 
         private TContext _context;
 
@@ -72,13 +66,7 @@ namespace Dime.Repositories
         }
 
         private IMultiTenantDbContextFactory<TContext> Factory { get; }
-        public IMultiTenantRepositoryConfiguration Configuration { get; set; }
-
-        #endregion Properties
-
-        #region Methods
-
-        #region Save Changes Region
+        public RepositoryConfiguration Configuration { get; set; }
 
         /// <summary>
         ///
@@ -145,10 +133,6 @@ namespace Dime.Repositories
             while (saveFailed && retryMax <= 3);
         }
 
-        #endregion Save Changes Region
-
-        #region Dispose region
-
         /// <summary>
         /// Releases all resources used by the Entities
         /// </summary>
@@ -161,8 +145,6 @@ namespace Dime.Repositories
             Context = null;
         }
 
-        #endregion Dispose region
-
         /// <summary>
         ///
         /// </summary>
@@ -170,6 +152,5 @@ namespace Dime.Repositories
         public static explicit operator TContext(EfRepository<TEntity, TContext> repository)
             => repository.Context;
 
-        #endregion Methods
     }
 }

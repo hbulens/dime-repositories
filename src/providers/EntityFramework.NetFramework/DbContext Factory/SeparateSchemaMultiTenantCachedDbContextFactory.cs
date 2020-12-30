@@ -12,20 +12,20 @@ namespace Dime.Repositories
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
     [ExcludeFromCodeCoverage]
-    public abstract class MultiTenantDbContextFactory<TContext> : IMultiTenantDbContextFactory<TContext> where TContext : DbContext
+    public abstract class SeparateSchemaMultiTenantCachedDbContextFactory<TContext> : IMultiTenantDbContextFactory<TContext> where TContext : DbContext
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MultiTenantDbContextFactory{TContext}"/> class
+        /// Initializes a new instance of the <see cref="SeparateSchemaMultiTenantCachedDbContextFactory{TContext}"/> class
         /// </summary>
-        protected MultiTenantDbContextFactory()
+        protected SeparateSchemaMultiTenantCachedDbContextFactory()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MultiTenantDbContextFactory{TContext}"/> class
+        /// Initializes a new instance of the <see cref="SeparateSchemaMultiTenantCachedDbContextFactory{TContext}"/> class
         /// </summary>
         /// <param name="connectionString">The connection string</param>
-        protected MultiTenantDbContextFactory(string connectionString) : this()
+        protected SeparateSchemaMultiTenantCachedDbContextFactory(string connectionString) : this()
         {
             Connection = connectionString;
         }
@@ -35,7 +35,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="connectionString"></param>
         /// <param name="tenant"></param>
-        protected MultiTenantDbContextFactory(string connectionString, string tenant) : this(connectionString)
+        protected SeparateSchemaMultiTenantCachedDbContextFactory(string connectionString, string tenant) : this(connectionString)
         {
             Tenant = tenant;
         }
@@ -43,8 +43,8 @@ namespace Dime.Repositories
         protected static ConcurrentDictionary<Tuple<string, string>, DbCompiledModel> ModelCache = new ConcurrentDictionary<Tuple<string, string>, DbCompiledModel>();
         protected static ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel> NamedModelCache = new ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel>();
 
-        public string Connection { get; set; }
-        public string Tenant { get; set; }
+        private string Connection { get; }
+        private string Tenant { get; }
 
         /// <summary>
         /// Creates the instance of <typeparamref name="TContext"/> with the default settings

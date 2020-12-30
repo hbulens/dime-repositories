@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a repository configuration object
     /// </summary>
-    public class RepositoryConfiguration : IMultiTenantRepositoryConfiguration
+    public class RepositoryConfiguration
     {
         /// <summary>
         /// Gets or sets the identifier of the tenant
@@ -23,11 +23,11 @@
         /// <summary>
         /// Gets or sets the database save strategy
         /// </summary>
-        public ConcurrencyStrategy SaveStrategy { get; set; }
+        public ConcurrencyStrategy SaveStrategy { get; set; } = ConcurrencyStrategy.ClientFirst;
 
         /// <summary>
         /// Gets or sets the flag to indicate whether to leverage the caching mechanism
         /// </summary>
-        public bool Cached { get; set; }
+        public bool Cached { get; set; } = true;
     }
 }

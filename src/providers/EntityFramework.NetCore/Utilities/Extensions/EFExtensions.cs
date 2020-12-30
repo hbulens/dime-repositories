@@ -26,7 +26,7 @@ namespace Dime.Repositories
             if (includes == null)
                 return query;
 
-            List<string> includeList = new List<string>();
+            List<string> includeList = new();
             if (includes.Any())
                 return includes
                     .Where(x => !string.IsNullOrEmpty(x) && !includeList.Contains(x))
