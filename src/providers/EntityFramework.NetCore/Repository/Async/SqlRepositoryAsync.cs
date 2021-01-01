@@ -17,7 +17,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public async Task ExecuteSqlAsync(string sql)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             await ctx.Database.ExecuteSqlRawAsync(sql).ConfigureAwait(false);
         }
 
@@ -36,7 +36,7 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(name, parameters);
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             return await ctx.Database.ExecuteSqlRawAsync(execQueryString, parameters).ConfigureAwait(false);
         }
 
@@ -56,7 +56,7 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(name, parameters);
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             return await ctx.Database.ExecuteSqlRawAsync(execQueryString, parameters).ConfigureAwait(false);
         }
 
@@ -70,9 +70,9 @@ namespace Dime.Repositories
         public async Task<IEnumerable<T>> ExecuteStoredProcedureAsync<T>(string name, string schema = "dbo", params DbParameter[] parameters)
         {
             string connectionString = Context.Database.GetDbConnection()?.ConnectionString;
-            using DbConnection connection = new SqlConnection(connectionString);
+            await using DbConnection connection = new SqlConnection(connectionString);
             await connection.OpenAsync();
-            using DbCommand cmd = connection.CreateCommand();
+            await using DbCommand cmd = connection.CreateCommand();
             cmd.CommandText = name;
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddRange(parameters);
@@ -97,7 +97,7 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(nameof(name), parameters);
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             //return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
             return 1;
         }

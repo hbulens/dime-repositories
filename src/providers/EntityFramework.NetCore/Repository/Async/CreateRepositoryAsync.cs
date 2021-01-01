@@ -25,7 +25,7 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             ctx.Entry(entity).State = EntityState.Added;
             TEntity createdItem = ctx.Set<TEntity>().Add(entity)?.Entity;
             await SaveChangesAsync(ctx).ConfigureAwait(false);
@@ -41,7 +41,7 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<TEntity> CreateAsync(TEntity entity, Expression<Func<TEntity, bool>> condition)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             ctx.Entry(entity).State = EntityState.Added;
             TEntity createdItem = ctx.Set<TEntity>().AddIfNotExists(entity, condition);
             await SaveChangesAsync(ctx).ConfigureAwait(false);
@@ -57,7 +57,7 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<TEntity> CreateAsync(TEntity entity, Func<TEntity, TContext, Task> beforeSaveAction)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             await beforeSaveAction(entity, ctx).ConfigureAwait(false);
 
             ctx.Entry(entity).State = EntityState.Added;
@@ -75,7 +75,7 @@ namespace Dime.Repositories
         /// <returns>The connected entity</returns>
         public virtual async Task<TEntity> CreateAsync(TEntity entity, bool commit)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             ctx.Entry(entity).State = EntityState.Added;
             TEntity createdItem = ctx.Set<TEntity>().Add(entity)?.Entity;
 
@@ -96,7 +96,7 @@ namespace Dime.Repositories
                 return entities;
 
             List<TEntity> newEntities = new();
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             foreach (TEntity entity in entities.ToList())
             {
                 ctx.Entry(entity).State = EntityState.Added;

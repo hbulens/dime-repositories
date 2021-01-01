@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace Dime.Repositories
@@ -8,6 +9,7 @@ namespace Dime.Repositories
     /// </summary>
     [Serializable]
     [Obsolete("Use shared project")]
+    [ExcludeFromCodeCoverage]
     public class ConcurrencyException : Exception
     {
         /// <summary>

@@ -129,7 +129,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes) where TResult : class
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             IQueryable<TResult> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -171,7 +171,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes) where TResult : class
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             IQueryable<TResult> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -208,7 +208,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -246,7 +246,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -281,7 +281,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -314,7 +314,7 @@ namespace Dime.Repositories
             bool trackChanges = false,
             params string[] includes)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -347,7 +347,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -379,7 +379,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)

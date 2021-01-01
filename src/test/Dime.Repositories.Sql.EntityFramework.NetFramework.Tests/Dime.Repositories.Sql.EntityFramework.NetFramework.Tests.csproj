@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{719B5ACC-8EA5-47B7-A8DA-B54A47E5ACA4}</ProjectGuid>
+    <TargetFramework>net461</TargetFramework>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\core\Dime.Repositories.Sql\Dime.Repositories.Sql.csproj" />
+    <ProjectReference Include="..\..\core\Dime.Repositories\Dime.Repositories.csproj" />
+    <ProjectReference Include="..\..\providers\EntityFramework.NetFramework\Dime.Repositories.Sql.EntityFramework.NetFramework.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Effort.EF6" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
+  </ItemGroup>
+</Project>

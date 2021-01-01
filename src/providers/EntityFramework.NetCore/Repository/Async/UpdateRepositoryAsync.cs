@@ -18,7 +18,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, bool commitChanges = true)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             ctx.Set<TEntity>().Attach(entity);
             ctx.Entry(entity).State = EntityState.Modified;
 
@@ -39,7 +39,7 @@ namespace Dime.Repositories
             if (!entities.Any())
                 return;
 
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             foreach (TEntity entity in entities)
             {
                 ctx.Set<TEntity>().Attach(entity);
@@ -57,7 +57,7 @@ namespace Dime.Repositories
         /// <returns>The updated entity</returns>
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, params string[] properties)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             ctx.Set<TEntity>().Attach(entity);
             EntityEntry<TEntity> entry = ctx.Entry(entity);
 
@@ -77,7 +77,7 @@ namespace Dime.Repositories
         /// <returns>The updated entity</returns>
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             ctx.Set<TEntity>().Attach(entity);
             EntityEntry<TEntity> entry = ctx.Entry(entity);
 

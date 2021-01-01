@@ -21,8 +21,17 @@ namespace Dime.Repositories
         /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
         /// </summary>
         /// <param name="dbContext">The DbContext instance</param>
+        public EfRepository(TContext dbContext)
+            : this(dbContext, new RepositoryConfiguration())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
+        /// </summary>
+        /// <param name="dbContext">The DbContext instance</param>
         /// <param name="configuration">Repository behavior configuration</param>
-        public EfRepository(TContext dbContext, RepositoryConfiguration configuration = null)
+        public EfRepository(TContext dbContext, RepositoryConfiguration configuration)
         {
             Context = dbContext;
             Configuration = configuration;

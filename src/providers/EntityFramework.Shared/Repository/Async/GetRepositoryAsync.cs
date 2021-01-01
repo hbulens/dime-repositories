@@ -29,7 +29,7 @@ namespace Dime.Repositories
         /// <returns>True if there is at least one record</returns>
         public virtual async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> where)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             return await ctx.Set<TEntity>().AsNoTracking().AnyAsync(where).ConfigureAwait(false);
         }
 
@@ -40,7 +40,7 @@ namespace Dime.Repositories
         /// <returns>The record of type <typeparamref name="TEntity"/> that matches the id</returns>
         public virtual async Task<TEntity> FindByIdAsync(long id)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             return await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
         }
 
@@ -52,7 +52,7 @@ namespace Dime.Repositories
         /// <returns>The record of type <typeparamref name="TEntity"/> that matches the id</returns>
         public virtual async Task<TEntity> FindByIdAsync(long id, params string[] includes)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             foreach (string include in includes)
                 ctx.Set<TEntity>().Include(include).AsNoTracking();
 
@@ -66,7 +66,7 @@ namespace Dime.Repositories
         /// <returns>The first record of type <typeparamref name="TEntity"/> that matches the query</returns>
         public virtual async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> where)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             TEntity query = ctx.Set<TEntity>()
                 .AsNoTracking()
                 .AsExpandable()
@@ -84,7 +84,7 @@ namespace Dime.Repositories
         /// <returns>The first record of type <typeparamref name="TEntity"/> that matches the query</returns>
         public virtual async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> where, params string[] includes)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             IQueryable<TEntity> query = ctx.Set<TEntity>()
                 .Include(ctx, includes)
                 .AsNoTracking()
@@ -139,7 +139,7 @@ namespace Dime.Repositories
         /// <returns>An collection of <typeparamref name="TEntity"/> that matched all filters.</returns>
         public virtual async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> where, params string[] includes)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             IQueryable<TEntity> query = ctx.Set<TEntity>()
                 .Include(ctx, includes)
                 .AsExpandable()
@@ -204,7 +204,7 @@ namespace Dime.Repositories
             int? pageSize = null,
             params string[] includes)
         {
-            using TContext ctx = Context;
+            await using TContext ctx = Context;
             IQueryable<TEntity> query = ctx.Set<TEntity>()
                 .Include(ctx, includes)
                 .AsExpandable()
