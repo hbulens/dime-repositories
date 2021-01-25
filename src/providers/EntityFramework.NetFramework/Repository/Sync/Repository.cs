@@ -62,11 +62,8 @@ namespace Dime.Repositories
                 }
                 catch (DbEntityValidationException validationEx)
                 {
-                    foreach (DbEntityValidationResult entityValidationResult in validationEx.EntityValidationErrors)
-                        foreach (DbValidationError validationError in entityValidationResult.ValidationErrors)
-                            Debug.WriteLine("Property: \"{0}\", Error: \"{1}\"", validationError.PropertyName, validationError.ErrorMessage);
-
-                    throw;
+                    Rethrow(validationEx);
+                    return false;
                 }
                 catch (DbUpdateConcurrencyException dbUpdateConcurrencyEx)
                 {

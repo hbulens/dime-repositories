@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Dime.Repositories
@@ -29,13 +31,10 @@ namespace Dime.Repositories
                 {
                     return !Configuration.SaveInBatch && 0 < await Context.SaveChangesAsync().ConfigureAwait(false);
                 }
-                catch (DbEntityValidationException validationEx)
+                catch (DbEntityValidationException ex)
                 {
-                    foreach (DbEntityValidationResult entityValidationResult in validationEx.EntityValidationErrors)
-                        foreach (DbValidationError validationError in entityValidationResult.ValidationErrors)
-                            Trace.WriteLine($"Property: \"{validationError.PropertyName}\", Error: \"{validationError.ErrorMessage}\"");
-
-                    throw;
+                    Rethrow(ex);
+                    return false;
                 }
                 catch (DbUpdateConcurrencyException dbUpdateConcurrencyEx)
                 {
@@ -115,11 +114,8 @@ namespace Dime.Repositories
                 }
                 catch (DbEntityValidationException validationEx)
                 {
-                    foreach (DbEntityValidationResult entityValidationResult in validationEx.EntityValidationErrors)
-                        foreach (DbValidationError validationError in entityValidationResult.ValidationErrors)
-                            Debug.WriteLine("Property: \"{0}\", Error: \"{1}\"", validationError.PropertyName, validationError.ErrorMessage);
-
-                    throw;
+                    Rethrow(validationEx);
+                    return false;
                 }
                 catch (DbUpdateConcurrencyException dbUpdateConcurrencyEx)
                 {
@@ -182,6 +178,23 @@ namespace Dime.Repositories
                 }
             }
             while (saveFailed && retryMax <= 3);
+        }
+
+        private static void Rethrow(DbEntityValidationException ex)
+        {
+            // Retrieve the error messages as a list of strings.
+            IEnumerable<string> errorMessages = ex.EntityValidationErrors
+                    .SelectMany(x => x.ValidationErrors)
+                    .Select(x => x.ErrorMessage);
+
+            // Join the list to a single string.
+            string fullErrorMessage = string.Join("; ", errorMessages);
+
+            // Combine the original exception message with the new one.
+            string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+            // Throw a new DbEntityValidationException with the improved exception message.
+            throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
         }
     }
 }
