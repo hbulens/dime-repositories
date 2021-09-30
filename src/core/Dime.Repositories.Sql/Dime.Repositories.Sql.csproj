@@ -11,13 +11,13 @@
     <VersionPrefix>2.0.0.0</VersionPrefix>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
-    <Authors>Dimenics</Authors>
+    <Authors>Dime Software</Authors>
     <Version>2.0.0.0-alpha.3</Version>
-    <Authors>Dimenics</Authors>
+    <Authors>Dime Software</Authors>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0;net461</TargetFrameworks>
     <AssemblyName>Dime.Repositories.Sql</AssemblyName>
     <PackageId>Dime.Repositories.Sql</PackageId>
-    <PackageIconUrl>http://dimenuget.azurewebsites.net/Images/dimenuget.png</PackageIconUrl>
+    <PackageIconUrl>https://cdn.dime-software.com/dime-software/logo-shape.png</PackageIconUrl>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
