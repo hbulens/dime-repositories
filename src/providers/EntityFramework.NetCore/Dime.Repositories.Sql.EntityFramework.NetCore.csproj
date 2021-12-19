@@ -1,52 +1,52 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup Label="Globals">
-    <VersionPrefix>1.2.3.1</VersionPrefix>
-    <AssemblyVersion>1.2.3.1</AssemblyVersion>
-    <FileVersion>1.2.3.1</FileVersion>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+	<PropertyGroup Label="Globals">
+		<VersionPrefix>2.0.0.0</VersionPrefix>
+		<AssemblyVersion>2.0.0.0</AssemblyVersion>
+		<FileVersion>2.0.0.0</FileVersion>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <NeutralLanguage>en</NeutralLanguage>
-    <IncludeSource>True</IncludeSource>
-    <IncludeSymbols>True</IncludeSymbols>
-  </PropertyGroup>
+	<PropertyGroup>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+		<GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+		<NeutralLanguage>en</NeutralLanguage>
+		<IncludeSource>True</IncludeSource>
+		<IncludeSymbols>True</IncludeSymbols>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <Authors>Dime Software</Authors>
-    <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
-    <AssemblyName>Dime.Repositories.Sql.EntityFramework</AssemblyName>
-    <PackageId>Dime.Repositories.Sql.EntityFramework</PackageId>
-    <PackageTags>Entity Framework;Repository;SQL</PackageTags>
-    <PackageIconUrl>https://cdn.dime-software.com/dime-software/logo-shape.png</PackageIconUrl>
-    <Version>1.2.3.3</Version>
-    <Description>Implementation of the repository pattern with Microsoft SQL using Entity Framework Core</Description>
-    <Copyright>Copyright © 2020</Copyright>
-    <PackageProjectUrl>https://github.com/dimenics/repository</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/dimenics/repository</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Authors>Dime Software</Authors>
+		<TargetFrameworks>net6.0</TargetFrameworks>
+		<AssemblyName>Dime.Repositories.Sql.EntityFramework</AssemblyName>
+		<PackageId>Dime.Repositories.Sql.EntityFramework</PackageId>
+		<PackageTags>Entity Framework;Repository;SQL</PackageTags>
+		<PackageIconUrl>https://cdn.dime-software.com/dime-software/logo-shape.png</PackageIconUrl>
+		<Version>2.0.0.0-alpha.10</Version>
+		<Description>Implementation of the repository pattern with Microsoft SQL using Entity Framework Core</Description>
+		<Copyright>Copyright © 2020</Copyright>
+		<PackageProjectUrl>https://github.com/dimesoftware/repository</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/dimesoftware/repository</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="LinqKit" Version="1.1.21" />
-    <PackageReference Include="Microsoft.Data.Edm" Version="5.8.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
-    <PackageReference Include="System.Data.Common" Version="4.3.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
-    <PackageReference Include="System.Linq" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="LinqKit" Version="1.1.27" />
+		<PackageReference Include="Microsoft.Data.Edm" Version="5.8.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
+		<PackageReference Include="System.Data.Common" Version="4.3.0" />
+		<PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+		<PackageReference Include="System.Linq" Version="4.3.0" />
+		<PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\core\Dime.Repositories.Sql\Dime.Repositories.Sql.csproj" />
-    <ProjectReference Include="..\..\core\Dime.Repositories\Dime.Repositories.csproj" />
-  </ItemGroup>
-  <Import Project="..\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.projitems" Label="Shared" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\core\Dime.Repositories.Sql\Dime.Repositories.Sql.csproj" />
+		<ProjectReference Include="..\..\core\Dime.Repositories\Dime.Repositories.csproj" />
+	</ItemGroup>
+	<Import Project="..\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.projitems" Label="Shared" />
 
 </Project>

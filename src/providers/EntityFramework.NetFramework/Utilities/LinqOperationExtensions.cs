@@ -7,11 +7,10 @@ namespace Dime.Repositories
     [ExcludeFromCodeCoverage]
     internal static class OrderLinq
     {
-
         internal static IOrderedQueryable<T> SortBy<T>(this IEnumerable<T> query, Order<T> order)
         {
             string verb = order.IsAscending ? "OrderBy" : "OrderByDescending";
-            LinqOrderHelper<T> helper = new LinqOrderHelper<T>(verb, order.Property);
+            LinqOrderHelper<T> helper = new(verb, order.Property);
             return helper.GetAsQueryable(query);
         }
 
@@ -25,7 +24,7 @@ namespace Dime.Repositories
         internal static IOrderedQueryable<TSource> ThenBy<TSource>(this IEnumerable<TSource> source, Order<TSource> order)
         {
             string verb = order.IsAscending ? "ThenBy" : "ThenByDescending";
-            LinqOrderHelper<TSource> helper = new LinqOrderHelper<TSource>(verb, order.Property);
+            LinqOrderHelper<TSource> helper = new(verb, order.Property);
             return helper.GetAsQueryable(source);
         }
     }

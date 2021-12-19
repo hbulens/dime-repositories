@@ -44,7 +44,7 @@ namespace Dime.Repositories
                     .WithSelect(select);
 
             IQueryable<TResult> fullGraphQuery = Include(query, includes);
-            Page<TResult> p = new Page<TResult>(
+            Page<TResult> p = new(
                 fullGraphQuery.ToList(),
                 ctx.Set<TEntity>().AsNoTracking().AsExpandable().Count(where));
 
@@ -88,7 +88,7 @@ namespace Dime.Repositories
 
             IQueryable<TResult> fullGraphQuery = Include(query, includes);
 
-            Page<TResult> p = new Page<TResult>(
+            Page<TResult> p = new(
                 fullGraphQuery.ToList(),
                 ctx.Set<TEntity>().AsNoTracking().AsExpandable().Count(where));
 
@@ -280,7 +280,7 @@ namespace Dime.Repositories
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="where"></param>
         /// <param name="count"></param>
@@ -310,7 +310,7 @@ namespace Dime.Repositories
                     .With(pageSize);
 
             return await Task.FromResult(
-                new Page<TEntity>(trackChanges 
+                new Page<TEntity>(trackChanges
                         ? query.ToList()
                         : query.AsNoTracking().ToList(),
                     ctx.Count(count))

@@ -1,10 +1,11 @@
-﻿namespace Dime.Repositories
+﻿
+namespace Dime.Repositories
 {
     /// <summary>
     ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Order<T>
+    public class Order<T> : IOrder<T>
     {
         public Order(string property, bool isAscending)
         {
@@ -15,11 +16,11 @@
         /// <summary>
         /// Gets or sets the sorting property
         /// </summary>
-        public string Property { get; }
+        public string Property { get; set; }
 
         /// <summary>
         /// Gets or sets the sorting direction
         /// </summary>
-        public bool IsAscending { get; }
+        public bool IsAscending { get; set; }
     }
 }

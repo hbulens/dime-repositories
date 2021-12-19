@@ -12,12 +12,12 @@ namespace Dime.Repositories
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
     [ExcludeFromCodeCoverage]
-    public abstract class SeparateSchemaMultiTenantCachedDbContextFactory<TContext> : IMultiTenantDbContextFactory<TContext> where TContext : DbContext
+    public abstract class CachedNamedDbContextFactory<TContext> : INamedDbContextFactory<TContext> where TContext : DbContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SeparateSchemaMultiTenantCachedDbContextFactory{TContext}"/> class
         /// </summary>
-        protected SeparateSchemaMultiTenantCachedDbContextFactory()
+        protected CachedNamedDbContextFactory()
         {
         }
 
@@ -25,7 +25,7 @@ namespace Dime.Repositories
         /// Initializes a new instance of the <see cref="SeparateSchemaMultiTenantCachedDbContextFactory{TContext}"/> class
         /// </summary>
         /// <param name="connectionString">The connection string</param>
-        protected SeparateSchemaMultiTenantCachedDbContextFactory(string connectionString) 
+        protected CachedNamedDbContextFactory(string connectionString)
             : this()
         {
             Connection = connectionString;
@@ -36,7 +36,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="connectionString"></param>
         /// <param name="tenant"></param>
-        protected SeparateSchemaMultiTenantCachedDbContextFactory(string connectionString, string tenant) 
+        protected CachedNamedDbContextFactory(string connectionString, string tenant)
             : this(connectionString)
         {
             Tenant = tenant;
@@ -45,8 +45,8 @@ namespace Dime.Repositories
         protected static ConcurrentDictionary<Tuple<string, string>, DbCompiledModel> ModelCache = new();
         protected static ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel> NamedModelCache = new();
 
-        private string Connection { get; }
-        private string Tenant { get; }
+        protected string Connection { get; }
+        protected string Tenant { get; }
 
         /// <summary>
         /// Creates the instance of <typeparamref name="TContext"/> with the default settings

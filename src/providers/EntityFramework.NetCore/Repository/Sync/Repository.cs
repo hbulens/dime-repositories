@@ -40,7 +40,7 @@ namespace Dime.Repositories
         /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
         /// </summary>
         /// <param name="dbContextFactory">Context factory</param>
-        public EfRepository(IMultiTenantDbContextFactory<TContext> dbContextFactory)
+        public EfRepository(INamedDbContextFactory<TContext> dbContextFactory)
         {
             Factory = dbContextFactory;
             Configuration = new RepositoryConfiguration();
@@ -51,7 +51,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="dbContextFactory">Context factory</param>
         /// <param name="configuration">Repository behavior configuration</param>
-        public EfRepository(IMultiTenantDbContextFactory<TContext> dbContextFactory, RepositoryConfiguration configuration)
+        public EfRepository(INamedDbContextFactory<TContext> dbContextFactory, RepositoryConfiguration configuration)
         {
             Factory = dbContextFactory;
             Configuration = configuration;
@@ -65,7 +65,7 @@ namespace Dime.Repositories
             set => _context = value;
         }
 
-        private IMultiTenantDbContextFactory<TContext> Factory { get; }
+        private INamedDbContextFactory<TContext> Factory { get; }
         public RepositoryConfiguration Configuration { get; set; }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Dime.Repositories
                     if (dbUpdateEx.InnerException?.InnerException == null)
                         throw;
 
-                    if (!(dbUpdateEx.InnerException.InnerException is SqlException sqlException))
+                    if (dbUpdateEx.InnerException.InnerException is not SqlException sqlException)
                         throw new DatabaseAccessException(dbUpdateEx.Message, dbUpdateEx.InnerException);
 
                     throw sqlException.Number switch
@@ -151,6 +151,5 @@ namespace Dime.Repositories
         /// <param name="repository"></param>
         public static explicit operator TContext(EfRepository<TEntity, TContext> repository)
             => repository.Context;
-
     }
 }

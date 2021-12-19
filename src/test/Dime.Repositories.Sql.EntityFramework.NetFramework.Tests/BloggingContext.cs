@@ -8,7 +8,6 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
     {
         public BloggingContext()
         {
-
         }
 
         public BloggingContext(DbConnection connection) : base(connection, true)

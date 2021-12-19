@@ -16,7 +16,7 @@ namespace Dime.Repositories
         private static EntityType GetEntityType<T>(IObjectContextAdapter context)
         {
             _workspace ??= context.ObjectContext.MetadataWorkspace;
-            _itemCollection ??= (ObjectItemCollection) _workspace.GetItemCollection(DataSpace.OSpace);
+            _itemCollection ??= (ObjectItemCollection)_workspace.GetItemCollection(DataSpace.OSpace);
 
             EntityType entityType = _itemCollection.OfType<EntityType>().FirstOrDefault(e => _itemCollection.GetClrType(e) == typeof(T));
             return entityType;
@@ -37,7 +37,7 @@ namespace Dime.Repositories
             if (includes == null)
                 return query;
 
-            List<string> includeList = new List<string>();
+            List<string> includeList = new();
             if (includes.Any())
                 return includes.Where(x => !string.IsNullOrEmpty(x) && !includeList.Contains(x))
                     .Aggregate(query, (current, include) => current.Include(include));
@@ -46,7 +46,7 @@ namespace Dime.Repositories
             if (navigationProperties == null)
                 return query;
 
-            foreach (NavigationProperty navigationProperty in 
+            foreach (NavigationProperty navigationProperty in
                 navigationProperties.Where(navigationProperty => !includeList.Contains(navigationProperty.Name)))
             {
                 includeList.Add(navigationProperty.Name);

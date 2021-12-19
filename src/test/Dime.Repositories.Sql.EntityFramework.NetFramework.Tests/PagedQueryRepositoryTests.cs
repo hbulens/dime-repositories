@@ -13,7 +13,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
         {
             EffortConnection connection = Effort.DbConnectionFactory.CreateTransient();
 
-            using (BloggingContext context = new BloggingContext(connection))
+            using (BloggingContext context = new(connection))
             {
                 context.Blogs.Add(new Blog { Url = "http://sample.com/cats" });
                 context.Blogs.Add(new Blog { Url = "http://sample.com/catfish" });

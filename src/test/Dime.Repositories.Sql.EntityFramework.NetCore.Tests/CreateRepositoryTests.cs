@@ -12,7 +12,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
         public void Repository_Create_ShouldAddOne()
         {
             // In-memory database only exists while the connection is open
-            using SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
+            using SqliteConnection connection = new("DataSource=:memory:");
             connection.Open();
 
             try
@@ -22,7 +22,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     .Options;
 
                 // Create the schema in the database
-                using (BloggingContext context = new BloggingContext(options))
+                using (BloggingContext context = new(options))
                     context.Database.EnsureCreated();
 
                 // Run the test against one instance of the context
@@ -30,7 +30,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     repo.Create(new Blog { Url = "http://sample.com" });
 
                 // Use a separate instance of the context to verify correct data was saved to database
-                using (BloggingContext context = new BloggingContext(options))
+                using (BloggingContext context = new(options))
                 {
                     Assert.AreEqual(1, context.Blogs.Count());
                     Assert.AreEqual("http://sample.com", context.Blogs.Single().Url);
@@ -46,7 +46,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
         public async Task Repository_CreateAsync_ShouldAddOne()
         {
             // In-memory database only exists while the connection is open
-            await using SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
+            await using SqliteConnection connection = new("DataSource=:memory:");
             connection.Open();
 
             try
@@ -56,14 +56,14 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     .Options;
 
                 // Create the schema in the database
-                await using (BloggingContext context = new BloggingContext(options)) 
+                await using (BloggingContext context = new(options))
                     context.Database.EnsureCreated();
 
                 using (IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(options)))
                     await repo.CreateAsync(new Blog { Url = "http://sample.com" });
 
                 // Use a separate instance of the context to verify correct data was saved to database
-                await using (BloggingContext context = new BloggingContext(options))
+                await using (BloggingContext context = new(options))
                 {
                     Assert.AreEqual(1, context.Blogs.Count());
                     Assert.AreEqual("http://sample.com", context.Blogs.Single().Url);

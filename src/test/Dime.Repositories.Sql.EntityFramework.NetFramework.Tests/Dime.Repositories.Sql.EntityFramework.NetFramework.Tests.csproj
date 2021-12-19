@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{719B5ACC-8EA5-47B7-A8DA-B54A47E5ACA4}</ProjectGuid>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>net461</TargetFrameworks>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
@@ -14,11 +14,11 @@
     <ProjectReference Include="..\..\providers\EntityFramework.NetFramework\Dime.Repositories.Sql.EntityFramework.NetFramework.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Effort.EF6" Version="2.2.10" />
+    <PackageReference Include="Effort.EF6" Version="2.2.15" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
     <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
   </ItemGroup>
 </Project>

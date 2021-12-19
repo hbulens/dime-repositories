@@ -2,7 +2,7 @@
 
 # Repositories
 
-[![Build Status](https://dev.azure.com/dimesoftware/Utilities/_apis/build/status/dimenics.repository?branchName=master)](https://dev.azure.com/dimesoftware/Utilities/_build/latest?definitionId=182&branchName=master)
+[![Build Status](https://dev.azure.com/dimesoftware/Utilities/_apis/build/status/dimesoftware.repository?branchName=master)](https://dev.azure.com/dimesoftware/Utilities/_build/latest?definitionId=182&branchName=master)
 
 ## Introduction
 

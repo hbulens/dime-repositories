@@ -11,7 +11,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
         {
             EffortConnection connection = Effort.DbConnectionFactory.CreateTransient();
 
-            using (BloggingContext context = new BloggingContext(connection))
+            using (BloggingContext context = new(connection))
             {
                 context.Blogs.Add(new Blog { Url = "http://sample.com/cats" });
                 context.Blogs.Add(new Blog { Url = "http://sample.com/catfish" });
@@ -29,7 +29,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
         {
             EffortConnection connection = Effort.DbConnectionFactory.CreateTransient();
 
-            using (BloggingContext context = new BloggingContext(connection))
+            using (BloggingContext context = new(connection))
             {
                 context.Blogs.Add(new Blog { Url = "http://sample.com/cats" });
                 context.Blogs.Add(new Blog { Url = "http://sample.com/catfish" });
@@ -47,7 +47,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
         {
             EffortConnection connection = Effort.DbConnectionFactory.CreateTransient();
 
-            using (BloggingContext context = new BloggingContext(connection))
+            using (BloggingContext context = new(connection))
             {
                 context.Blogs.Add(new Blog { Url = "http://sample.com/cats" });
                 context.Blogs.Add(new Blog { Url = "http://sample.com/catfish" });
@@ -64,8 +64,8 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
         public void Repository_Count_Predicate_ShouldCountCorrectly()
         {
             EffortConnection connection = Effort.DbConnectionFactory.CreateTransient();
-            
-            using (BloggingContext context = new BloggingContext(connection))
+
+            using (BloggingContext context = new(connection))
             {
                 context.Blogs.Add(new Blog { Url = "http://sample.com/cats" });
                 context.Blogs.Add(new Blog { Url = "http://sample.com/catfish" });
@@ -73,11 +73,9 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
                 context.SaveChanges();
             }
 
-            using (IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(connection)))
-            {
-                long result = repo.Count(x => x.Url.Contains("cat"));
-                Assert.AreEqual(2, result);
-            }
+            using IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(connection));
+            long result = repo.Count(x => x.Url.Contains("cat"));
+            Assert.AreEqual(2, result);
         }
     }
 }

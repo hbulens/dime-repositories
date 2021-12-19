@@ -4,8 +4,8 @@
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <Authors>Dime Software</Authors>
-    <Version>2.0.0.0-alpha.3</Version>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0;net461</TargetFrameworks>
+    <Version>2.0.0.0-alpha.10</Version>
+    <TargetFrameworks>net6.0;net461</TargetFrameworks>
     <AssemblyName>Dime.Repositories</AssemblyName>
     <PackageId>Dime.Repositories</PackageId>
     <PackageIconUrl>https://cdn.dime-software.com/dime-software/logo-shape.png</PackageIconUrl>
@@ -17,9 +17,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
-    <Copyright>Copyright © 2020</Copyright>
-    <PackageProjectUrl>https://github.com/dimenics/repository</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/dimenics/repository</RepositoryUrl>
+    <Copyright>Copyright © 2021</Copyright>
+    <PackageProjectUrl>https://github.com/dimesoftware/repository</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dimesoftware/repository</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <LangVersion>latest</LangVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

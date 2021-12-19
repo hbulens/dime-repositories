@@ -2,30 +2,30 @@
   <PropertyGroup>
     <RootNamespace>Dime.Repositories.Sql.EntityFramework.NetFramework</RootNamespace>
     <AssemblyName>Dime.Repositories.Sql.EntityFramework.NetFramework</AssemblyName>
-    <TargetFrameworks>net461;netstandard2.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net461</TargetFrameworks>
     <AssemblyTitle>Dime.Repositories.Sql.EntityFramework.NetFramework</AssemblyTitle>
     <Company>Dime Software</Company>
     <Product>Dime.Repositories.Sql.EntityFramework.NetFramework</Product>
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Implementation of the repository pattern with Entity Framework</Description>
-    <Copyright>Copyright © 2020</Copyright>
-    <Version>2.0.0.0-alpha.4</Version>
+    <Copyright>Copyright © 2021</Copyright>
+    <Version>2.0.0.0-alpha.10</Version>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <LangVersion>latest</LangVersion>
     <Authors>Dime Software</Authors>
     <PackageIconUrl>https://cdn.dime-software.com/dime-software/logo-shape.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/dimenics/repository</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/dimenics/repository</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/dimesoftware/repository</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dimesoftware/repository</RepositoryUrl>
     <PackageTags>Dime.Scheduler</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="LinqKit" Version="1.1.21" />
+    <PackageReference Include="LinqKit" Version="1.1.27" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>

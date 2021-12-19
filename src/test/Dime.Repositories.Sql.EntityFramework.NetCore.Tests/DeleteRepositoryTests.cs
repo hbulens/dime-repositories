@@ -12,7 +12,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
         public void Repository_Delete_ByEntity_ShouldRemoveOne()
         {
             // In-memory database only exists while the connection is open
-            using SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
+            using SqliteConnection connection = new("DataSource=:memory:");
             connection.Open();
 
             try
@@ -21,7 +21,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     .UseSqlite(connection)
                     .Options;
 
-                using (BloggingContext context = new BloggingContext(options))
+                using (BloggingContext context = new(options))
                 {
                     context.Database.EnsureCreated();
 
@@ -35,7 +35,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     repo.Delete(new Blog { BlogId = 1 });
 
                 // Use a separate instance of the context to verify correct data was saved to database
-                using (BloggingContext context = new BloggingContext(options))
+                using (BloggingContext context = new(options))
                 {
                     Assert.AreEqual(2, context.Blogs.Count());
                 }
@@ -50,7 +50,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
         public async Task Repository_DeleteAsync_ByEntity_ShouldRemoveOne()
         {
             // In-memory database only exists while the connection is open
-            await using SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
+            await using SqliteConnection connection = new("DataSource=:memory:");
             connection.Open();
 
             try
@@ -59,7 +59,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     .UseSqlite(connection)
                     .Options;
 
-                await using (BloggingContext context = new BloggingContext(options))
+                await using (BloggingContext context = new(options))
                 {
                     context.Database.EnsureCreated();
 
@@ -73,7 +73,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     await repo.DeleteAsync(new Blog { BlogId = 1 });
 
                 // Use a separate instance of the context to verify correct data was saved to database
-                await using (BloggingContext context = new BloggingContext(options))
+                await using (BloggingContext context = new(options))
                 {
                     Assert.AreEqual(2, context.Blogs.Count());
                 }

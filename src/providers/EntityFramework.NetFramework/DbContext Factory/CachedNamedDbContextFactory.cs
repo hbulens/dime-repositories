@@ -12,12 +12,12 @@ namespace Dime.Repositories
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
     [ExcludeFromCodeCoverage]
-    public abstract class SeparateSchemaMultiTenantCachedDbContextFactory<TContext> : IMultiTenantDbContextFactory<TContext> where TContext : DbContext
+    public abstract class CachedNamedDbContextFactory<TContext> : INamedDbContextFactory<TContext> where TContext : DbContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SeparateSchemaMultiTenantCachedDbContextFactory{TContext}"/> class
         /// </summary>
-        protected SeparateSchemaMultiTenantCachedDbContextFactory()
+        protected CachedNamedDbContextFactory()
         {
         }
 
@@ -25,7 +25,7 @@ namespace Dime.Repositories
         /// Initializes a new instance of the <see cref="SeparateSchemaMultiTenantCachedDbContextFactory{TContext}"/> class
         /// </summary>
         /// <param name="connectionString">The connection string</param>
-        protected SeparateSchemaMultiTenantCachedDbContextFactory(string connectionString) : this()
+        protected CachedNamedDbContextFactory(string connectionString) : this()
         {
             Connection = connectionString;
         }
@@ -35,16 +35,16 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="connectionString"></param>
         /// <param name="tenant"></param>
-        protected SeparateSchemaMultiTenantCachedDbContextFactory(string connectionString, string tenant) : this(connectionString)
+        protected CachedNamedDbContextFactory(string connectionString, string tenant) : this(connectionString)
         {
             Tenant = tenant;
         }
 
-        protected static ConcurrentDictionary<Tuple<string, string>, DbCompiledModel> ModelCache = new ConcurrentDictionary<Tuple<string, string>, DbCompiledModel>();
-        protected static ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel> NamedModelCache = new ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel>();
+        protected static ConcurrentDictionary<Tuple<string, string>, DbCompiledModel> ModelCache = new();
+        protected static ConcurrentDictionary<Tuple<string, string, string>, DbCompiledModel> NamedModelCache = new();
 
-        private string Connection { get; }
-        private string Tenant { get; }
+        protected string Connection { get; }
+        protected string Tenant { get; }
 
         /// <summary>
         /// Creates the instance of <typeparamref name="TContext"/> with the default settings
@@ -74,7 +74,7 @@ namespace Dime.Repositories
             if (string.IsNullOrEmpty(context))
                 return Create(tenant, connection);
 
-            SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
+            SqlConnectionFactory connectionFactory = new();
             DbConnection dbConnection = connectionFactory.CreateConnection(connection);
             Database.SetInitializer<TContext>(null);
 
@@ -93,7 +93,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual TContext Create(string tenant, string nameOrConnectionString)
         {
-            SqlConnectionFactory connectionFactory = new SqlConnectionFactory();
+            SqlConnectionFactory connectionFactory = new();
             DbConnection dbConnection = connectionFactory.CreateConnection(nameOrConnectionString);
             Database.SetInitializer<TContext>(null);
 

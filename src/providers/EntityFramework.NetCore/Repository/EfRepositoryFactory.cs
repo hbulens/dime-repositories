@@ -8,14 +8,14 @@ namespace Dime.Repositories
     /// </summary>
     /// <typeparam name="TContext">The DbContext implementation</typeparam>
     [ExcludeFromCodeCoverage]
-    public class EfRepositoryFactory<TContext> : IRepositoryFactory, IRepositoryFactory<RepositoryConfiguration> 
+    public class EfRepositoryFactory<TContext> : IRepositoryFactory, IRepositoryFactory<RepositoryConfiguration>
         where TContext : DbContext
     {
         /// <summary>
         /// Constructor that only accepts the DbContext Factory and uses the default repository configuration
         /// </summary>
         /// <param name="contextFactory"></param>
-        public EfRepositoryFactory(IMultiTenantDbContextFactory<TContext> contextFactory)
+        public EfRepositoryFactory(INamedDbContextFactory<TContext> contextFactory)
             : this(contextFactory, GetDefaultRepositoryConfiguration())
         {
         }
@@ -26,14 +26,14 @@ namespace Dime.Repositories
         /// <param name="contextFactory">The factory that actually generates the DbContext instance</param>
         /// <param name="repositoryConfiguration">The configuration for the repository</param>
         public EfRepositoryFactory(
-            IMultiTenantDbContextFactory<TContext> contextFactory,
+            INamedDbContextFactory<TContext> contextFactory,
             RepositoryConfiguration repositoryConfiguration)
         {
             ContextFactory = contextFactory;
             RepositoryConfiguration = repositoryConfiguration;
         }
 
-        protected IMultiTenantDbContextFactory<TContext> ContextFactory { get; }
+        protected INamedDbContextFactory<TContext> ContextFactory { get; }
         public RepositoryConfiguration RepositoryConfiguration { get; set; }
 
         /// <summary>

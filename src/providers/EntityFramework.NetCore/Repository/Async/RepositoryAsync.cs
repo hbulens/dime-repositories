@@ -51,7 +51,7 @@ namespace Dime.Repositories
                     if (dbUpdateEx.InnerException?.InnerException == null)
                         throw;
 
-                    if (!(dbUpdateEx.InnerException.InnerException is SqlException sqlException))
+                    if (dbUpdateEx.InnerException.InnerException is not SqlException sqlException)
                         throw new DatabaseAccessException(dbUpdateEx.Message, dbUpdateEx.InnerException);
 
                     throw sqlException.Number switch
@@ -85,7 +85,7 @@ namespace Dime.Repositories
             {
                 try
                 {
-                    if (!((!Configuration?.SaveInBatch) ?? true)) 
+                    if (!((!Configuration?.SaveInBatch) ?? true))
                         return false;
 
                     int result = await context.SaveChangesAsync().ConfigureAwait(false);
@@ -115,7 +115,7 @@ namespace Dime.Repositories
                     if (dbUpdateEx.InnerException?.InnerException == null)
                         throw;
 
-                    if (!(dbUpdateEx.InnerException.InnerException is SqlException sqlException))
+                    if (dbUpdateEx.InnerException.InnerException is not SqlException sqlException)
                         throw new DatabaseAccessException(dbUpdateEx.Message, dbUpdateEx.InnerException);
 
                     throw sqlException.Number switch

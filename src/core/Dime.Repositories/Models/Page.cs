@@ -9,7 +9,7 @@ namespace Dime.Repositories
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [KnownType(typeof(Page<>))]
-    public class Page<T>
+    public class Page<T> : IPage<T>
     {
         /// <summary>
         /// Default constructor
@@ -67,22 +67,21 @@ namespace Dime.Repositories
         /// <summary>
         ///
         /// </summary>
-        public IEnumerable<T> Data { get; }
+        public IEnumerable<T> Data { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        public int Total { get; }
+        public int Total { get; set;  }
 
         /// <summary>
         ///
         /// </summary>
-        public string Message { get; }
+        public string Message { get; set; }
 
         /// <summary>
         ///
         /// </summary>
         public List<dynamic> Summary { get; }
-
     }
 }

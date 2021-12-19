@@ -97,10 +97,10 @@ namespace Dime.Repositories
                 return ascending
                     ? source.OrderBy(orderByExpression).AsQueryable()
                     : source.OrderByDescending(orderByExpression).AsQueryable();
-            
+
             Func<TSource, object> defaultSorting = x => true;
             return ascending
-                ? source.OrderBy(defaultSorting).AsQueryable() 
+                ? source.OrderBy(defaultSorting).AsQueryable()
                 : source.OrderByDescending(defaultSorting).AsQueryable();
         }
     }

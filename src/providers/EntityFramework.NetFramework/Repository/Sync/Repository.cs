@@ -2,7 +2,6 @@
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Dime.Repositories
@@ -91,7 +90,7 @@ namespace Dime.Repositories
                     if (dbUpdateEx.InnerException?.InnerException == null)
                         throw;
 
-                    if (!(dbUpdateEx.InnerException.InnerException is SqlException sqlException))
+                    if (dbUpdateEx.InnerException.InnerException is not SqlException sqlException)
                         throw new DatabaseAccessException(dbUpdateEx.Message, dbUpdateEx.InnerException);
 
                     throw sqlException.Number switch

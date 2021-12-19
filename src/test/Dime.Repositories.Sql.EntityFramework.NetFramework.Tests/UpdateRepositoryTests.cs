@@ -11,7 +11,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
         {
             EffortConnection connection = Effort.DbConnectionFactory.CreateTransient();
 
-            using (BloggingContext context = new BloggingContext(connection))
+            using (BloggingContext context = new(connection))
             {
                 context.Blogs.Add(new Blog { BlogId = 1, Url = "http://sample.com/cats" });
                 context.Blogs.Add(new Blog { BlogId = 2, Url = "http://sample.com/catfish" });
@@ -23,7 +23,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
                 repo.Update(new Blog { BlogId = 1, Url = "http://sample.com/zebras" });
 
             // Use a separate instance of the context to verify correct data was saved to database
-            using (BloggingContext context = new BloggingContext(connection))
+            using (BloggingContext context = new(connection))
             {
                 Blog blog = context.Blogs.Find(1);
                 Assert.IsTrue(blog.Url == "http://sample.com/zebras");
@@ -35,7 +35,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
         {
             EffortConnection connection = Effort.DbConnectionFactory.CreateTransient();
 
-            using (BloggingContext context = new BloggingContext(connection))
+            using (BloggingContext context = new(connection))
             {
                 context.Blogs.Add(new Blog { BlogId = 1, Url = "http://sample.com/cats" });
                 context.Blogs.Add(new Blog { BlogId = 2, Url = "http://sample.com/catfish" });
@@ -47,7 +47,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
                 await repo.UpdateAsync(new Blog { BlogId = 1, Url = "http://sample.com/zebras" });
 
             // Use a separate instance of the context to verify correct data was saved to database
-            using (BloggingContext context = new BloggingContext(connection))
+            using (BloggingContext context = new(connection))
             {
                 Blog blog = await context.Blogs.FindAsync(1);
                 Assert.IsTrue(blog.Url == "http://sample.com/zebras");

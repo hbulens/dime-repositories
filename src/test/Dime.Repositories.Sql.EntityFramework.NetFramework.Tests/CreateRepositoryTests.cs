@@ -15,11 +15,9 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
             using (IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(connection)))
                 repo.Create(new Blog { Url = "http://sample.com" });
 
-            using (BloggingContext context = new BloggingContext(connection))
-            {
-                Assert.AreEqual(1, context.Blogs.Count());
-                Assert.AreEqual("http://sample.com", context.Blogs.Single().Url);
-            }
+            using BloggingContext context = new(connection);
+            Assert.AreEqual(1, context.Blogs.Count());
+            Assert.AreEqual("http://sample.com", context.Blogs.Single().Url);
         }
 
         [TestMethod]
@@ -31,11 +29,9 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
                 await repo.CreateAsync(new Blog { Url = "http://sample.com" });
 
             // Use a separate instance of the context to verify correct data was saved to database
-            using (BloggingContext context = new BloggingContext(connection))
-            {
-                Assert.AreEqual(1, context.Blogs.Count());
-                Assert.AreEqual("http://sample.com", context.Blogs.Single().Url);
-            }
+            using BloggingContext context = new(connection);
+            Assert.AreEqual(1, context.Blogs.Count());
+            Assert.AreEqual("http://sample.com", context.Blogs.Single().Url);
         }
     }
 }

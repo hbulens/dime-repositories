@@ -16,7 +16,7 @@ namespace Dime.Repositories
         /// <returns></returns>
         public IEnumerable<SqlParameter> GetStoredProcedureSchema(string name, string schema = "dbo")
         {
-            using SqlConnection connection = new SqlConnection(Context.Database.Connection.ConnectionString);
+            using SqlConnection connection = new(Context.Database.Connection.ConnectionString);
             connection.Open();
             using SqlCommand cmd = connection.CreateCommand();
             cmd.CommandText = $"{schema}.{name}";

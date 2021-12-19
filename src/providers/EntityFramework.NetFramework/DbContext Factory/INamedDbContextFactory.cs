@@ -7,7 +7,7 @@ namespace Dime.Repositories
     /// Entity Framework context factory
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
-    public interface IMultiTenantDbContextFactory<out TContext> : IDbContextFactory<TContext> where TContext : DbContext
+    public interface INamedDbContextFactory<out TContext> : IDbContextFactory<TContext> where TContext : DbContext
     {
         /// <summary>
         /// Creates the context by name

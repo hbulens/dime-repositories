@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
         public void Repository_Update_ByEntity_ShouldRemoveOne()
         {
             // In-memory database only exists while the connection is open
-            using SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
+            using SqliteConnection connection = new("DataSource=:memory:");
             connection.Open();
 
             try
@@ -21,7 +20,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     .UseSqlite(connection)
                     .Options;
 
-                using (BloggingContext context = new BloggingContext(options))
+                using (BloggingContext context = new(options))
                 {
                     context.Database.EnsureCreated();
 
@@ -35,7 +34,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     repo.Update(new Blog { BlogId = 1, Url = "http://sample.com/zebras" });
 
                 // Use a separate instance of the context to verify correct data was saved to database
-                using (BloggingContext context = new BloggingContext(options))
+                using (BloggingContext context = new(options))
                 {
                     Blog blog = context.Blogs.Find(1);
                     Assert.IsTrue(blog.Url == "http://sample.com/zebras");
@@ -51,7 +50,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
         public async Task Repository_UpdateAsync_ByEntity_ShouldRemoveOne()
         {
             // In-memory database only exists while the connection is open
-            await using SqliteConnection connection = new SqliteConnection("DataSource=:memory:");
+            await using SqliteConnection connection = new("DataSource=:memory:");
             connection.Open();
 
             try
@@ -60,7 +59,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     .UseSqlite(connection)
                     .Options;
 
-                await using (BloggingContext context = new BloggingContext(options))
+                await using (BloggingContext context = new(options))
                 {
                     context.Database.EnsureCreated();
 
@@ -74,7 +73,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     await repo.UpdateAsync(new Blog { BlogId = 1, Url = "http://sample.com/zebras" });
 
                 // Use a separate instance of the context to verify correct data was saved to database
-                await using (BloggingContext context = new BloggingContext(options))
+                await using (BloggingContext context = new(options))
                 {
                     Blog blog = await context.Blogs.FindAsync(1);
                     Assert.IsTrue(blog.Url == "http://sample.com/zebras");

@@ -7,8 +7,6 @@ using System.Data.Entity;
 
 #else
 
-using Microsoft.EntityFrameworkCore;
-
 #endif
 
 using System.Linq;
