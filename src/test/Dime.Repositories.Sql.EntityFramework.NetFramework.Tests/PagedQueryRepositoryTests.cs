@@ -30,7 +30,7 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
             }
 
             IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(connection), new RepositoryConfiguration());
-            Page<Blog> result = await repo.FindAllPagedAsync(
+            IPage<Blog> result = await repo.FindAllPagedAsync(
                 where: x => x.Url.Contains("cat"),
                 orderBy: null,
                 count: null,

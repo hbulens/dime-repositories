@@ -145,11 +145,9 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                     context.SaveChanges();
                 }
 
-                using (IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(options)))
-                {
-                    long result = repo.Count(x => x.Url.Contains("cat"));
-                    Assert.AreEqual(2, result);
-                }
+                using IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(options));
+                long result = repo.Count(x => x.Url.Contains("cat"));
+                Assert.AreEqual(2, result);
             }
             finally
             {

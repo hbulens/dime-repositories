@@ -14,14 +14,14 @@ namespace Dime.Repositories
         /// <param name="source">The source.</param>
         /// <param name="orderByExpression">The order by expression.</param>
         /// <returns></returns>
-        internal static IQueryable<TSource> WithOrder<TSource>(this IQueryable<TSource> source, IEnumerable<Order<TSource>> orderByExpression)
+        internal static IQueryable<TSource> WithOrder<TSource>(this IQueryable<TSource> source, IEnumerable<IOrder<TSource>> orderByExpression)
         {
             if (orderByExpression != null && orderByExpression.Count() > 1)
             {
                 IEnumerable<TSource> orderBy = null;
                 for (int i = 0; i < orderByExpression.Count(); i++)
                 {
-                    Order<TSource> element = orderByExpression.ElementAt(i);
+                    IOrder<TSource> element = orderByExpression.ElementAt(i);
                     orderBy = i == 0 ? source.SortBy(element) : orderBy.ThenBy(element);
                 }
 

@@ -6,6 +6,11 @@
     public class RepositoryConfiguration
     {
         /// <summary>
+        /// Gets or sets the identifier of the tenant
+        /// </summary>
+        public string Tenant { get; set; }
+
+        /// <summary>
         /// Gets or sets the database connection
         /// </summary>
         public string Connection { get; set; }
@@ -18,11 +23,11 @@
         /// <summary>
         /// Gets or sets the database save strategy
         /// </summary>
-        public ConcurrencyStrategy SaveStrategy { get; set; } = ConcurrencyStrategy.ClientFirst;
+        public ConcurrencyStrategy SaveStrategy { get; set; }
 
         /// <summary>
         /// Gets or sets the flag to indicate whether to leverage the caching mechanism
         /// </summary>
-        public bool Cached { get; set; } = true;
+        public bool Cached { get; set; }
     }
 }

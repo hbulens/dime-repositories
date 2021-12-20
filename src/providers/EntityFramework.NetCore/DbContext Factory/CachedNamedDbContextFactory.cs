@@ -118,9 +118,6 @@ namespace Dime.Repositories
         /// <returns></returns>
         protected abstract DbCompiledModel GetContextModel(DbConnection dbConnection, string schema);
 
-        public TContext CreateDbContext(string[] args)
-        {
-            throw new NotImplementedException();
-        }
+        public TContext CreateDbContext(string[] args) => Create();
     }
 }

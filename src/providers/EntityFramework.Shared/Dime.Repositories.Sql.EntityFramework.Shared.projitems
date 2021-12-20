@@ -13,7 +13,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ConcurrencyException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ConstraintViolationException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\DatabaseAccessException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)INamedEfRepositoryFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\Async\AggregateRepositoryAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\Async\DeleteRepositoryAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\Async\GetRepositoryAsync.cs" />
@@ -23,7 +22,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repository\Sync\GetRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\Sync\PagedRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repository\Sync\UpdateRepository.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UnitOfWork.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DataReaderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DbContextExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\LinqOperationExtensions.cs" />

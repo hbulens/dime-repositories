@@ -1,6 +1,6 @@
 ﻿namespace Dime.Repositories
 {
-    public interface IRepositoryFactory<in TOpts>
+    public interface IRepositoryFactory<in TOpts> : IRepositoryFactory
     {
         /// <summary>
         ///

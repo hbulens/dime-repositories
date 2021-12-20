@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 
 namespace Dime.Repositories
 {
+    [Obsolete("In a next release this will be internal. Fetch a utility library instead.", false)]
     internal static partial class QueryFactory
     {
         /// <summary>
@@ -14,22 +15,17 @@ namespace Dime.Repositories
         /// <param name="source">The source.</param>
         /// <param name="orderByExpression">The order by expression.</param>
         /// <returns></returns>
-        internal static IQueryable<TSource> WithOrder<TSource>(this IQueryable<TSource> source, IEnumerable<Order<TSource>> orderByExpression)
+        internal static IQueryable<TSource> WithOrder<TSource>(this IQueryable<TSource> source, IEnumerable<IOrder<TSource>> orderByExpression)
         {
             if (orderByExpression != null && orderByExpression.Count() > 1)
             {
                 IEnumerable<TSource> orderBy = null;
                 for (int i = 0; i < orderByExpression.Count(); i++)
                 {
-                    Order<TSource> element = orderByExpression.ElementAt(i);
-                    if (i == 0)
-                        orderBy = element.IsAscending ?
-                            source.Order(element.Property) :
-                            source.OrderDescending(element.Property);
-                    else
-                        orderBy = element.IsAscending ?
-                            orderBy.ThenBy(element.Property) :
-                            orderBy.ThenByDescending(element.Property);
+                    (string property, bool isAscending) = orderByExpression.ElementAt(i);
+                    orderBy = i == 0
+                        ? isAscending ? source.Order(property) : source.OrderDescending(property)
+                        : isAscending ? orderBy.ThenBy(property) : orderBy.ThenByDescending(property);
                 }
 
                 return orderBy.AsQueryable();
@@ -39,6 +35,7 @@ namespace Dime.Repositories
                 return orderByExpression.ElementAt(0).IsAscending ?
                     source.Order(orderByExpression.ElementAt(0).Property).AsQueryable() :
                     source.OrderDescending(orderByExpression.ElementAt(0).Property).AsQueryable();
+
             return source.OrderBy(x => true);
         }
 

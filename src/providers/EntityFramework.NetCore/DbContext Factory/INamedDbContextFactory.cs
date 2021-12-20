@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace Dime.Repositories
@@ -8,12 +9,7 @@ namespace Dime.Repositories
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
     public interface INamedDbContextFactory<out TContext> : IDesignTimeDbContextFactory<TContext> where TContext : DbContext
-    {
-        /// <summary>
-        /// Creates the context by name
-        /// </summary>
-        /// <param name="nameOrConnectionString">The name or connection string</param>
-        /// <returns>The instantiated context</returns>
-        TContext Create(string nameOrConnectionString);
+    {        
+        TContext Create(string nameOrConnectionString);        
     }
 }

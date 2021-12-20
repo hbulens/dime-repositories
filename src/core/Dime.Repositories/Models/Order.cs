@@ -22,5 +22,11 @@ namespace Dime.Repositories
         /// Gets or sets the sorting direction
         /// </summary>
         public bool IsAscending { get; set; }
+
+        public void Deconstruct(out string property, out bool isAscending)
+        {
+            property = Property;
+            isAscending = IsAscending;
+        }
     }
 }

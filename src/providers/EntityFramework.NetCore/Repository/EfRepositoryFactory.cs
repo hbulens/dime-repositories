@@ -8,7 +8,7 @@ namespace Dime.Repositories
     /// </summary>
     /// <typeparam name="TContext">The DbContext implementation</typeparam>
     [ExcludeFromCodeCoverage]
-    public class EfRepositoryFactory<TContext> : IRepositoryFactory, IRepositoryFactory<RepositoryConfiguration>
+    public class EfRepositoryFactory<TContext> : IRepositoryFactory<RepositoryConfiguration>
         where TContext : DbContext
     {
         /// <summary>
