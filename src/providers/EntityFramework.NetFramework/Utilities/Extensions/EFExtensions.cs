@@ -39,7 +39,8 @@ namespace Dime.Repositories
 
             List<string> includeList = new();
             if (includes.Any())
-                return includes.Where(x => !string.IsNullOrEmpty(x) && !includeList.Contains(x))
+                return includes
+                    .Where(x => !string.IsNullOrEmpty(x) && !includeList.Contains(x))
                     .Aggregate(query, (current, include) => current.Include(include));
 
             ReadOnlyMetadataCollection<NavigationProperty> navigationProperties = GetEntityType<TEntity>(context)?.NavigationProperties;
@@ -68,7 +69,8 @@ namespace Dime.Repositories
         internal static IQueryable<TResult> IncludeView<TEntity, TResult>(this IQueryable<TResult> query, DbContext context, params string[] includes) where TEntity : class
         {
             if (includes != null && includes.Any())
-                return includes.Where(include => include != null)
+                return includes
+                    .Where(x => !string.IsNullOrEmpty(x))
                     .Aggregate(query, (current, include) => current.Include(include));
 
             return GetEntityType<TEntity>(context)

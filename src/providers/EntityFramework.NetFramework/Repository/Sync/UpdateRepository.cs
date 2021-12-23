@@ -9,63 +9,38 @@ namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
-        /// <summary>
-        /// Updates the entities
-        /// </summary>
-        /// <param name="entity">The entities to update</param>
-        /// <returns></returns>
         public TEntity Update(TEntity entity) => Update(entity, true);
 
-        /// <summary>
-        /// Updates the existing entity.
-        /// </summary>
-        /// <param name="entity">The entity to update</param>
-        /// <param name="commitChanges">Indication whether or not the SaveChanges should be called during this call</param>
-        /// <returns></returns>
         public virtual TEntity Update(TEntity entity, bool commitChanges = true)
         {
-            using TContext ctx = Context;
-            ctx.Set<TEntity>().Attach(entity);
-            ctx.Entry(entity).State = EntityState.Modified;
+            Context.Set<TEntity>().Attach(entity);
+            Context.Entry(entity).State = EntityState.Modified;
 
             if (commitChanges)
-                SaveChanges(ctx);
+                SaveChanges(Context);
 
             return entity;
         }
 
-        /// <summary>
-        /// Updates the entities
-        /// </summary>
-        /// <param name="entities">The entities to update</param>
-        /// <param name="commitChanges">Indication whether or not the SaveChanges should be called during this call</param>
-        /// <returns></returns>
         public void Update(IEnumerable<TEntity> entities, bool commitChanges = true)
         {
             if (!entities.Any())
                 return;
 
-            using TContext ctx = Context;
             foreach (TEntity entity in entities)
             {
-                ctx.Set<TEntity>().Attach(entity);
-                ctx.Entry(entity).State = EntityState.Modified;
+                Context.Set<TEntity>().Attach(entity);
+                Context.Entry(entity).State = EntityState.Modified;
             }
 
-            SaveChanges(ctx);
+            SaveChanges(Context);
         }
 
-        /// <summary>
-        /// Updates the existing entity.
-        /// </summary>
-        /// <param name="entity">The entity to update</param>
-        /// <param name="properties">The properties of the entity to update</param>
-        /// <returns>The updated entity</returns>
         public virtual TEntity Update(TEntity entity, params string[] properties)
         {
-            using TContext ctx = Context;
-            ctx.Set<TEntity>().Attach(entity);
-            DbEntityEntry<TEntity> entry = ctx.Entry(entity);
+            
+            Context.Set<TEntity>().Attach(entity);
+            DbEntityEntry<TEntity> entry = Context.Entry(entity);
 
             foreach (string property in properties)
             {
@@ -75,29 +50,23 @@ namespace Dime.Repositories
                     entry.Property(property).IsModified = true;
             }
 
-            ctx.Entry(entity).State = EntityState.Modified;
-            SaveChanges(ctx);
+            Context.Entry(entity).State = EntityState.Modified;
+            SaveChanges(Context);
             return entity;
         }
 
-        /// <summary>
-        /// Updates the existing entity.
-        /// </summary>
-        /// <param name="entity">The entity to update</param>
-        /// <param name="properties">The properties of the entity to update</param>
-        /// <returns>The updated entity</returns>
         public virtual TEntity Update(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
         {
-            using TContext ctx = Context;
-            ctx.Set<TEntity>().Attach(entity);
-            DbEntityEntry<TEntity> entry = ctx.Entry(entity);
+            
+            Context.Set<TEntity>().Attach(entity);
+            DbEntityEntry<TEntity> entry = Context.Entry(entity);
 
             foreach (Expression<Func<TEntity, object>> property in properties)
                 entry.Property(property).IsModified = true;
 
-            ctx.Entry(entity).State = EntityState.Modified;
+            Context.Entry(entity).State = EntityState.Modified;
 
-            SaveChanges(ctx);
+            SaveChanges(Context);
 
             return entity;
         }

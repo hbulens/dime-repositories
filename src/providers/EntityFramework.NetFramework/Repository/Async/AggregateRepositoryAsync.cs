@@ -12,10 +12,7 @@ namespace Dime.Repositories
         /// <returns>A number of the amount of records</returns>
         public Task<long> CountAsync()
         {
-            long count;
-            using (TContext ctx = Context)
-                count = ctx.Count<TEntity>();
-
+            long count = Context.Count<TEntity>();
             return Task.FromResult(count);
         }
 
@@ -26,10 +23,7 @@ namespace Dime.Repositories
         /// <param name="where">The expression to execute against the data store</param>
         public Task<long> CountAsync(Expression<Func<TEntity, bool>> where)
         {
-            long count;
-            using (TContext ctx = Context)
-                count = ctx.Count(where);
-
+            long count = Context.Count(where);
             return Task.FromResult(count);
         }
     }

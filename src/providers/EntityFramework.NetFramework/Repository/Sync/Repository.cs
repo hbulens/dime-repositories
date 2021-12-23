@@ -6,49 +6,50 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Dime.Repositories
 {
-    /// <summary>
-    /// Represents a repository with Entity Framework as the backbone for connecting to SQL databases
-    /// </summary>
-    /// <typeparam name="TEntity">The domain model that is registered in the underlying DbContext</typeparam>
-    /// <typeparam name="TContext">The context type</typeparam>
     [ExcludeFromCodeCoverage]
     public partial class EfRepository<TEntity, TContext> : ISqlRepository<TEntity>
         where TEntity : class, new()
         where TContext : DbContext
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
-        /// </summary>
-        /// <param name="dbContext">The DbContext instance</param>
         public EfRepository(TContext dbContext)
             : this(dbContext, new RepositoryConfiguration())
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EfRepository{TEntity,TContext}"/> class
-        /// </summary>
-        /// <param name="dbContext">The DbContext instance</param>
-        /// <param name="configuration">Repository behavior configuration</param>
         public EfRepository(TContext dbContext, RepositoryConfiguration configuration)
         {
             Context = dbContext;
             Configuration = configuration;
         }
 
-        protected TContext Context { get; set; }
+        public EfRepository(TContext dbContext, RepositoryConfiguration configuration, INamedDbContextFactory<TContext> factory)
+        {
+            Context = dbContext;
+            Configuration = configuration;
+            Factory = factory;
+        }
+
+        private TContext _context;
+        protected TContext Context
+        {
+            get
+            {
+                if (_context == null)
+                    _context = Factory?.Create(Configuration.Connection);
+
+                return _context;
+            }
+            set => _context = value;
+        }
 
         private RepositoryConfiguration Configuration { get; }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
+        private INamedDbContextFactory<TContext> Factory { get; }
+
         public virtual bool SaveChanges(TContext context)
         {
-            int retryMax = 0;
-            bool saveFailed = false;
+            int retryMax;
+            bool saveFailed;
             do
             {
                 try
@@ -95,15 +96,12 @@ namespace Dime.Repositories
 
                     throw sqlException.Number switch
                     {
-                        // Unique constraint error
                         2627 => new ConcurrencyException(sqlException.Message, sqlException),
-                        // Constraint check violation
-                        // Duplicated key row error
                         547 => new ConstraintViolationException(sqlException.Message,
-                            sqlException) // A custom exception of yours for concurrency issues
+                            sqlException)
                         ,
                         2601 => new ConstraintViolationException(sqlException.Message,
-                            sqlException) // A custom exception of yours for concurrency issues
+                            sqlException)
                         ,
                         _ => new DatabaseAccessException(sqlException.Message, sqlException)
                     };
@@ -112,22 +110,10 @@ namespace Dime.Repositories
             while (saveFailed && retryMax <= 3);
         }
 
-        /// <summary>
-        /// Releases all resources used by the Entities
-        /// </summary>
         public void Dispose()
         {
-            if (Context == null)
-                return;
-
-            Context.Dispose();
-            Context = null;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="repository"></param>
         public static explicit operator TContext(EfRepository<TEntity, TContext> repository)
             => repository.Context;
     }

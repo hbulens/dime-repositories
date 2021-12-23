@@ -15,8 +15,8 @@ namespace Dime.Repositories
         /// <returns></returns>
         public async Task ExecuteSqlAsync(string sql)
         {
-            using TContext ctx = Context;
-            await ctx.Database.ExecuteSqlCommandAsync(sql).ConfigureAwait(false);
+            
+            await Context.Database.ExecuteSqlCommandAsync(sql).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -34,8 +34,8 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(name, parameters);
-            using TContext ctx = Context;
-            return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
+            
+            return await Context.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -54,8 +54,8 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(name, parameters);
-            using TContext ctx = Context;
-            return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
+            
+            return await Context.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -94,8 +94,8 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(nameof(name), parameters);
-            using TContext ctx = Context;
-            return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
+            
+            return await Context.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace Dime.Repositories
 
             return await Task.Run(() =>
             {
-                using TContext ctx = Context;
-                return ctx.Database.SqlQuery<T>(ExecQuery(command, parameters));
+                
+                return Context.Database.SqlQuery<T>(ExecQuery(command, parameters));
             }).ConfigureAwait(false);
         }
     }

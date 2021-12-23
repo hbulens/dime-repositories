@@ -9,20 +9,6 @@ namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
-        #region Projected Pages
-
-        /// <summary>
-        /// Finds all hronous.
-        /// </summary>
-        /// <typeparam name="TResult">The type of the result.</typeparam>
-        /// <param name="where">The where.</param>
-        /// <param name="select">The select.</param>
-        /// <param name="orderBy">The order by.</param>
-        /// <param name="ascending"></param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <param name="includes">The includes.</param>
-        /// <returns></returns>
         public virtual Page<TResult> FindAllPaged<TResult>(
             Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, TResult>> select = null,
@@ -33,9 +19,8 @@ namespace Dime.Repositories
             params string[] includes)
             where TResult : class
         {
-            using TContext ctx = Context;
             IQueryable<TResult> query =
-                ctx.Set<TEntity>()
+                Context.Set<TEntity>()
                     .AsExpandable()
                     .AsNoTracking()
                     .With(where)
@@ -45,22 +30,9 @@ namespace Dime.Repositories
                     .WithSelect(select);
 
             IQueryable<TResult> fullGraphQuery = Include(query, includes);
-            return new Page<TResult>(fullGraphQuery.ToList(), ctx.Count(where));
+            return new Page<TResult>(fullGraphQuery.ToList(), Context.Count(where));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="where"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="select"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TResult> FindAllPaged<TResult>(
             Expression<Func<TEntity, bool>> where = null,
             Func<TEntity, object> groupBy = null,
@@ -71,9 +43,8 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes) where TResult : class, new()
         {
-            using TContext ctx = Context;
             IQueryable<TResult> query =
-                ctx.Set<TEntity>()
+                Context.Set<TEntity>()
                     .AsExpandable()
                     .AsNoTracking()
                     .With(where)
@@ -84,22 +55,9 @@ namespace Dime.Repositories
                     .WithSelect<TEntity, TResult, object>(select);
 
             IQueryable<TResult> fullGraphQuery = Include(query, includes);
-            return new Page<TResult>(fullGraphQuery.ToList(), ctx.Count(where));
+            return new Page<TResult>(fullGraphQuery.ToList(), Context.Count(where));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="where"></param>
-        /// <param name="select"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TResult> FindAllPaged<TResult>(
            Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, TResult>> select = null,
@@ -110,10 +68,9 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes) where TResult : class
         {
-            using TContext ctx = Context;
             IQueryable<TResult> query =
-                ctx.Set<TEntity>()
-                    .Include(ctx, includes)
+                Context.Set<TEntity>()
+                    .Include(Context, includes)
                     .AsExpandable()
                     .AsNoTracking()
                     .With(where)
@@ -122,23 +79,9 @@ namespace Dime.Repositories
                     .With(pageSize)
                     .WithSelect(select);
 
-            return new Page<TResult>(query.ToList(), ctx.Count(where));
+            return new Page<TResult>(query.ToList(), Context.Count(where));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="where"></param>
-        /// <param name="count"></param>
-        /// <param name="select"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TResult> FindAllPaged<TResult>(
            Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, bool>> count = null,
@@ -150,10 +93,9 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes) where TResult : class
         {
-            using TContext ctx = Context;
             IQueryable<TResult> query =
-                ctx.Set<TEntity>()
-                    .Include(ctx, includes)
+                Context.Set<TEntity>()
+                    .Include(Context, includes)
                     .AsNoTracking()
                     .AsExpandable()
                     .AsQueryable()
@@ -163,23 +105,9 @@ namespace Dime.Repositories
                     .With(pageSize)
                     .WithSelect(select);
 
-            return new Page<TResult>(query.ToList(), ctx.Count(count));
+            return new Page<TResult>(query.ToList(), Context.Count(count));
         }
 
-        #endregion Projected Pages
-
-        #region Unprojected Pages
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="where"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            Expression<Func<TEntity, dynamic>> orderBy = null,
@@ -188,10 +116,9 @@ namespace Dime.Repositories
            int? pageSize = default,
            params string[] includes)
         {
-            using TContext ctx = Context;
             IQueryable<TEntity> query =
-                ctx.Set<TEntity>()
-                    .Include(ctx, includes)
+                Context.Set<TEntity>()
+                    .Include(Context, includes)
                     .AsExpandable()
                     .AsNoTracking()
                     .With(where)
@@ -200,20 +127,9 @@ namespace Dime.Repositories
                     .With(pageSize)
                     .AsQueryable();
 
-            return new Page<TEntity>(query.ToList(), ctx.Count(where));
+            return new Page<TEntity>(query.ToList(), Context.Count(where));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="where"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            Expression<Func<TEntity, dynamic>> orderBy = null,
@@ -223,10 +139,9 @@ namespace Dime.Repositories
            int? pageSize = default,
            params string[] includes)
         {
-            using TContext ctx = Context;
             IQueryable<TEntity> query =
-                ctx.Set<TEntity>()
-                    .Include(ctx, includes)
+                Context.Set<TEntity>()
+                    .Include(Context, includes)
                     .AsExpandable()
                     .AsNoTracking()
                     .With(where)
@@ -234,19 +149,9 @@ namespace Dime.Repositories
                     .With(page, pageSize, orderBy)
                     .With(pageSize);
 
-            return new Page<TEntity>(query.ToList(), ctx.Count(where));
+            return new Page<TEntity>(query.ToList(), Context.Count(where));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="where"></param>
-        /// <param name="count"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            Expression<Func<TEntity, bool>> count = null,
@@ -255,10 +160,9 @@ namespace Dime.Repositories
            int? pageSize = default,
            params string[] includes)
         {
-            using TContext ctx = Context;
             IQueryable<TEntity> query =
-                ctx.Set<TEntity>()
-                    .Include(ctx, includes)
+                Context.Set<TEntity>()
+                    .Include(Context, includes)
                     .AsNoTracking()
                     .AsExpandable()
                     .With(where)
@@ -266,19 +170,9 @@ namespace Dime.Repositories
                     .With(page, pageSize, orderBy)
                     .With(pageSize);
 
-            return new Page<TEntity>(query.ToList(), ctx.Count(count));
+            return new Page<TEntity>(query.ToList(), Context.Count(count));
         }
 
-        /// <summary>
-        /// Gets the items hronously.
-        /// </summary>
-        /// <typeparam name="TEntity">The type of the entity.</typeparam>
-        /// <param name="where">The where.</param>
-        /// <param name="orderBy">The order by.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <param name="includes">The includes.</param>
-        /// <returns></returns>
         public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            IEnumerable<IOrder<TEntity>> orderBy = null,
@@ -286,10 +180,9 @@ namespace Dime.Repositories
            int? pageSize = default,
            params string[] includes)
         {
-            using TContext ctx = Context;
             IQueryable<TEntity> query =
-                ctx.Set<TEntity>()
-                    .Include(ctx, includes)
+                Context.Set<TEntity>()
+                    .Include(Context, includes)
                     .AsNoTracking()
                     .AsExpandable()
                     .With(where)
@@ -297,19 +190,9 @@ namespace Dime.Repositories
                     .With(page, pageSize, orderBy)
                     .With(pageSize);
 
-            return new Page<TEntity>(query.ToList(), ctx.Count(where));
+            return new Page<TEntity>(query.ToList(), Context.Count(where));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="where"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            IEnumerable<Expression<Func<TEntity, object>>> orderBy = null,
@@ -318,10 +201,9 @@ namespace Dime.Repositories
            int? pageSize = default,
            params string[] includes)
         {
-            using TContext ctx = Context;
             IQueryable<TEntity> query =
-                ctx.Set<TEntity>()
-                    .Include(ctx, includes)
+                Context.Set<TEntity>()
+                    .Include(Context, includes)
                     .AsExpandable()
                     .AsNoTracking()
                     .With(where)
@@ -330,9 +212,7 @@ namespace Dime.Repositories
                     .With(pageSize)
                     .AsQueryable();
 
-            return new Page<TEntity>(query.ToList(), ctx.Count(where));
+            return new Page<TEntity>(query.ToList(), Context.Count(where));
         }
-
-        #endregion Unprojected Pages
     }
 }

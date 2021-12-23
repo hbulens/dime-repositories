@@ -96,15 +96,15 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual async Task<bool> SaveChangesAsync(TContext context)
         {
-            int retryMax = 0;
-            bool saveFailed = false;
+            int retryMax;
+            bool saveFailed;
             do
             {
                 try
                 {
                     if (!Configuration.SaveInBatch)
                     {
-                        int result = await context.SaveChangesAsync().ConfigureAwait(false);
+                        int result = context.SaveChanges();
                         return 0 < result;
                     }
                     else

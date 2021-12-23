@@ -19,7 +19,11 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Category>().HasKey(c => c.Id);
+
             modelBuilder.Entity<Blog>().HasKey(c => c.BlogId);
+            modelBuilder.Entity<Blog>().HasOptional(c => c.Category);
+
             base.OnModelCreating(modelBuilder);
         }
     }
@@ -28,8 +32,14 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
     {
         public int BlogId { get; set; }
         public string Url { get; set; }
-
+        public Category Category { get; set; }
         public List<Post> Posts { get; set; }
+    }
+
+    public class Category
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 
     public class Post

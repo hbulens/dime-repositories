@@ -14,13 +14,13 @@ namespace Dime.Repositories
         ///
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
-        /// <param name="ctx"></param>
+        /// <param name="Context"></param>
         /// <param name="query"></param>
         /// <returns></returns>
-        internal static int Count<TEntity>(this DbContext ctx, Expression<Func<TEntity, bool>> query = null)
+        internal static int Count<TEntity>(this DbContext Context, Expression<Func<TEntity, bool>> query = null)
             where TEntity : class
             => query == null
-                ? ctx.Set<TEntity>().AsExpandable().AsNoTracking().Count()
-                : ctx.Set<TEntity>().AsExpandable().AsNoTracking().Count(query);
+                ? Context.Set<TEntity>().AsExpandable().AsNoTracking().Count()
+                : Context.Set<TEntity>().AsExpandable().AsNoTracking().Count(query);
     }
 }

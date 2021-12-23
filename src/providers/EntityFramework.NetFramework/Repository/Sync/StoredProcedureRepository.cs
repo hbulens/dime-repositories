@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data.Common;
-using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -8,12 +7,6 @@ namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <param name="name">The name of the stored procedure.</param>
-        /// <param name="schema">The parameters.</param>
-        /// <returns></returns>
         public IEnumerable<SqlParameter> GetStoredProcedureSchema(string name, string schema = "dbo")
         {
             using SqlConnection connection = new(Context.Database.Connection.ConnectionString);
@@ -29,12 +22,6 @@ namespace Dime.Repositories
             }
         }
 
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <param name="name">The name of the stored procedure.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
         public int ExecuteStoredProcedure(string name, params DbParameter[] parameters)
         {
             string ExecQuery(string x, DbParameter[] y)
@@ -44,17 +31,9 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(name, parameters);
-            using DbContext context = Context;
-            return context.Database.ExecuteSqlCommand(execQueryString, parameters);
+            return Context.Database.ExecuteSqlCommand(execQueryString, parameters);
         }
 
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <param name="name">The name of the stored procedure.</param>
-        /// <param name="schema"></param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
         public int ExecuteStoredProcedure(string name, string schema = "dbo", params DbParameter[] parameters)
         {
             string ExecQuery(string x, DbParameter[] y)
@@ -64,17 +43,9 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(name, parameters);
-            using DbContext context = Context;
-            return context.Database.ExecuteSqlCommand(execQueryString, parameters);
+            return Context.Database.ExecuteSqlCommand(execQueryString, parameters);
         }
 
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <param name="name">The name of the stored procedure.</param>
-        /// <param name="schema"></param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
         public IEnumerable<T> ExecuteStoredProcedure<T>(string name, string schema = "dbo", params DbParameter[] parameters)
         {
             using DbConnection connection = Context.Database.Connection;

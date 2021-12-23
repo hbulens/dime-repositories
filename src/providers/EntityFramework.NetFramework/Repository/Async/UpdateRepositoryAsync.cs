@@ -18,12 +18,12 @@ namespace Dime.Repositories
         /// <returns></returns>
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, bool commitChanges = true)
         {
-            using TContext ctx = Context;
-            ctx.Set<TEntity>().Attach(entity);
-            ctx.Entry(entity).State = EntityState.Modified;
+            
+            Context.Set<TEntity>().Attach(entity);
+            Context.Entry(entity).State = EntityState.Modified;
 
             if (commitChanges)
-                await SaveChangesAsync(ctx).ConfigureAwait(false);
+                await SaveChangesAsync(Context).ConfigureAwait(false);
 
             return entity;
         }
@@ -39,14 +39,14 @@ namespace Dime.Repositories
             if (!entities.Any())
                 return;
 
-            using TContext ctx = Context;
+            
             foreach (TEntity entity in entities)
             {
-                ctx.Set<TEntity>().Attach(entity);
-                ctx.Entry(entity).State = EntityState.Modified;
+                Context.Set<TEntity>().Attach(entity);
+                Context.Entry(entity).State = EntityState.Modified;
             }
 
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            await SaveChangesAsync(Context).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace Dime.Repositories
         /// <returns>The updated entity</returns>
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, params string[] properties)
         {
-            using TContext ctx = Context;
-            ctx.Set<TEntity>().Attach(entity);
-            DbEntityEntry<TEntity> entry = ctx.Entry(entity);
+            
+            Context.Set<TEntity>().Attach(entity);
+            DbEntityEntry<TEntity> entry = Context.Entry(entity);
 
             foreach (string property in properties)
             {
@@ -69,8 +69,8 @@ namespace Dime.Repositories
                     entry.Property(property).IsModified = true;
             }
 
-            ctx.Entry(entity).State = EntityState.Modified;
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            Context.Entry(entity).State = EntityState.Modified;
+            await SaveChangesAsync(Context).ConfigureAwait(false);
             return entity;
         }
 
@@ -82,16 +82,16 @@ namespace Dime.Repositories
         /// <returns>The updated entity</returns>
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
         {
-            using TContext ctx = Context;
-            ctx.Set<TEntity>().Attach(entity);
-            DbEntityEntry<TEntity> entry = ctx.Entry(entity);
+            
+            Context.Set<TEntity>().Attach(entity);
+            DbEntityEntry<TEntity> entry = Context.Entry(entity);
 
             foreach (Expression<Func<TEntity, object>> property in properties)
                 entry.Property(property).IsModified = true;
 
-            ctx.Entry(entity).State = EntityState.Modified;
+            Context.Entry(entity).State = EntityState.Modified;
 
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            await SaveChangesAsync(Context).ConfigureAwait(false);
 
             return entity;
         }

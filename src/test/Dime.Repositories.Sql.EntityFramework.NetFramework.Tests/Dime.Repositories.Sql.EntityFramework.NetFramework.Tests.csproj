@@ -14,6 +14,7 @@
     <ProjectReference Include="..\..\providers\EntityFramework.NetFramework\Dime.Repositories.Sql.EntityFramework.NetFramework.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Dime.Expressions" Version="1.0.0-alpha.1" />
     <PackageReference Include="Effort.EF6" Version="2.2.15" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
     <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
