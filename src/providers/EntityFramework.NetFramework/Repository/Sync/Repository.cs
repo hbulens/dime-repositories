@@ -22,23 +22,17 @@ namespace Dime.Repositories
             Configuration = configuration;
         }
 
-        public EfRepository(TContext dbContext, RepositoryConfiguration configuration, INamedDbContextFactory<TContext> factory)
+        public EfRepository(RepositoryConfiguration configuration, INamedDbContextFactory<TContext> factory)
         {
-            Context = dbContext;
             Configuration = configuration;
             Factory = factory;
         }
 
         private TContext _context;
+
         protected TContext Context
         {
-            get
-            {
-                if (_context == null)
-                    _context = Factory?.Create(Configuration.Connection);
-
-                return _context;
-            }
+            get => Factory?.Create(Configuration.Connection);
             set => _context = value;
         }
 
@@ -112,6 +106,11 @@ namespace Dime.Repositories
 
         public void Dispose()
         {
+            if (Context == null)
+                return;
+
+            Context.Dispose();
+            Context = null;
         }
 
         public static explicit operator TContext(EfRepository<TEntity, TContext> repository)

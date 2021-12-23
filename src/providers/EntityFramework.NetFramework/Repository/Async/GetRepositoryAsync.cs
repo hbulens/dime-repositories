@@ -14,24 +14,29 @@ namespace Dime.Repositories
     {
         public virtual async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> where)
         {
-            
-            return await Context.Set<TEntity>().AsNoTracking().AnyAsync(where).ConfigureAwait(false);
+            using TContext ctx = Context;
+            return await ctx.Set<TEntity>().AsNoTracking().AnyAsync(where).ConfigureAwait(false);
         }
 
-        public virtual async Task<TEntity> FindByIdAsync(long id) 
-            => await Context.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
+        public virtual async Task<TEntity> FindByIdAsync(long id)
+        {
+            using TContext ctx = Context;
+            return await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
+        }
 
         public virtual async Task<TEntity> FindByIdAsync(long id, params string[] includes)
         {
+            using TContext ctx = Context;
             foreach (string include in includes)
-                Context.Set<TEntity>().Include(include).AsNoTracking();
+                ctx.Set<TEntity>().Include(include).AsNoTracking();
 
-            return await Context.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
+            return await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
         }
 
         public virtual async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> where)
         {
-            TEntity query = Context.Set<TEntity>()
+            using TContext ctx = Context;
+            TEntity query = ctx.Set<TEntity>()
                 .AsNoTracking()
                 .AsExpandable()
                 .With(where)
@@ -42,8 +47,9 @@ namespace Dime.Repositories
 
         public virtual async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> where, params string[] includes)
         {
-            IQueryable<TEntity> query = Context.Set<TEntity>()
-                .Include(Context, includes)
+            using TContext ctx = Context;
+            IQueryable<TEntity> query = ctx.Set<TEntity>()
+                .Include(ctx, includes)
                 .AsNoTracking()
                 .AsExpandable()
                 .With(where);
@@ -61,7 +67,8 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes) where TResult : class
         {
-            IQueryable<TResult> query = Context.Set<TEntity>()
+            using TContext ctx = Context;
+            IQueryable<TResult> query = ctx.Set<TEntity>()
                 .AsExpandable()
                 .AsQueryable()
                 .AsNoTracking()
@@ -77,8 +84,9 @@ namespace Dime.Repositories
 
         public virtual async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> where, params string[] includes)
         {
-            IQueryable<TEntity> query = Context.Set<TEntity>()
-                .Include(Context, includes)
+            using TContext ctx = Context;
+            IQueryable<TEntity> query = ctx.Set<TEntity>()
+                .Include(ctx, includes)
                 .AsExpandable()
                 .AsQueryable()
                 .AsNoTracking()
@@ -96,8 +104,9 @@ namespace Dime.Repositories
             int? pageSize = null,
             params string[] includes)
         {
-            IQueryable<TResult> query = Context.Set<TEntity>()
-                .Include(Context, includes)
+            using TContext ctx = Context;
+            IQueryable<TResult> query = ctx.Set<TEntity>()
+                .Include(ctx, includes)
                 .AsNoTracking()
                 .AsExpandable()
                 .AsQueryable()
@@ -118,8 +127,9 @@ namespace Dime.Repositories
             int? pageSize = null,
             params string[] includes)
         {
-            IQueryable<TEntity> query = Context.Set<TEntity>()
-                .Include(Context, includes)
+            using TContext ctx = Context;
+            IQueryable<TEntity> query = ctx.Set<TEntity>()
+                .Include(ctx, includes)
                 .AsExpandable()
                 .AsNoTracking()
                 .With(where)

@@ -50,10 +50,9 @@ namespace Dime.Repositories
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="opts">The parameters.</param>
         /// <returns></returns>
-        public virtual IRepository<TEntity> Create<TEntity>(RepositoryConfiguration opts) where TEntity : class, new()
-        {
-            TContext dbContext = ContextFactory.Create(opts.Connection ?? RepositoryConfiguration.Connection);
-            return new EfRepository<TEntity, TContext>(dbContext, RepositoryConfiguration, ContextFactory);
-        }
+        public virtual IRepository<TEntity> Create<TEntity>(RepositoryConfiguration opts) where TEntity : class, new() 
+            => new EfRepository<TEntity, TContext>(
+                !string.IsNullOrEmpty(opts.Connection) ? opts : RepositoryConfiguration,
+                ContextFactory);
     }
 }

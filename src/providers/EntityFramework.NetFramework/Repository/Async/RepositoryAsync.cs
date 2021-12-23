@@ -8,17 +8,8 @@ using System.Threading.Tasks;
 
 namespace Dime.Repositories
 {
-    /// <summary>
-    /// Generic repository using Entity Framework
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="TContext"></typeparam>
     public partial class EfRepository<TEntity, TContext>
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
         public virtual async Task<bool> SaveChangesAsync()
         {
             int retryMax = 0;
@@ -73,15 +64,12 @@ namespace Dime.Repositories
 
                     throw sqlException.Number switch
                     {
-                        // Unique constraint error
                         2627 => new ConcurrencyException(sqlException.Message, sqlException),
-                        // Constraint check violation
-                        // Duplicated key row error
                         547 => new ConstraintViolationException(sqlException.Message,
-                            sqlException) // A custom exception of yours for concurrency issues
+                            sqlException)         
                         ,
                         2601 => new ConstraintViolationException(sqlException.Message,
-                            sqlException) // A custom exception of yours for concurrency issues
+                            sqlException)         
                         ,
                         _ => new DatabaseAccessException(sqlException.Message, sqlException)
                     };
@@ -90,10 +78,6 @@ namespace Dime.Repositories
             while (saveFailed && retryMax <= 3);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
         public virtual async Task<bool> SaveChangesAsync(TContext context)
         {
             int retryMax;
@@ -161,15 +145,12 @@ namespace Dime.Repositories
 
                     throw sqlException.Number switch
                     {
-                        // Unique constraint error
                         2627 => new ConcurrencyException(sqlException.Message, sqlException),
-                        // Constraint check violation
-                        // Duplicated key row error
                         547 => new ConstraintViolationException(sqlException.Message,
-                            sqlException) // A custom exception of yours for concurrency issues
+                            sqlException)         
                         ,
                         2601 => new ConstraintViolationException(sqlException.Message,
-                            sqlException) // A custom exception of yours for concurrency issues
+                            sqlException)         
                         ,
                         _ => new DatabaseAccessException(sqlException.Message, sqlException)
                     };
@@ -180,18 +161,14 @@ namespace Dime.Repositories
 
         private static void Rethrow(DbEntityValidationException ex)
         {
-            // Retrieve the error messages as a list of strings.
             IEnumerable<string> errorMessages = ex.EntityValidationErrors
                     .SelectMany(x => x.ValidationErrors)
                     .Select(x => x.ErrorMessage);
 
-            // Join the list to a single string.
             string fullErrorMessage = string.Join("; ", errorMessages);
 
-            // Combine the original exception message with the new one.
             string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
-            // Throw a new DbEntityValidationException with the improved exception message.
             throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
         }
     }

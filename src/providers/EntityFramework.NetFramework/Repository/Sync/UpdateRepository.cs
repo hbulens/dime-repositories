@@ -13,8 +13,9 @@ namespace Dime.Repositories
 
         public virtual TEntity Update(TEntity entity, bool commitChanges = true)
         {
-            Context.Set<TEntity>().Attach(entity);
-            Context.Entry(entity).State = EntityState.Modified;
+            using TContext ctx = Context;
+            ctx.Set<TEntity>().Attach(entity);
+            ctx.Entry(entity).State = EntityState.Modified;
 
             if (commitChanges)
                 SaveChanges(Context);
@@ -27,10 +28,11 @@ namespace Dime.Repositories
             if (!entities.Any())
                 return;
 
+            using TContext ctx = Context;
             foreach (TEntity entity in entities)
             {
-                Context.Set<TEntity>().Attach(entity);
-                Context.Entry(entity).State = EntityState.Modified;
+                ctx.Set<TEntity>().Attach(entity);
+                ctx.Entry(entity).State = EntityState.Modified;
             }
 
             SaveChanges(Context);
@@ -38,9 +40,9 @@ namespace Dime.Repositories
 
         public virtual TEntity Update(TEntity entity, params string[] properties)
         {
-            
-            Context.Set<TEntity>().Attach(entity);
-            DbEntityEntry<TEntity> entry = Context.Entry(entity);
+            using TContext ctx = Context;
+            ctx.Set<TEntity>().Attach(entity);
+            DbEntityEntry<TEntity> entry = ctx.Entry(entity);
 
             foreach (string property in properties)
             {
@@ -50,21 +52,21 @@ namespace Dime.Repositories
                     entry.Property(property).IsModified = true;
             }
 
-            Context.Entry(entity).State = EntityState.Modified;
+            ctx.Entry(entity).State = EntityState.Modified;
             SaveChanges(Context);
             return entity;
         }
 
         public virtual TEntity Update(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
         {
-            
-            Context.Set<TEntity>().Attach(entity);
-            DbEntityEntry<TEntity> entry = Context.Entry(entity);
+            using TContext ctx = Context;
+            ctx.Set<TEntity>().Attach(entity);
+            DbEntityEntry<TEntity> entry = ctx.Entry(entity);
 
             foreach (Expression<Func<TEntity, object>> property in properties)
                 entry.Property(property).IsModified = true;
 
-            Context.Entry(entity).State = EntityState.Modified;
+            ctx.Entry(entity).State = EntityState.Modified;
 
             SaveChanges(Context);
 

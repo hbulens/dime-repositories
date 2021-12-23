@@ -9,7 +9,8 @@ namespace Dime.Repositories
     {
         public IEnumerable<SqlParameter> GetStoredProcedureSchema(string name, string schema = "dbo")
         {
-            using SqlConnection connection = new(Context.Database.Connection.ConnectionString);
+            using TContext ctx = Context;
+            using SqlConnection connection = new(ctx.Database.Connection.ConnectionString);
             connection.Open();
             using SqlCommand cmd = connection.CreateCommand();
             cmd.CommandText = $"{schema}.{name}";
@@ -24,6 +25,7 @@ namespace Dime.Repositories
 
         public int ExecuteStoredProcedure(string name, params DbParameter[] parameters)
         {
+            using TContext ctx = Context;
             string ExecQuery(string x, DbParameter[] y)
             {
                 string parameterString = string.Join(",", parameters.Select(z => $"{z.ParameterName}={z.Value}"));
@@ -31,11 +33,12 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(name, parameters);
-            return Context.Database.ExecuteSqlCommand(execQueryString, parameters);
+            return ctx.Database.ExecuteSqlCommand(execQueryString, parameters);
         }
 
         public int ExecuteStoredProcedure(string name, string schema = "dbo", params DbParameter[] parameters)
         {
+            using TContext ctx = Context;
             string ExecQuery(string x, DbParameter[] y)
             {
                 string parameterString = string.Join(",", parameters.Select(z => $"{z.ParameterName}={z.Value}"));
@@ -43,12 +46,13 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(name, parameters);
-            return Context.Database.ExecuteSqlCommand(execQueryString, parameters);
+            return ctx.Database.ExecuteSqlCommand(execQueryString, parameters);
         }
 
         public IEnumerable<T> ExecuteStoredProcedure<T>(string name, string schema = "dbo", params DbParameter[] parameters)
         {
-            using DbConnection connection = Context.Database.Connection;
+            using TContext ctx = Context;
+            using DbConnection connection = ctx.Database.Connection;
             connection.Open();
             using DbCommand cmd = connection.CreateCommand();
             cmd.CommandText = $"{schema}.{name}";

@@ -11,25 +11,29 @@ namespace Dime.Repositories
     {
         public bool Exists(Expression<Func<TEntity, bool>> where)
         {
-            return Context.Set<TEntity>().AsNoTracking().Any(where);
+            using TContext ctx = Context;
+            return ctx.Set<TEntity>().AsNoTracking().Any(where);
         }
 
         public virtual TEntity FindById(long id)
         {
-            return Context.Set<TEntity>().Find(id);
+            using TContext ctx = Context;
+            return ctx.Set<TEntity>().Find(id);
         }
 
         public virtual TEntity FindById(long id, params string[] includes)
         {
+            using TContext ctx = Context;
             foreach (string include in includes)
-                Context.Set<TEntity>().Include(include).AsNoTracking();
+                ctx.Set<TEntity>().Include(include).AsNoTracking();
 
-            return Context.Set<TEntity>().Find(id);
+            return ctx.Set<TEntity>().Find(id);
         }
 
         public virtual TEntity FindOne(Expression<Func<TEntity, bool>> where)
         {
-            TEntity query = Context.Set<TEntity>()
+            using TContext ctx = Context;
+            TEntity query = ctx.Set<TEntity>()
                 .AsNoTracking()
                 .AsExpandable()
                 .With(where)
@@ -40,8 +44,9 @@ namespace Dime.Repositories
 
         public virtual TEntity FindOne(Expression<Func<TEntity, bool>> where, params string[] includes)
         {
-            IQueryable<TEntity> query = Context.Set<TEntity>()
-                .Include(Context, includes)
+            using TContext ctx = Context;
+            IQueryable<TEntity> query = ctx.Set<TEntity>()
+                .Include(ctx, includes)
                 .AsNoTracking()
                 .AsExpandable()
                 .With(where);
@@ -58,7 +63,8 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes) where TResult : class
         {
-            IQueryable<TResult> query = Context.Set<TEntity>()
+            using TContext ctx = Context;
+            IQueryable<TResult> query = ctx.Set<TEntity>()
                 .AsExpandable()
                 .AsQueryable()
                 .AsNoTracking()
@@ -73,8 +79,9 @@ namespace Dime.Repositories
 
         public IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> where)
         {
-            IQueryable<TEntity> query = Context.Set<TEntity>()
-                .Include(Context, null)
+            using TContext ctx = Context;
+            IQueryable<TEntity> query = ctx.Set<TEntity>()
+                .Include(ctx, null)
                 .AsExpandable()
                 .AsQueryable()
                 .AsNoTracking()
@@ -85,8 +92,9 @@ namespace Dime.Repositories
 
         public virtual IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> where, params string[] includes)
         {
-            IQueryable<TEntity> query = Context.Set<TEntity>()
-                .Include(Context, includes)
+            using TContext ctx = Context;
+            IQueryable<TEntity> query = ctx.Set<TEntity>()
+                .Include(ctx, includes)
                 .AsExpandable()
                 .AsQueryable()
                 .AsNoTracking()
@@ -97,8 +105,9 @@ namespace Dime.Repositories
 
         public IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> where, bool includeAll, params string[] includes)
         {
-            IQueryable<TEntity> query = Context.Set<TEntity>()
-                .Include(Context, includes)
+            using TContext ctx = Context;
+            IQueryable<TEntity> query = ctx.Set<TEntity>()
+                .Include(ctx, includes)
                 .AsExpandable()
                 .AsQueryable()
                 .AsNoTracking()
@@ -109,7 +118,8 @@ namespace Dime.Repositories
 
         public IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> where, int? page, int? pageSize, string[] includes)
         {
-            IQueryable<TEntity> query = Context.Set<TEntity>()
+            using TContext ctx = Context;
+            IQueryable<TEntity> query = ctx.Set<TEntity>()
                 .AsExpandable()
                 .AsQueryable()
                 .AsNoTracking()
@@ -129,8 +139,9 @@ namespace Dime.Repositories
             int? pageSize = null,
             params string[] includes)
         {
-            IQueryable<TResult> query = Context.Set<TEntity>()
-                .Include(Context, includes)
+            using TContext ctx = Context;
+            IQueryable<TResult> query = ctx.Set<TEntity>()
+                .Include(ctx, includes)
                 .AsNoTracking()
                 .AsExpandable()
                 .With(where)
@@ -150,8 +161,9 @@ namespace Dime.Repositories
            int? pageSize = null,
            params string[] includes)
         {
-            IQueryable<TEntity> query = Context.Set<TEntity>()
-                .Include(Context, includes)
+            using TContext ctx = Context;
+            IQueryable<TEntity> query = ctx.Set<TEntity>()
+                .Include(ctx, includes)
                 .AsExpandable()
                 .AsNoTracking()
                 .With(where)

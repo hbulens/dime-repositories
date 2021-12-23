@@ -19,9 +19,10 @@ namespace Dime.Repositories
             int? pageSize = null,
             params string[] includes)
             where TResult : class
-        {       
+        {
+            using TContext ctx = Context;
             IQueryable<TResult> query =
-                Context.Set<TEntity>()
+                ctx.Set<TEntity>()
                     .AsExpandable()
                     .AsNoTracking()
                     .With(where)
@@ -33,7 +34,7 @@ namespace Dime.Repositories
             IQueryable<TResult> fullGraphQuery = Include(query, includes);
             Page<TResult> p = new(
                 fullGraphQuery.ToList(),
-                Context.Set<TEntity>().AsNoTracking().AsExpandable().Count(where));
+                ctx.Set<TEntity>().AsNoTracking().AsExpandable().Count(where));
 
             return Task.FromResult((IPage<TResult>)p);
         }
@@ -48,8 +49,9 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes) where TResult : class, new()
         {
+            using TContext ctx = Context;
             IQueryable<TResult> query =
-                Context.Set<TEntity>()
+                ctx.Set<TEntity>()
                     .AsExpandable()
                     .AsNoTracking()
                     .With(where)
@@ -63,7 +65,7 @@ namespace Dime.Repositories
 
             Page<TResult> p = new(
                 fullGraphQuery.ToList(),
-                Context.Set<TEntity>().AsNoTracking().AsExpandable().Count(where));
+                ctx.Set<TEntity>().AsNoTracking().AsExpandable().Count(where));
 
             return Task.FromResult((IPage<TResult>)p);
         }
@@ -78,9 +80,10 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes) where TResult : class
         {
+            using TContext ctx = Context;
             IQueryable<TResult> query =
-                Context.Set<TEntity>()
-                    .Include(Context, includes)
+                ctx.Set<TEntity>()
+                    .Include(ctx, includes)
                     .AsExpandable()
                     .AsNoTracking()
                     .With(where)
@@ -91,7 +94,7 @@ namespace Dime.Repositories
 
             return await Task.FromResult(
                 new Page<TResult>(query.ToList(),
-                    Context.Count(where))).ConfigureAwait(false);
+                    ctx.Count(where))).ConfigureAwait(false);
         }
 
         public async Task<IPage<TResult>> FindAllPagedAsync<TResult>(
@@ -105,9 +108,10 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes) where TResult : class
         {
+            using TContext ctx = Context;
             IQueryable<TResult> query =
-                Context.Set<TEntity>()
-                    .Include(Context, includes)
+                ctx.Set<TEntity>()
+                    .Include(ctx, includes)
                     .AsNoTracking()
                     .AsExpandable()
                     .With(where)
@@ -116,7 +120,7 @@ namespace Dime.Repositories
                     .With(pageSize)
                     .WithSelect(select);
 
-            return await Task.FromResult(new Page<TResult>(query.ToList(), Context.Count(count))).ConfigureAwait(false);
+            return await Task.FromResult(new Page<TResult>(query.ToList(), ctx.Count(count))).ConfigureAwait(false);
         }
 
         public async Task<IPage<TEntity>> FindAllPagedAsync(
@@ -127,9 +131,10 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
+            using TContext ctx = Context;
             IQueryable<TEntity> query =
-                Context.Set<TEntity>()
-                    .Include(Context, includes)
+                ctx.Set<TEntity>()
+                    .Include(ctx, includes)
                     .AsExpandable()
                     .AsNoTracking()
                     .With(where)
@@ -140,7 +145,7 @@ namespace Dime.Repositories
 
             return await Task.FromResult(
                 new Page<TEntity>(query.ToList(),
-                    Context.Count(where))).ConfigureAwait(false);
+                    ctx.Count(where))).ConfigureAwait(false);
         }
 
         public async Task<IPage<TEntity>> FindAllPagedAsync(
@@ -152,9 +157,10 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
+            using TContext ctx = Context;
             IQueryable<TEntity> query =
-                Context.Set<TEntity>()
-                    .Include(Context, includes)
+                ctx.Set<TEntity>()
+                    .Include(ctx, includes)
                     .AsExpandable()
                     .AsNoTracking()
                     .With(where)
@@ -165,7 +171,7 @@ namespace Dime.Repositories
             return await Task.FromResult(
                 new Page<TEntity>(
                     query.ToList(),
-                    Context.Count(where))).ConfigureAwait(false);
+                    ctx.Count(where))).ConfigureAwait(false);
         }
 
         public async Task<IPage<TEntity>> FindAllPagedAsync(
@@ -176,9 +182,10 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
+            using TContext ctx = Context;
             IQueryable<TEntity> query =
-                Context.Set<TEntity>()
-                    .Include(Context, includes)
+                ctx.Set<TEntity>()
+                    .Include(ctx, includes)
                     .AsNoTracking()
                     .AsExpandable()
                     .With(where)
@@ -186,7 +193,7 @@ namespace Dime.Repositories
                     .With(page, pageSize, orderBy)
                     .With(pageSize);
 
-            return await Task.FromResult(new Page<TEntity>(query.ToList(), Context.Count(count))).ConfigureAwait(false);
+            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(count))).ConfigureAwait(false);
         }
 
         public async Task<IPage<TEntity>> FindAllPagedAsync(
@@ -198,9 +205,10 @@ namespace Dime.Repositories
             bool trackChanges = false,
             params string[] includes)
         {
+            using TContext ctx = Context;
             IQueryable<TEntity> query =
-                Context.Set<TEntity>()
-                    .Include(Context, includes)
+                ctx.Set<TEntity>()
+                    .Include(ctx, includes)
                     .AsExpandable()
                     .With(where)
                     .WithOrder(orderBy)
@@ -211,7 +219,7 @@ namespace Dime.Repositories
                 new Page<TEntity>(trackChanges
                         ? query.ToList()
                         : query.AsNoTracking().ToList(),
-                    Context.Count(count))
+                    ctx.Count(count))
             ).ConfigureAwait(false);
         }
 
@@ -222,9 +230,10 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
+            using TContext ctx = Context;
             IQueryable<TEntity> query =
-                Context.Set<TEntity>()
-                    .Include(Context, includes)
+                ctx.Set<TEntity>()
+                    .Include(ctx, includes)
                     .AsNoTracking()
                     .AsExpandable()
                     .With(where)
@@ -232,7 +241,7 @@ namespace Dime.Repositories
                     .With(page, pageSize, orderBy)
                     .With(pageSize);
 
-            return await Task.FromResult(new Page<TEntity>(query.ToList(), Context.Count(where))).ConfigureAwait(false);
+            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where))).ConfigureAwait(false);
         }
 
         public async Task<IPage<TEntity>> FindAllPagedAsync(
@@ -243,9 +252,10 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
+            using TContext ctx = Context;
             IQueryable<TEntity> query =
-                Context.Set<TEntity>()
-                    .Include(Context, includes)
+                ctx.Set<TEntity>()
+                    .Include(ctx, includes)
                     .AsExpandable()
                     .AsNoTracking()
                     .With(where)
@@ -254,7 +264,7 @@ namespace Dime.Repositories
                     .With(pageSize)
                     .AsQueryable();
 
-            return await Task.FromResult(new Page<TEntity>(query.ToList(), Context.Count(where))).ConfigureAwait(false);
+            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where))).ConfigureAwait(false);
         }
     }
 }

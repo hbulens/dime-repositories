@@ -9,7 +9,7 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Implementation of the repository pattern with Entity Framework</Description>
     <Copyright>Copyright © 2021</Copyright>
-    <Version>2.0.0.0-alpha.22</Version>
+    <Version>2.0.0.0-alpha.32</Version>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <LangVersion>latest</LangVersion>

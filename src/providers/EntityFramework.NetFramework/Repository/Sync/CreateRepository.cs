@@ -11,8 +11,9 @@ namespace Dime.Repositories
     {
         public virtual TEntity Create(TEntity entity)
         {
-            Context.Entry(entity).State = EntityState.Added;
-            TEntity createdItem = Context.Set<TEntity>().Add(entity);
+            using TContext ctx = Context;
+            ctx.Entry(entity).State = EntityState.Added;
+            TEntity createdItem = ctx.Set<TEntity>().Add(entity);
             SaveChanges(Context);
 
             return createdItem;
@@ -20,8 +21,9 @@ namespace Dime.Repositories
 
         public virtual TEntity Create(TEntity entity, Expression<Func<TEntity, bool>> condition)
         {
-            Context.Entry(entity).State = EntityState.Added;
-            TEntity createdItem = Context.Set<TEntity>().AddIfNotExists(entity, condition);
+            using TContext ctx = Context;
+            ctx.Entry(entity).State = EntityState.Added;
+            TEntity createdItem = ctx.Set<TEntity>().AddIfNotExists(entity, condition);
             SaveChanges(Context);
 
             return createdItem;
@@ -31,8 +33,9 @@ namespace Dime.Repositories
         {
             beforeSaveAction(entity, Context);
 
-            Context.Entry(entity).State = EntityState.Added;
-            TEntity createdItem = Context.Set<TEntity>().Add(entity);
+            using TContext ctx = Context;
+            ctx.Entry(entity).State = EntityState.Added;
+            TEntity createdItem = ctx.Set<TEntity>().Add(entity);
             SaveChanges(Context);
 
             return createdItem;
@@ -40,8 +43,9 @@ namespace Dime.Repositories
 
         public virtual TEntity Create(TEntity entity, bool commit)
         {
-            Context.Entry(entity).State = EntityState.Added;
-            TEntity createdItem = Context.Set<TEntity>().Add(entity);
+            using TContext ctx = Context;
+            ctx.Entry(entity).State = EntityState.Added;
+            TEntity createdItem = ctx.Set<TEntity>().Add(entity);
 
             if (commit)
                 SaveChanges(Context);
@@ -56,11 +60,12 @@ namespace Dime.Repositories
 
             List<TEntity> newEntities = new();
             List<TEntity> entitiesToCreate = entities.ToList();
-            
+
+            using TContext ctx = Context;
             foreach (TEntity entity in entitiesToCreate)
             {
-                Context.Entry(entity).State = EntityState.Added;
-                TEntity newEntity = Context.Set<TEntity>().Add(entity);
+                ctx.Entry(entity).State = EntityState.Added;
+                TEntity newEntity = ctx.Set<TEntity>().Add(entity);
                 newEntities.Add(newEntity);
             }
 

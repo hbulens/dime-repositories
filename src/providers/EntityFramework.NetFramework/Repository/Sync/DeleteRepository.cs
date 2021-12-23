@@ -10,29 +10,32 @@ namespace Dime.Repositories
     {
         public virtual void Delete(long id)
         {
-            TEntity item = Context.Set<TEntity>().Find(id);
+            using TContext ctx = Context;
+            TEntity item = ctx.Set<TEntity>().Find(id);
             if (item == default(TEntity))
                 return;
 
-            Context.Set<TEntity>().Remove(item);
+            ctx.Set<TEntity>().Remove(item);
             SaveChanges(Context);
         }
 
         public virtual void Delete(long id, bool commit)
         {
-            TEntity item = Context.Set<TEntity>().Find(id);
+            using TContext ctx = Context;
+            TEntity item = ctx.Set<TEntity>().Find(id);
             if (item == default(TEntity))
                 return;
 
-            Context.Set<TEntity>().Remove(item);
+            ctx.Set<TEntity>().Remove(item);
             if (commit)
                 SaveChanges(Context);
         }
 
         public virtual void Delete(TEntity entity)
         {
-            Context.Set<TEntity>().Attach(entity);
-            Context.Set<TEntity>().Remove(entity);
+            using TContext ctx = Context;
+            ctx.Set<TEntity>().Attach(entity);
+            ctx.Set<TEntity>().Remove(entity);
             SaveChanges(Context);
         }
 
@@ -41,11 +44,11 @@ namespace Dime.Repositories
             if (!entities.Any())
                 return;
 
-
+            using TContext ctx = Context;
             foreach (TEntity entity in entities)
             {
-                Context.Set<TEntity>().Attach(entity);
-                Context.Set<TEntity>().Remove(entity);
+                ctx.Set<TEntity>().Attach(entity);
+                ctx.Set<TEntity>().Remove(entity);
             }
 
             SaveChanges(Context);
@@ -53,8 +56,9 @@ namespace Dime.Repositories
 
         public virtual void Delete(TEntity entity, bool commit)
         {
-            Context.Set<TEntity>().Attach(entity);
-            Context.Set<TEntity>().Remove(entity);
+            using TContext ctx = Context;
+            ctx.Set<TEntity>().Attach(entity);
+            ctx.Set<TEntity>().Remove(entity);
 
             if (commit)
                 SaveChanges(Context);
@@ -62,14 +66,15 @@ namespace Dime.Repositories
 
         public virtual void Delete(Expression<Func<TEntity, bool>> where)
         {
-            IEnumerable<TEntity> entities = Context.Set<TEntity>().With(where).AsNoTracking().ToList();
+            using TContext ctx = Context;
+            IEnumerable<TEntity> entities = ctx.Set<TEntity>().With(where).AsNoTracking().ToList();
             if (entities == null)
                 return;
 
             foreach (TEntity item in entities)
-                Context.Set<TEntity>().Attach(item);
+                ctx.Set<TEntity>().Attach(item);
 
-            Context.Set<TEntity>().RemoveRange(entities);
+            ctx.Set<TEntity>().RemoveRange(entities);
             SaveChanges(Context);
         }
     }
