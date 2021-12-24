@@ -2,27 +2,12 @@
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
-
-#if NET461
-
-using System.Data.Entity;
-
-#else
-
 using Microsoft.EntityFrameworkCore;
-
-#endif
 
 namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <param name="name">The name of the stored procedure.</param>
-        /// <param name="schema">The parameters.</param>
-        /// <returns></returns>
         public IEnumerable<SqlParameter> GetStoredProcedureSchema(string name, string schema = "dbo")
         {
             DbConnection dbConnection = Context.Database.GetDbConnection();
@@ -41,12 +26,6 @@ namespace Dime.Repositories
             }
         }
 
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <param name="name">The name of the stored procedure.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
         public int ExecuteStoredProcedure(string name, params DbParameter[] parameters)
         {
             string ExecQuery(string x, DbParameter[] y)
@@ -60,13 +39,6 @@ namespace Dime.Repositories
             return context.Database.ExecuteSqlRaw(execQueryString, parameters);
         }
 
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <param name="name">The name of the stored procedure.</param>
-        /// <param name="schema"></param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
         public int ExecuteStoredProcedure(string name, string schema = "dbo", params DbParameter[] parameters)
         {
             string ExecQuery(string x, DbParameter[] y)
@@ -80,13 +52,6 @@ namespace Dime.Repositories
             return context.Database.ExecuteSqlRaw(execQueryString, parameters);
         }
 
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <param name="name">The name of the stored procedure.</param>
-        /// <param name="schema"></param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
         public IEnumerable<T> ExecuteStoredProcedure<T>(string name, string schema = "dbo", params DbParameter[] parameters)
         {
             DbConnection dbConnection = Context.Database.GetDbConnection();

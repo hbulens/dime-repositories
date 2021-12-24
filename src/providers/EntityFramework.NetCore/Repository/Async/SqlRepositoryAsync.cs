@@ -10,23 +10,12 @@ namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
-        /// <summary>
-        /// Executes the SQL asynchronous.
-        /// </summary>
-        /// <param name="sql">The SQL.</param>
-        /// <returns></returns>
         public async Task ExecuteSqlAsync(string sql)
         {
             await using TContext ctx = Context;
             await ctx.Database.ExecuteSqlRawAsync(sql).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
         public async Task<int> ExecuteStoredProcedureAsync(string name, params DbParameter[] parameters)
         {
             string ExecQuery(string x, DbParameter[] y)
@@ -40,13 +29,6 @@ namespace Dime.Repositories
             return await ctx.Database.ExecuteSqlRawAsync(execQueryString, parameters).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <param name="name">The name of the stored procedure.</param>
-        /// <param name="schema"></param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
         public async Task<int> ExecuteStoredProcedureAsync(string name, string schema = "dbo", params DbParameter[] parameters)
         {
             string ExecQuery(string x, DbParameter[] y)
@@ -60,13 +42,6 @@ namespace Dime.Repositories
             return await ctx.Database.ExecuteSqlRawAsync(execQueryString, parameters).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <param name="name">The name of the stored procedure.</param>
-        /// <param name="schema"></param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
         public async Task<IEnumerable<T>> ExecuteStoredProcedureAsync<T>(string name, string schema = "dbo", params DbParameter[] parameters)
         {
             string connectionString = Context.Database.GetDbConnection()?.ConnectionString;
@@ -81,13 +56,6 @@ namespace Dime.Repositories
             return reader.GetRecords<T>();
         }
 
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <param name="name">The name of the stored procedure.</param>
-        /// <param name="schema"></param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
         public async Task<int> ExecuteStoredProcedureAsync<T>(T name, string schema = "dbo", params DbParameter[] parameters)
         {
             string ExecQuery(string x, DbParameter[] y)
@@ -98,17 +66,9 @@ namespace Dime.Repositories
 
             string execQueryString = ExecQuery(nameof(name), parameters);
             await using TContext ctx = Context;
-            //return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
             return 1;
         }
 
-        /// <summary>
-        /// Executes the stored procedure asynchronous.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="command">The name of the stored procedure.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <returns></returns>
         public async Task<IEnumerable<T>> ExecuteStoredProcedureAsync<T>(string command, params DbParameter[] parameters)
         {
             string ExecQuery(string x, DbParameter[] y)
@@ -120,7 +80,6 @@ namespace Dime.Repositories
             return await Task.Run(() =>
             {
                 using TContext ctx = Context;
-                //return ctx.Database.SqlQuery<T>(ExecQuery(command, parameters));
                 return Task.FromResult(new List<T>());
             }).ConfigureAwait(false);
         }

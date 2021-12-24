@@ -6,17 +6,8 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Dime.Repositories
 {
-    /// <summary>
-    /// Generic repository using Entity Framework
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="TContext"></typeparam>
     public partial class EfRepository<TEntity, TContext>
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
         public virtual async Task<bool> SaveChangesAsync()
         {
             int retryMax;
@@ -56,15 +47,12 @@ namespace Dime.Repositories
 
                     throw sqlException.Number switch
                     {
-                        // Unique constraint error
                         2627 => (Exception)new ConcurrencyException(sqlException.Message, sqlException),
-                        // Constraint check violation
-                        // Duplicated key row error
                         547 => new ConstraintViolationException(sqlException.Message,
-                            sqlException) // A custom exception of yours for concurrency issues
+                            sqlException)         
                         ,
                         2601 => new ConstraintViolationException(sqlException.Message,
-                            sqlException) // A custom exception of yours for concurrency issues
+                            sqlException)         
                         ,
                         _ => new DatabaseAccessException(sqlException.Message, sqlException)
                     };
@@ -73,10 +61,6 @@ namespace Dime.Repositories
             while (saveFailed && retryMax <= 3);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
         public virtual async Task<bool> SaveChangesAsync(TContext context)
         {
             int retryMax = 0;
@@ -120,15 +104,12 @@ namespace Dime.Repositories
 
                     throw sqlException.Number switch
                     {
-                        // Unique constraint error
                         2627 => (Exception)new ConcurrencyException(sqlException.Message, sqlException),
-                        // Constraint check violation
-                        // Duplicated key row error
                         547 => new ConstraintViolationException(sqlException.Message,
-                            sqlException) // A custom exception of yours for concurrency issues
+                            sqlException)         
                         ,
                         2601 => new ConstraintViolationException(sqlException.Message,
-                            sqlException) // A custom exception of yours for concurrency issues
+                            sqlException)         
                         ,
                         _ => new DatabaseAccessException(sqlException.Message, sqlException)
                     };

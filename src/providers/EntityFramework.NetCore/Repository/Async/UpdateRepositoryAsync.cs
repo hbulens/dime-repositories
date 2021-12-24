@@ -10,12 +10,6 @@ namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
-        /// <summary>
-        /// Updates the existing entity.
-        /// </summary>
-        /// <param name="entity">The entity to update</param>
-        /// <param name="commitChanges">Indication whether or not the SaveChangesAsync should be called during this call</param>
-        /// <returns></returns>
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, bool commitChanges = true)
         {
             await using TContext ctx = Context;
@@ -28,12 +22,6 @@ namespace Dime.Repositories
             return entity;
         }
 
-        /// <summary>
-        /// Updates the entities
-        /// </summary>
-        /// <param name="entities">The entities to update</param>
-        /// <param name="commitChanges">Indication whether or not the SaveChangesAsync should be called during this call</param>
-        /// <returns></returns>
         public async Task UpdateAsync(IEnumerable<TEntity> entities, bool commitChanges = true)
         {
             if (!entities.Any())
@@ -49,12 +37,6 @@ namespace Dime.Repositories
             await SaveChangesAsync(ctx).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Updates the existing entity.
-        /// </summary>
-        /// <param name="entity">The entity to update</param>
-        /// <param name="properties">The properties of the entity to update</param>
-        /// <returns>The updated entity</returns>
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, params string[] properties)
         {
             await using TContext ctx = Context;
@@ -69,12 +51,6 @@ namespace Dime.Repositories
             return entity;
         }
 
-        /// <summary>
-        /// Updates the existing entity.
-        /// </summary>
-        /// <param name="entity">The entity to update</param>
-        /// <param name="properties">The properties of the entity to update</param>
-        /// <returns>The updated entity</returns>
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
         {
             await using TContext ctx = Context;
