@@ -12,7 +12,7 @@
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <Authors>Dime Software</Authors>
-    <Version>2.0.0.0-alpha.32</Version>
+    <Version>2.0.0.0-alpha.34</Version>
     <Authors>Dime Software</Authors>
     <TargetFrameworks>net6.0;net461</TargetFrameworks>
     <AssemblyName>Dime.Repositories.Sql</AssemblyName>
@@ -39,8 +39,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net461'">
+		<PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' != 'net461'">
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
+	</ItemGroup>
+	
 </Project>

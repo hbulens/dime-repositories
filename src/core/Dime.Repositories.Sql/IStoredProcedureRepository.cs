@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Data.Common;
+#if NET461
 using System.Data.SqlClient;
+#else
+using Microsoft.Data.SqlClient;
+#endif
 
 namespace Dime.Repositories
 {
     public interface IStoredProcedureRepository
     {
         /// <summary>
-        /// Executes the stored procedure asynchronous.
+        /// Executes the stored procedure.
         /// </summary>
         /// <param name="command">The name of the stored procedure.</param>
         /// <param name="parameters">The parameters.</param>
@@ -15,7 +19,7 @@ namespace Dime.Repositories
         int ExecuteStoredProcedure(string command, params DbParameter[] parameters);
 
         /// <summary>
-        /// Executes the stored procedure asynchronous.
+        /// Executes the stored procedure.
         /// </summary>
         /// <param name="command">The name of the stored procedure.</param>
         /// <param name="schema">The schema</param>
@@ -24,21 +28,21 @@ namespace Dime.Repositories
         int ExecuteStoredProcedure(string command, string schema = "dbo", params DbParameter[] parameters);
 
         /// <summary>
-        ///
+        /// Executes the stored procedure asynchronously.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="name"></param>
-        /// <param name="schema"></param>
-        /// <param name="parameters"></param>
+        /// <param name="command">The name of the stored procedure.</param>
+        /// <param name="schema">The schema</param>
+        /// <param name="parameters">The parameters.</param>
         /// <returns></returns>
         IEnumerable<T> ExecuteStoredProcedure<T>(string name, string schema = "dbo", params DbParameter[] parameters);
 
         /// <summary>
-        ///
+        /// Executes the stored procedure asynchronously.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="name"></param>
-        /// <param name="schema"></param>
+        /// <param name="command">The name of the stored procedure.</param>
+        /// <param name="schema">The schema</param>
         /// <returns></returns>
         IEnumerable<SqlParameter> GetStoredProcedureSchema(string name, string schema = "dbo");
     }

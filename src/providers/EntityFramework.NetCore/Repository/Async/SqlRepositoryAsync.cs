@@ -49,7 +49,7 @@ namespace Dime.Repositories
             await connection.OpenAsync();
             await using DbCommand cmd = connection.CreateCommand();
             cmd.CommandText = name;
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddRange(parameters);
 
             using IDataReader reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);

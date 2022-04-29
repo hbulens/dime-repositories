@@ -1,8 +1,14 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
-using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
+
+#if NET461
+using System.Data.SqlClient;
+#else
+using Microsoft.Data.SqlClient;
+#endif
+
 
 namespace Dime.Repositories
 {

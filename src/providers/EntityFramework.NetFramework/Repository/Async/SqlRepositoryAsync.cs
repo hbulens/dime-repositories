@@ -4,6 +4,12 @@ using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 
+#if NET461
+using System.Data.SqlClient;
+#else
+using Microsoft.Data.SqlClient;
+#endif
+
 namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
@@ -50,7 +56,7 @@ namespace Dime.Repositories
             connection.Open();
             using DbCommand cmd = connection.CreateCommand();
             cmd.CommandText = name;
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddRange(parameters);
 
             using IDataReader reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);

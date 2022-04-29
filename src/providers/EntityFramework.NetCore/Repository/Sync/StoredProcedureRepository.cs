@@ -1,8 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+
+#if NET461
+using System.Data.SqlClient;
+#else
+using Microsoft.Data.SqlClient;
+#endif
 
 namespace Dime.Repositories
 {

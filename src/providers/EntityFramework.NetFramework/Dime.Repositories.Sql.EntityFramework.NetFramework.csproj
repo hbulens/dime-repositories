@@ -9,7 +9,7 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Implementation of the repository pattern with Entity Framework</Description>
     <Copyright>Copyright © 2021</Copyright>
-    <Version>2.0.0.0-alpha.32</Version>
+    <Version>2.0.0.0-alpha.35</Version>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <LangVersion>latest</LangVersion>
@@ -24,10 +24,17 @@
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="LinqKit" Version="1.1.27" />
-    <PackageReference Include="System.Data.Common" Version="4.3.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="System.Data.Common" Version="4.3.0" />    
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net461'">
+		<PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' != 'net461'">
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\core\Dime.Repositories.Sql\Dime.Repositories.Sql.csproj" />
     <ProjectReference Include="..\..\core\Dime.Repositories\Dime.Repositories.csproj" />
