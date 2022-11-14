@@ -23,8 +23,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="LinqKit" Version="1.1.27" />
-    <PackageReference Include="System.Data.Common" Version="4.3.0" />    
+    <PackageReference Include="LinqKit" Version="1.2.3" />
+    <PackageReference Include="System.Data.Common" Version="4.3.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />    
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
 
@@ -33,7 +34,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' != 'net461'">
-		<PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.1" />
 	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\core\Dime.Repositories.Sql\Dime.Repositories.Sql.csproj" />

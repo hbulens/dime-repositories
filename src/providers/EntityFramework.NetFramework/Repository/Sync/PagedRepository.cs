@@ -150,6 +150,7 @@ namespace Dime.Repositories
              .With(pageSize)
              .ToPage(ctx.Count(where));
         }
+
         public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            Expression<Func<TEntity, bool>> count = null,

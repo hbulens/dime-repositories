@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 #if NET461
 using System.Data.SqlClient;
 #else
+
 using Microsoft.Data.SqlClient;
+
 #endif
 
 namespace Dime.Repositories
@@ -31,7 +33,7 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(name, parameters);
-            
+
             return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
         }
 

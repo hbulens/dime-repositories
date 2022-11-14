@@ -66,10 +66,10 @@ namespace Dime.Repositories
                     {
                         2627 => new ConcurrencyException(sqlException.Message, sqlException),
                         547 => new ConstraintViolationException(sqlException.Message,
-                            sqlException)         
+                            sqlException)
                         ,
                         2601 => new ConstraintViolationException(sqlException.Message,
-                            sqlException)         
+                            sqlException)
                         ,
                         _ => new DatabaseAccessException(sqlException.Message, sqlException)
                     };
@@ -147,10 +147,10 @@ namespace Dime.Repositories
                     {
                         2627 => new ConcurrencyException(sqlException.Message, sqlException),
                         547 => new ConstraintViolationException(sqlException.Message,
-                            sqlException)         
+                            sqlException)
                         ,
                         2601 => new ConstraintViolationException(sqlException.Message,
-                            sqlException)         
+                            sqlException)
                         ,
                         _ => new DatabaseAccessException(sqlException.Message, sqlException)
                     };

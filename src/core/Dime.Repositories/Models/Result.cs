@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 
 namespace Dime.Repositories
 {
-
     [Obsolete("Will be removed in version 2.0.0")]
     [KnownType(typeof(Page<>))]
     public class Result<T> : IResult<T>

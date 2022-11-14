@@ -22,21 +22,14 @@ namespace Dime.Repositories
             Configuration = configuration;
         }
 
-        public EfRepository(RepositoryConfiguration configuration, INamedDbContextFactory<TContext> factory)
-        {
-            Configuration = configuration;
-            Factory = factory;
-        }
-
         private TContext _context;
 
         protected TContext Context
         {
-            get => Factory?.Create(Configuration.Connection);
+            get => _context;
             set => _context = value;
         }
 
-        private INamedDbContextFactory<TContext> Factory { get; }
         public RepositoryConfiguration Configuration { get; set; }
 
         public virtual bool SaveChanges(TContext context)

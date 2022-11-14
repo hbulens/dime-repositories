@@ -26,7 +26,7 @@ namespace Dime.Repositories
         public virtual IRepository<TEntity> Create<TEntity>() where TEntity : class, new()
             => Create<TEntity>(RepositoryConfiguration);
 
-        public virtual IRepository<TEntity> Create<TEntity>(RepositoryConfiguration opts) where TEntity : class, new() 
+        public virtual IRepository<TEntity> Create<TEntity>(RepositoryConfiguration opts) where TEntity : class, new()
             => new EfRepository<TEntity, TContext>(
                 !string.IsNullOrEmpty(opts.Connection) ? opts : RepositoryConfiguration,
                 ContextFactory);

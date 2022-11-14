@@ -47,7 +47,6 @@ namespace Dime.Repositories.Sql.EntityFramework.NetFramework.Tests
             Assert.AreEqual(2, result.Count());
         }
 
-
         [TestMethod]
         public async Task Repository_FindAllAsync_ShouldFindMatches()
         {

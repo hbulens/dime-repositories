@@ -63,7 +63,7 @@ namespace Dime.Repositories
                  .Where(m =>
                  {
                      List<ParameterInfo> parameters = m.GetParameters().ToList();
-                     return parameters.Count == 2;    
+                     return parameters.Count == 2;
                  }).Single();
 
             MethodInfo genericMethod = method.MakeGenericMethod(typeof(TSource), type);

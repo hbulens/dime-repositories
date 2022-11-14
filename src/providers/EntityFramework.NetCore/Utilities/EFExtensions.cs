@@ -12,17 +12,8 @@ namespace Dime.Repositories
         private static IEntityType GetEntityType<T>(DbContext context)
             => context.Model.FindEntityType(typeof(T));
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <param name="query"></param>
-        /// <param name="context"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         internal static IQueryable<TEntity> Include<TEntity>(this IQueryable<TEntity> query, DbContext context, params string[] includes) where TEntity : class
         {
-            // Do a safety check first
             if (includes == null)
                 return query;
 
@@ -48,26 +39,17 @@ namespace Dime.Repositories
             return query;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <typeparam name="TResult"></typeparam>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <param name="query"></param>
-        /// <param name="includes"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
         internal static IQueryable<TResult> IncludeView<TEntity, TResult>(this IQueryable<TResult> query, DbContext context, params string[] includes)
             where TEntity : class
             where TResult : class
         {
             if (includes != null && includes.Any())
                 return includes.Where(include => include != null)
-                    .Aggregate(query, (current, include) => Include(current, context, include));
+                    .Aggregate(query, (current, include) => current.Include(context, include));
 
             return GetEntityType<TEntity>(context)
                 .GetNavigations()
-                .Aggregate(query, (current, navigationProperty) => Include(current, context, navigationProperty.Name));
+                .Aggregate(query, (current, navigationProperty) => current.Include(context, navigationProperty.Name));
         }
     }
 }

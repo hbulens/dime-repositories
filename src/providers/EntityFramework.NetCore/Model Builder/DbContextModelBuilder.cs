@@ -6,17 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dime.Repositories
 {
-    /// <summary>
-    ///
-    /// </summary>
     [ExcludeFromCodeCoverage]
     public static class DbContextModelBuilder
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="modelBuilder"></param>
-        /// <param name="schema"></param>
         public static void BuildModel<T>(this ModelBuilder modelBuilder, string schema) where T : DbContext
         {
             Type foundType = Assembly.GetCallingAssembly()

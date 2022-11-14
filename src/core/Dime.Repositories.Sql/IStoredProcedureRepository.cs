@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Data.Common;
+
 #if NET461
 using System.Data.SqlClient;
 #else
+
 using Microsoft.Data.SqlClient;
+
 #endif
 
 namespace Dime.Repositories

@@ -1,5 +1,4 @@
-﻿
-namespace Dime.Repositories
+﻿namespace Dime.Repositories
 {
     /// <summary>
     ///
