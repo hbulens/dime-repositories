@@ -2,14 +2,14 @@
 	<PropertyGroup>
 		<RootNamespace>Dime.Repositories.Sql.EntityFramework.NetFramework</RootNamespace>
 		<AssemblyName>Dime.Repositories.Sql.EntityFramework.NetFramework</AssemblyName>
-		<TargetFrameworks>net7.0;net6.0;net461</TargetFrameworks>
+		<TargetFrameworks>net7.0;net461</TargetFrameworks>
 		<AssemblyTitle>Dime.Repositories.Sql.EntityFramework.NetFramework</AssemblyTitle>
 		<Company>Dime Software</Company>
 		<Product>Dime.Repositories.Sql.EntityFramework.NetFramework</Product>
 		<NeutralLanguage>en</NeutralLanguage>
 		<Description>Implementation of the repository pattern with Entity Framework</Description>
 		<Copyright>Copyright © 2021</Copyright>
-		<Version>2.0.0.0-alpha.36</Version>
+		<Version>2.0.0.0-alpha.37</Version>
 		<AssemblyVersion>2.0.0.0</AssemblyVersion>
 		<FileVersion>2.0.0.0</FileVersion>
 		<LangVersion>latest</LangVersion>

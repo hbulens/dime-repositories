@@ -19,12 +19,7 @@ namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
-        /// <summary>
-        /// Removes the record from the data store by its identifier
-        /// </summary>
-        /// <param name="id">The identifier of the entity</param>
-        /// <returns>Void</returns>
-        public virtual async Task DeleteAsync(long id)
+        public virtual async Task DeleteAsync(object? id)
         {
             await using TContext ctx = Context;
             TEntity item = await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
@@ -35,15 +30,10 @@ namespace Dime.Repositories
             }
         }
 
-        /// <summary>
-        /// Removes the record from the data store by its identifiers
-        /// </summary>
-        /// <param name="ids">The identifiers of the entities</param>
-        /// <returns>Void</returns>
-        public virtual async Task DeleteAsync(IEnumerable<long> ids)
+        public virtual async Task DeleteAsync(IEnumerable<object?> ids)
         {
             await using TContext ctx = Context;
-            foreach (long id in ids.Distinct().ToList())
+            foreach (object id in ids.Distinct().ToList())
             {
                 TEntity item = await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
                 if (item == default(TEntity))
@@ -55,13 +45,7 @@ namespace Dime.Repositories
             await SaveChangesAsync(ctx).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Removes the record from the data store by its identifier
-        /// </summary>
-        /// <param name="id">The identifier of the entity</param>
-        /// <param name="commit">Indicates whether or not SaveChangesAsync should be called during this call</param>
-        /// <returns>Void</returns>
-        public virtual async Task DeleteAsync(long id, bool commit)
+        public virtual async Task DeleteAsync(object? id, bool commit)
         {
             await using TContext ctx = Context;
             TEntity item = await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
@@ -73,11 +57,6 @@ namespace Dime.Repositories
             }
         }
 
-        /// <summary>
-        /// Removes the record from the data store
-        /// </summary>
-        /// <param name="entity">The disconnected entity to remove</param>
-        /// <returns>Void</returns>
         public virtual async Task DeleteAsync(TEntity entity)
         {
             await using TContext ctx = Context;
@@ -86,11 +65,6 @@ namespace Dime.Repositories
             await SaveChangesAsync(ctx).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Removes the records
-        /// </summary>
-        /// <param name="entities">The disconnected entities to remove</param>
-        /// <returns>Void</returns>
         public async Task DeleteAsync(IEnumerable<TEntity> entities)
         {
             if (!entities.Any())
@@ -106,12 +80,6 @@ namespace Dime.Repositories
             await SaveChangesAsync(ctx).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Removes the record from the data store
-        /// </summary>
-        /// <param name="entity">The disconnected entity to remove</param>
-        /// <param name="commit">Indicates whether or not SaveChangesAsync should be called during this call</param>
-        /// <returns></returns>
         public virtual async Task DeleteAsync(TEntity entity, bool commit)
         {
             await using TContext ctx = Context;
@@ -122,11 +90,6 @@ namespace Dime.Repositories
                 await SaveChangesAsync(ctx).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Removes the record from the data store
-        /// </summary>
-        /// <param name="where">The expression to execute against the data store</param>
-        /// <returns>Void</returns>
         public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> where)
         {
             await using TContext ctx = Context;

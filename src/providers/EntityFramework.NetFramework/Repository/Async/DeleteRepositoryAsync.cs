@@ -9,7 +9,7 @@ namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
-        public virtual async Task DeleteAsync(long id)
+        public virtual async Task DeleteAsync(object? id)
         {
             using TContext ctx = Context;
             TEntity item = await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
@@ -20,10 +20,10 @@ namespace Dime.Repositories
             }
         }
 
-        public virtual async Task DeleteAsync(IEnumerable<long> ids)
+        public virtual async Task DeleteAsync(IEnumerable<object?> ids)
         {
             using TContext ctx = Context;
-            foreach (long id in ids.Distinct().ToList())
+            foreach (object id in ids.Distinct().ToList())
             {
                 TEntity item = await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
                 if (item == default(TEntity))
@@ -35,7 +35,7 @@ namespace Dime.Repositories
             await SaveChangesAsync(ctx).ConfigureAwait(false);
         }
 
-        public virtual async Task DeleteAsync(long id, bool commit)
+        public virtual async Task DeleteAsync(object? id, bool commit)
         {
             using TContext ctx = Context;
             TEntity item = await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);

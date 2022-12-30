@@ -16,14 +16,14 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="id">The identifier of the entity</param>
         /// <returns>Void</returns>
-        void Delete(long id);
+        void Delete(object? id);
 
         /// <summary>
         /// Removes the record from the data store by its identifier
         /// </summary>
         /// <param name="id">The identifier of the entity</param>
         /// <returns>Void</returns>
-        Task DeleteAsync(long id);
+        Task DeleteAsync(object? id);
 
         /// <summary>
         /// Removes the record from the data store by its identifier
@@ -31,14 +31,14 @@ namespace Dime.Repositories
         /// <param name="id">The identifier of the entity</param>
         /// <param name="commit">Indicates whether or not SaveChangesAsync should be called during this call</param>
         /// <returns>Void</returns>
-        Task DeleteAsync(long id, bool commit);
+        Task DeleteAsync(object? id, bool commit);
 
         /// <summary>
         /// Removes the record from the data store by its identifiers
         /// </summary>
         /// <param name="ids">The identifiers of the entity</param>
         /// <returns>Void</returns>
-        Task DeleteAsync(IEnumerable<long> ids);
+        Task DeleteAsync(IEnumerable<object?> ids);
 
         /// <summary>
         /// Removes the record

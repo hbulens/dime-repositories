@@ -19,12 +19,12 @@
 
 	<PropertyGroup>
 		<Authors>Dime Software</Authors>
-		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+		<TargetFrameworks>net7.0</TargetFrameworks>
 		<AssemblyName>Dime.Repositories.Sql.EntityFramework</AssemblyName>
 		<PackageId>Dime.Repositories.Sql.EntityFramework</PackageId>
 		<PackageTags>Entity Framework;Repository;SQL</PackageTags>
 		<PackageIconUrl>https://cdn.dime-software.com/dime-software/logo-shape.png</PackageIconUrl>
-		<Version>2.0.0.0-alpha.38</Version>
+		<Version>2.0.0.0-alpha.39</Version>
 		<Description>Implementation of the repository pattern with Microsoft SQL using Entity Framework Core</Description>
 		<Copyright>Copyright © 2022</Copyright>
 		<PackageProjectUrl>https://github.com/dimesoftware/repository</PackageProjectUrl>

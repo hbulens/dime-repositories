@@ -11,8 +11,6 @@ namespace Dime.Repositories
     /// <typeparam name="TEntity"></typeparam>
     public partial interface IQueryRepositoryAsync<TEntity> : IDisposable where TEntity : class
     {
-        #region Find By Id
-
         /// <summary>
         /// Gets the record by its identifier
         /// </summary>
@@ -34,10 +32,6 @@ namespace Dime.Repositories
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns>The record of type <typeparamref name="TEntity"/> that matches the id</returns>
         Task<TEntity> FindByIdAsync(long id, params string[] includes);
-
-        #endregion Find By Id
-
-        #region Find One
 
         /// <summary>
         /// Checks if the record exists
@@ -104,10 +98,6 @@ namespace Dime.Repositories
             int? pageSize = null,
             params string[] includes)
             where TResult : class;
-
-        #endregion Find One
-
-        #region Find All
 
         /// <summary>
         /// Finds entities based on provided criteria.
@@ -200,10 +190,6 @@ namespace Dime.Repositories
             int? pageSize = null,
             params string[] includes);
 
-        #endregion Find All
-
-        #region Aggregates
-
         /// <summary>
         /// Counts the amount of records in the data store for the table that corresponds to the entity type <typeparamref name="TEntity"/>.
         /// </summary>
@@ -232,6 +218,5 @@ namespace Dime.Repositories
         /// <history>
         long Count(Expression<Func<TEntity, bool>> where);
 
-        #endregion Aggregates
     }
 }

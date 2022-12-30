@@ -23,7 +23,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="id">The identifier of the entity</param>
         /// <returns>Void</returns>
-        public virtual void Delete(long id)
+        public virtual void Delete(object? id)
         {
             using TContext ctx = Context;
             TEntity item = ctx.Set<TEntity>().Find(id);
@@ -40,7 +40,7 @@ namespace Dime.Repositories
         /// <param name="id">The identifier of the entity</param>
         /// <param name="commit">Indicates whether or not SaveChanges should be called during this call</param>
         /// <returns>Void</returns>
-        public virtual void Delete(long id, bool commit)
+        public virtual void Delete(object? id, bool commit)
         {
             using TContext ctx = Context;
             TEntity item = ctx.Set<TEntity>().Find(id);
