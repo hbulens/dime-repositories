@@ -19,7 +19,7 @@ namespace Dime.Repositories
         public async Task ExecuteSqlAsync(string sql)
         {
             using TContext ctx = Context;
-            await ctx.Database.ExecuteSqlCommandAsync(sql).ConfigureAwait(false);
+            await ctx.Database.ExecuteSqlCommandAsync(sql);
         }
 
         public async Task<int> ExecuteStoredProcedureAsync(string name, params DbParameter[] parameters)
@@ -34,7 +34,7 @@ namespace Dime.Repositories
 
             string execQueryString = ExecQuery(name, parameters);
 
-            return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
+            return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters);
         }
 
         public async Task<int> ExecuteStoredProcedureAsync(string name, string schema = "dbo", params DbParameter[] parameters)
@@ -48,7 +48,7 @@ namespace Dime.Repositories
             string execQueryString = ExecQuery(name, parameters);
 
             using TContext ctx = Context;
-            return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
+            return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters);
         }
 
         public async Task<IEnumerable<T>> ExecuteStoredProcedureAsync<T>(string name, string schema = "dbo", params DbParameter[] parameters)
@@ -61,7 +61,7 @@ namespace Dime.Repositories
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddRange(parameters);
 
-            using IDataReader reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+            using IDataReader reader = await cmd.ExecuteReaderAsync();
             return reader.GetRecords<T>();
         }
 
@@ -76,7 +76,7 @@ namespace Dime.Repositories
             string execQueryString = ExecQuery(nameof(name), parameters);
 
             using TContext ctx = Context;
-            return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters).ConfigureAwait(false);
+            return await ctx.Database.ExecuteSqlCommandAsync(execQueryString, parameters);
         }
 
         public async Task<IEnumerable<T>> ExecuteStoredProcedureAsync<T>(string command, params DbParameter[] parameters)
@@ -91,7 +91,7 @@ namespace Dime.Repositories
             {
                 using TContext ctx = Context;
                 return ctx.Database.SqlQuery<T>(ExecQuery(command, parameters));
-            }).ConfigureAwait(false);
+            });
         }
     }
 }

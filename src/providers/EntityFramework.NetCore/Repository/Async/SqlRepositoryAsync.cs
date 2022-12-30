@@ -13,7 +13,7 @@ namespace Dime.Repositories
         public async Task ExecuteSqlAsync(string sql)
         {
             await using TContext ctx = Context;
-            await ctx.Database.ExecuteSqlRawAsync(sql).ConfigureAwait(false);
+            await ctx.Database.ExecuteSqlRawAsync(sql);
         }
 
         public async Task<int> ExecuteStoredProcedureAsync(string name, params DbParameter[] parameters)
@@ -26,7 +26,7 @@ namespace Dime.Repositories
 
             string execQueryString = ExecQuery(name, parameters);
             await using TContext ctx = Context;
-            return await ctx.Database.ExecuteSqlRawAsync(execQueryString, parameters).ConfigureAwait(false);
+            return await ctx.Database.ExecuteSqlRawAsync(execQueryString, parameters);
         }
 
         public async Task<int> ExecuteStoredProcedureAsync(string name, string schema = "dbo", params DbParameter[] parameters)
@@ -39,7 +39,7 @@ namespace Dime.Repositories
 
             string execQueryString = ExecQuery(name, parameters);
             await using TContext ctx = Context;
-            return await ctx.Database.ExecuteSqlRawAsync(execQueryString, parameters).ConfigureAwait(false);
+            return await ctx.Database.ExecuteSqlRawAsync(execQueryString, parameters);
         }
 
         public async Task<IEnumerable<T>> ExecuteStoredProcedureAsync<T>(string name, string schema = "dbo", params DbParameter[] parameters)
@@ -52,7 +52,7 @@ namespace Dime.Repositories
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddRange(parameters);
 
-            using IDataReader reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+            using IDataReader reader = await cmd.ExecuteReaderAsync();
             return reader.GetRecords<T>();
         }
 
@@ -81,7 +81,7 @@ namespace Dime.Repositories
             {
                 using TContext ctx = Context;
                 return Task.FromResult(new List<T>());
-            }).ConfigureAwait(false);
+            });
         }
     }
 }

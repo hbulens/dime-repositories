@@ -30,7 +30,7 @@ namespace Dime.Repositories
         public virtual async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> where)
         {
             await using TContext ctx = Context;
-            return await ctx.Set<TEntity>().AsNoTracking().AnyAsync(where).ConfigureAwait(false);
+            return await ctx.Set<TEntity>().AsNoTracking().AnyAsync(where);
         }
 
         /// <summary>
@@ -38,10 +38,10 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="id">The identifier of the entity</param>
         /// <returns>The record of type <typeparamref name="TEntity"/> that matches the id</returns>
-        public virtual async Task<TEntity> FindByIdAsync(long id)
+        public virtual async Task<TEntity> FindByIdAsync(object? id)
         {
             await using TContext ctx = Context;
-            return await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
+            return await ctx.Set<TEntity>().FindAsync(id);
         }
 
         /// <summary>
@@ -50,13 +50,13 @@ namespace Dime.Repositories
         /// <param name="id">The identifier of the entity</param>
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns>The record of type <typeparamref name="TEntity"/> that matches the id</returns>
-        public virtual async Task<TEntity> FindByIdAsync(long id, params string[] includes)
+        public virtual async Task<TEntity> FindByIdAsync(object? id, params string[] includes)
         {
             await using TContext ctx = Context;
             foreach (string include in includes)
                 ctx.Set<TEntity>().Include(include).AsNoTracking();
 
-            return await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
+            return await ctx.Set<TEntity>().FindAsync(id);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Dime.Repositories
                 .With(where)
                 .FirstOrDefault();
 
-            return await Task.Run(() => query).ConfigureAwait(false);
+            return await Task.Run(() => query);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Dime.Repositories
                 .AsExpandable()
                 .With(where);
 
-            IQueryable<TEntity> fullGraphQuery = await Task.Run(() => query).ConfigureAwait(false);
+            IQueryable<TEntity> fullGraphQuery = await Task.Run(() => query);
             return fullGraphQuery.FirstOrDefault();
         }
 
@@ -147,7 +147,7 @@ namespace Dime.Repositories
                 .AsNoTracking()
                 .With(where);
 
-            return await Task.FromResult(query.ToList()).ConfigureAwait(false);
+            return await Task.FromResult(query.ToList());
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Dime.Repositories
                 .With(page, pageSize, orderBy)
                 .With(pageSize);
 
-            return await Task.FromResult(query.ToList()).ConfigureAwait(false);
+            return await Task.FromResult(query.ToList());
         }
     }
 }

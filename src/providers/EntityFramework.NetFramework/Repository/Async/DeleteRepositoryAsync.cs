@@ -12,11 +12,11 @@ namespace Dime.Repositories
         public virtual async Task DeleteAsync(object? id)
         {
             using TContext ctx = Context;
-            TEntity item = await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
+            TEntity item = await ctx.Set<TEntity>().FindAsync(id);
             if (item != default(TEntity))
             {
                 ctx.Set<TEntity>().Remove(item);
-                await SaveChangesAsync(ctx).ConfigureAwait(false);
+                await SaveChangesAsync(ctx);
             }
         }
 
@@ -25,25 +25,25 @@ namespace Dime.Repositories
             using TContext ctx = Context;
             foreach (object id in ids.Distinct().ToList())
             {
-                TEntity item = await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
+                TEntity item = await ctx.Set<TEntity>().FindAsync(id);
                 if (item == default(TEntity))
                     continue;
 
                 ctx.Set<TEntity>().Remove(item);
             }
 
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            await SaveChangesAsync(ctx);
         }
 
         public virtual async Task DeleteAsync(object? id, bool commit)
         {
             using TContext ctx = Context;
-            TEntity item = await ctx.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
+            TEntity item = await ctx.Set<TEntity>().FindAsync(id);
             if (item != default(TEntity))
             {
                 ctx.Set<TEntity>().Remove(item);
                 if (commit)
-                    await SaveChangesAsync(ctx).ConfigureAwait(false);
+                    await SaveChangesAsync(ctx);
             }
         }
 
@@ -52,7 +52,7 @@ namespace Dime.Repositories
             using TContext ctx = Context;
             ctx.Set<TEntity>().Attach(entity);
             ctx.Set<TEntity>().Remove(entity);
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            await SaveChangesAsync(ctx);
         }
 
         public async Task DeleteAsync(IEnumerable<TEntity> entities)
@@ -67,7 +67,7 @@ namespace Dime.Repositories
                 ctx.Set<TEntity>().Remove(entity);
             }
 
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            await SaveChangesAsync(ctx);
         }
 
         public virtual async Task DeleteAsync(TEntity entity, bool commit)
@@ -77,7 +77,7 @@ namespace Dime.Repositories
             ctx.Set<TEntity>().Remove(entity);
 
             if (commit)
-                await SaveChangesAsync(ctx).ConfigureAwait(false);
+                await SaveChangesAsync(ctx);
         }
 
         public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> where)
@@ -90,7 +90,7 @@ namespace Dime.Repositories
                     ctx.Set<TEntity>().Attach(item);
 
                 ctx.Set<TEntity>().RemoveRange(entities);
-                await SaveChangesAsync(ctx).ConfigureAwait(false);
+                await SaveChangesAsync(ctx);
             }
         }
     }

@@ -143,7 +143,7 @@ namespace Dime.Repositories
 
             return await Task.FromResult(
                 new Page<TResult>(query.ToList(),
-                    ctx.Count(where))).ConfigureAwait(false);
+                    ctx.Count(where)));
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Dime.Repositories
                     .With(pageSize)
                     .WithSelect(select);
 
-            return await Task.FromResult(new Page<TResult>(query.ToList(), ctx.Count(count))).ConfigureAwait(false);
+            return await Task.FromResult(new Page<TResult>(query.ToList(), ctx.Count(count)));
         }
 
         #endregion Projected Pages
@@ -223,7 +223,7 @@ namespace Dime.Repositories
             // TODO: shouldn't where clause also be applied to the count?
             return await Task.FromResult(
                 new Page<TEntity>(query.ToList(),
-                    ctx.Count(where))).ConfigureAwait(false);
+                    ctx.Count(where)));
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Dime.Repositories
             return await Task.FromResult(
                 new Page<TEntity>(
                     query.ToList(),
-                    ctx.Count(where))).ConfigureAwait(false);
+                    ctx.Count(where)));
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Dime.Repositories
                     .With(page, pageSize, orderBy)
                     .With(pageSize);
 
-            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(count))).ConfigureAwait(false);
+            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(count)));
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Dime.Repositories
             return await Task.FromResult(
                 new Page<TEntity>(trackChanges == true ? query.ToList() : query.AsNoTracking().ToList(),
                     ctx.Count(count))
-            ).ConfigureAwait(false);
+            );
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Dime.Repositories
                     .With(page, pageSize, orderBy)
                     .With(pageSize);
 
-            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where))).ConfigureAwait(false);
+            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where)));
         }
 
         /// <summary>
@@ -391,7 +391,7 @@ namespace Dime.Repositories
                     .With(pageSize)
                     .AsQueryable();
 
-            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where))).ConfigureAwait(false);
+            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where)));
         }
 
         #endregion Unprojected Pages

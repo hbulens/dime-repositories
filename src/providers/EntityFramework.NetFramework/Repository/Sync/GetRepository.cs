@@ -15,13 +15,13 @@ namespace Dime.Repositories
             return ctx.Set<TEntity>().AsNoTracking().Any(where);
         }
 
-        public virtual TEntity FindById(long id)
+        public virtual TEntity FindById(object? id)
         {
             using TContext ctx = Context;
             return ctx.Set<TEntity>().Find(id);
         }
 
-        public virtual TEntity FindById(long id, params string[] includes)
+        public virtual TEntity FindById(object? id, params string[] includes)
         {
             using TContext ctx = Context;
             foreach (string include in includes)

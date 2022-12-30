@@ -3,7 +3,6 @@ using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Dime.Repositories
 {
@@ -29,10 +28,10 @@ namespace Dime.Repositories
             Configuration = configuration;
         }
 
-
         private IDbContextFactory<TContext> ContextFactory { get; set; }
 
         private TContext _context;
+
         protected TContext Context
         {
             get => ContextFactory?.CreateDbContext() ?? _context;

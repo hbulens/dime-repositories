@@ -14,7 +14,7 @@ namespace Dime.Repositories
             using TContext ctx = Context;
             ctx.Entry(entity).State = EntityState.Added;
             TEntity createdItem = ctx.Set<TEntity>().Add(entity);
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            await SaveChangesAsync(ctx);
 
             return createdItem;
         }
@@ -24,7 +24,7 @@ namespace Dime.Repositories
             using TContext ctx = Context;
             ctx.Entry(entity).State = EntityState.Added;
             TEntity createdItem = ctx.Set<TEntity>().AddIfNotExists(entity, condition);
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            await SaveChangesAsync(ctx);
 
             return createdItem;
         }
@@ -33,11 +33,11 @@ namespace Dime.Repositories
         {
             using TContext ctx = Context;
 
-            await beforeSaveAction(entity, ctx).ConfigureAwait(false);
+            await beforeSaveAction(entity, ctx);
 
             ctx.Entry(entity).State = EntityState.Added;
             TEntity createdItem = ctx.Set<TEntity>().Add(entity);
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            await SaveChangesAsync(ctx);
 
             return createdItem;
         }
@@ -49,7 +49,7 @@ namespace Dime.Repositories
             TEntity createdItem = ctx.Set<TEntity>().Add(entity);
 
             if (commit)
-                await SaveChangesAsync(ctx).ConfigureAwait(false);
+                await SaveChangesAsync(ctx);
 
             return createdItem;
         }
@@ -69,7 +69,7 @@ namespace Dime.Repositories
                 newEntities.Add(newEntity);
             }
 
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            await SaveChangesAsync(ctx);
 
             return newEntities.AsQueryable();
         }

@@ -18,7 +18,7 @@ namespace Dime.Repositories
             {
                 try
                 {
-                    return !Configuration.SaveInBatch && 0 < await Context.SaveChangesAsync().ConfigureAwait(false);
+                    return !Configuration.SaveInBatch && 0 < await Context.SaveChangesAsync();
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -42,14 +42,14 @@ namespace Dime.Repositories
                                 continue;
 
                             failedEntry.OriginalValues.SetValues(dbValues);
-                            return await SaveChangesAsync().ConfigureAwait(false);
+                            return await SaveChangesAsync();
                         }
                         return true;
                     }
                     else
                     {
                         foreach (DbEntityEntry failedEnttry in dbUpdateConcurrencyEx.Entries)
-                            await failedEnttry.ReloadAsync().ConfigureAwait(false);
+                            await failedEnttry.ReloadAsync();
 
                         return true;
                     }
@@ -119,7 +119,7 @@ namespace Dime.Repositories
 
                             retried = true;
                             failedEntry.OriginalValues.SetValues(dbValues);
-                            return await SaveChangesAsync(context).ConfigureAwait(false);
+                            return await SaveChangesAsync(context);
                         }
 
                         if (!retried)
@@ -130,7 +130,7 @@ namespace Dime.Repositories
                     else
                     {
                         foreach (DbEntityEntry failedEnttry in dbUpdateConcurrencyEx.Entries)
-                            await failedEnttry.ReloadAsync().ConfigureAwait(false);
+                            await failedEnttry.ReloadAsync();
 
                         return true;
                     }

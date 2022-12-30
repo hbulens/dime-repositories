@@ -16,7 +16,7 @@ namespace Dime.Repositories
             {
                 try
                 {
-                    return !Configuration.SaveInBatch && 0 < await Context.SaveChangesAsync().ConfigureAwait(false);
+                    return !Configuration.SaveInBatch && 0 < await Context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException dbUpdateConcurrencyEx)
                 {
@@ -72,7 +72,7 @@ namespace Dime.Repositories
                     if (!((!Configuration?.SaveInBatch) ?? true))
                         return false;
 
-                    int result = await context.SaveChangesAsync().ConfigureAwait(false);
+                    int result = await context.SaveChangesAsync();
                     return 0 < result;
                 }
                 catch (DbUpdateConcurrencyException dbUpdateConcurrencyEx)

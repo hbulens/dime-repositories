@@ -94,7 +94,7 @@ namespace Dime.Repositories
 
             return await Task.FromResult(
                 new Page<TResult>(query.ToList(),
-                    ctx.Count(where))).ConfigureAwait(false);
+                    ctx.Count(where)));
         }
 
         public async Task<IPage<TResult>> FindAllPagedAsync<TResult>(
@@ -120,7 +120,7 @@ namespace Dime.Repositories
                     .With(pageSize)
                     .WithSelect(select);
 
-            return await Task.FromResult(new Page<TResult>(query.ToList(), ctx.Count(count))).ConfigureAwait(false);
+            return await Task.FromResult(new Page<TResult>(query.ToList(), ctx.Count(count)));
         }
 
         public async Task<IPage<TEntity>> FindAllPagedAsync(
@@ -145,7 +145,7 @@ namespace Dime.Repositories
 
             return await Task.FromResult(
                 new Page<TEntity>(query.ToList(),
-                    ctx.Count(where))).ConfigureAwait(false);
+                    ctx.Count(where)));
         }
 
         public async Task<IPage<TEntity>> FindAllPagedAsync(
@@ -171,7 +171,7 @@ namespace Dime.Repositories
             return await Task.FromResult(
                 new Page<TEntity>(
                     query.ToList(),
-                    ctx.Count(where))).ConfigureAwait(false);
+                    ctx.Count(where)));
         }
 
         public async Task<IPage<TEntity>> FindAllPagedAsync(
@@ -193,7 +193,7 @@ namespace Dime.Repositories
                     .With(page, pageSize, orderBy)
                     .With(pageSize);
 
-            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(count))).ConfigureAwait(false);
+            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(count)));
         }
 
         public async Task<IPage<TEntity>> FindAllPagedAsync(
@@ -220,7 +220,7 @@ namespace Dime.Repositories
                         ? query.ToList()
                         : query.AsNoTracking().ToList(),
                     ctx.Count(count))
-            ).ConfigureAwait(false);
+            );
         }
 
         public async Task<IPage<TEntity>> FindAllPagedAsync(
@@ -241,7 +241,7 @@ namespace Dime.Repositories
                     .With(page, pageSize, orderBy)
                     .With(pageSize);
 
-            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where))).ConfigureAwait(false);
+            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where)));
         }
 
         public async Task<IPage<TEntity>> FindAllPagedAsync(
@@ -264,7 +264,7 @@ namespace Dime.Repositories
                     .With(pageSize)
                     .AsQueryable();
 
-            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where))).ConfigureAwait(false);
+            return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where)));
         }
     }
 }

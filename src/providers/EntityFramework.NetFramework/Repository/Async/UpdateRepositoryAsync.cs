@@ -17,7 +17,7 @@ namespace Dime.Repositories
             ctx.Entry(entity).State = EntityState.Modified;
 
             if (commitChanges)
-                await SaveChangesAsync(ctx).ConfigureAwait(false);
+                await SaveChangesAsync(ctx);
 
             return entity;
         }
@@ -34,7 +34,7 @@ namespace Dime.Repositories
                 ctx.Entry(entity).State = EntityState.Modified;
             }
 
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            await SaveChangesAsync(ctx);
         }
 
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, params string[] properties)
@@ -52,7 +52,7 @@ namespace Dime.Repositories
             }
 
             ctx.Entry(entity).State = EntityState.Modified;
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            await SaveChangesAsync(ctx);
             return entity;
         }
 
@@ -67,7 +67,7 @@ namespace Dime.Repositories
 
             ctx.Entry(entity).State = EntityState.Modified;
 
-            await SaveChangesAsync(ctx).ConfigureAwait(false);
+            await SaveChangesAsync(ctx);
 
             return entity;
         }

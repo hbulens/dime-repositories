@@ -16,14 +16,14 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="id">The identifier of the entity</param>
         /// <returns>The record of type <typeparamref name="TEntity"/> that matches the id</returns>
-        TEntity FindById(long id);
+        TEntity FindById(object? id);
 
         /// <summary>
         /// Gets the record by its identifier
         /// </summary>
         /// <param name="id">The identifier of the entity</param>
         /// <returns>The record of type <typeparamref name="TEntity"/> that matches the id</returns>
-        Task<TEntity> FindByIdAsync(long id);
+        Task<TEntity> FindByIdAsync(object? id);
 
         /// <summary>
         /// Gets the record by its identifier
@@ -31,7 +31,7 @@ namespace Dime.Repositories
         /// <param name="id">The identifier of the entity</param>
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns>The record of type <typeparamref name="TEntity"/> that matches the id</returns>
-        Task<TEntity> FindByIdAsync(long id, params string[] includes);
+        Task<TEntity> FindByIdAsync(object? id, params string[] includes);
 
         /// <summary>
         /// Checks if the record exists
@@ -217,6 +217,5 @@ namespace Dime.Repositories
         /// <param name="where">The expression to execute against the data store</param>
         /// <history>
         long Count(Expression<Func<TEntity, bool>> where);
-
     }
 }

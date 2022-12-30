@@ -35,7 +35,7 @@ namespace Dime.Repositories
         /// </summary>
         /// <param name="id">The identifier of the entity</param>
         /// <returns>The record of type <typeparamref name="TEntity"/> that matches the id</returns>
-        public virtual TEntity FindById(long id)
+        public virtual TEntity FindById(object? id)
         {
             using TContext ctx = Context;
             return ctx.Set<TEntity>().Find(id);
@@ -47,7 +47,7 @@ namespace Dime.Repositories
         /// <param name="id">The identifier of the entity</param>
         /// <param name="includes">The optional list of related entities that should be eagerly loaded</param>
         /// <returns>The record of type <typeparamref name="TEntity"/> that matches the id</returns>
-        public virtual TEntity FindById(long id, params string[] includes)
+        public virtual TEntity FindById(object? id, params string[] includes)
         {
             using TContext ctx = Context;
             foreach (string include in includes)
