@@ -30,12 +30,18 @@ namespace Dime.Repositories
 
         public virtual async Task<TEntity> CreateAsync(TEntity entity, Expression<Func<TEntity, bool>> condition)
         {
-            await using TContext ctx = Context;
-            ctx.Entry(entity).State = EntityState.Added;
-            TEntity createdItem = ctx.Set<TEntity>().AddIfNotExists(entity, condition);
-            await SaveChangesAsync(ctx);
+            using TContext ctx = Context;
 
-            return createdItem;
+            if (condition == null || !(condition != null && ctx.Set<TEntity>().Any(condition)))
+            {
+                ctx.Entry(entity).State = EntityState.Added;
+                TEntity createdItem = ctx.Set<TEntity>()?.Add(entity)?.Entity;
+                await SaveChangesAsync(ctx);
+
+                return createdItem;
+            }
+            else
+                return entity;
         }
 
         public virtual async Task<TEntity> CreateAsync(TEntity entity, Func<TEntity, TContext, Task> beforeSaveAction)

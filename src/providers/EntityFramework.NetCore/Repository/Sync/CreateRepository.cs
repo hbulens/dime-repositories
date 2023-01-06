@@ -22,11 +22,17 @@ namespace Dime.Repositories
         public virtual TEntity Create(TEntity entity, Expression<Func<TEntity, bool>> condition)
         {
             using TContext ctx = Context;
-            ctx.Entry(entity).State = EntityState.Added;
-            TEntity createdItem = ctx.Set<TEntity>().AddIfNotExists(entity, condition);
-            SaveChanges(ctx);
 
-            return createdItem;
+            if (condition == null || !(condition != null && ctx.Set<TEntity>().Any(condition)))
+            {
+                ctx.Entry(entity).State = EntityState.Added;
+                TEntity createdItem = ctx.Set<TEntity>()?.Add(entity)?.Entity;
+                SaveChanges(ctx);
+
+                return createdItem;
+            }
+            else
+                return entity;
         }
 
         public virtual TEntity Create(TEntity entity, Func<TEntity, TContext, Task> beforeSaveAction)
