@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 #if NET461
 
@@ -11,16 +15,19 @@ using Microsoft.EntityFrameworkCore;
 
 #endif
 
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-
 namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
         public virtual async Task DeleteAsync(object? id)
         {
+            if (id is IEnumerable)
+            {
+                IEnumerable<object?> ids = (id as IEnumerable).Cast<object?>();
+                await DeleteAsync(ids);
+                return;
+            }
+
             await using TContext ctx = Context;
             TEntity item = await ctx.Set<TEntity>().FindAsync(id);
             if (item != default(TEntity))

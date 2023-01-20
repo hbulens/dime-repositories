@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
@@ -77,6 +79,49 @@ namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
                 {
                     Assert.AreEqual(2, context.Blogs.Count());
                 }
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        [TestMethod]
+        public async Task Repository_DeleteAsync_ByIds_ShouldRemoveList()
+        {
+            // In-memory database only exists while the connection is open
+            await using SqliteConnection connection = new("DataSource=:memory:");
+            connection.Open();
+
+            try
+            {
+                DbContextOptions<BloggingContext> options = new DbContextOptionsBuilder<BloggingContext>()
+                    .UseSqlite(connection)
+                    .Options;
+
+                await using (BloggingContext context = new(options))
+                {
+                    context.Database.EnsureCreated();
+
+                    context.Blogs.Add(new Blog { BlogId = 1, Url = "http://sample.com/cats" });
+                    context.Blogs.Add(new Blog { BlogId = 2, Url = "http://sample.com/catfish" });
+                    context.Blogs.Add(new Blog { BlogId = 3, Url = "http://sample.com/dogs" });
+                    context.SaveChanges();
+                }
+
+                List<int> ids = new() { 1, 2 };
+                using (IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(options)))
+                    await repo.DeleteAsync(ids);
+
+                // Use a separate instance of the context to verify correct data was saved to database
+                await using (BloggingContext context = new(options))
+                {
+                    Assert.AreEqual(1, context.Blogs.Count());
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
             }
             finally
             {
