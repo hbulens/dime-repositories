@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dime.Repositories.Sql.EntityFramework.NetCore.Tests
+namespace Dime.Repositories.Sql.EntityFramework.Tests
 {
     public class BloggingContext : DbContext
     {
