@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 
 namespace Dime.Repositories
 {
-    [Obsolete("In a next release this will be internal. Fetch a utility library instead.", false)]
     internal static partial class QueryFactory
     {
         /// <summary>

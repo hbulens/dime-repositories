@@ -7,7 +7,6 @@ using System.Reflection;
 
 namespace Dime.Repositories
 {
-    [Obsolete("In a next release this will be internal. Fetch a utility library instead.", false)]
     [ExcludeFromCodeCoverage]
     internal class LinqOrderHelper<TSource>
     {

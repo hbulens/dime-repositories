@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Dime.Repositories.Sql.EntityFramework.Tests
 {
     internal class TestDatabase : IDisposable
-    {        
+    {
         internal TestDatabase()
         {
             // In-memory database only exists while the connection is open
@@ -19,8 +19,8 @@ namespace Dime.Repositories.Sql.EntityFramework.Tests
 
         internal SqliteConnection Connection { get; private set; }
 
-        internal DbContextOptions<BloggingContext> Options { get; private set; }   
-        
+        internal DbContextOptions<BloggingContext> Options { get; private set; }
+
         internal void CreateDatabase()
         {
             // Create the schema in the database

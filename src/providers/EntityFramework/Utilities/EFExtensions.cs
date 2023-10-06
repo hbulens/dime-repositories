@@ -18,7 +18,7 @@ namespace Dime.Repositories
                 return query;
 
             List<string> includeList = new();
-            if (includes.Any())
+            if (includes.Length != 0)
                 return includes
                     .Where(x => !string.IsNullOrEmpty(x) && !includeList.Contains(x))
                     .Aggregate(query, (current, include) => current.Include(include));
@@ -43,7 +43,7 @@ namespace Dime.Repositories
             where TEntity : class
             where TResult : class
         {
-            if (includes != null && includes.Any())
+            if (includes != null && includes.Length != 0)
                 return includes.Where(include => include != null)
                     .Aggregate(query, (current, include) => current.Include(context, include));
 
