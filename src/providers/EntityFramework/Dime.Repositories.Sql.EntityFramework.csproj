@@ -19,34 +19,28 @@
 
 	<PropertyGroup>
 		<Authors>Dime Software</Authors>
-		<TargetFrameworks>net7.0</TargetFrameworks>
+		<TargetFrameworks>net8.0</TargetFrameworks>
 		<AssemblyName>Dime.Repositories.Sql.EntityFramework</AssemblyName>
 		<PackageId>Dime.Repositories.Sql.EntityFramework</PackageId>
 		<PackageTags>Entity Framework;Repository;SQL</PackageTags>
 		<PackageIconUrl>https://cdn.dime-software.com/dime-software/logo-shape.png</PackageIconUrl>
-		<Version>2.0.0.0-alpha.47</Version>
+		<Version>2.0.0.0-alpha.48</Version>
 		<Description>Implementation of the repository pattern with Microsoft SQL using Entity Framework Core</Description>
-		<Copyright>Copyright © 2022</Copyright>
+		<Copyright>Copyright © 2023</Copyright>
 		<PackageProjectUrl>https://github.com/dimesoftware/repository</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/dimesoftware/repository</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="LinqKit" Version="1.2.3" />
-		<PackageReference Include="Microsoft.Data.Edm" Version="5.8.5" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.1" />
-		<PackageReference Include="System.Data.Common" Version="4.3.0" />
-		<PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
-		<PackageReference Include="System.Linq" Version="4.3.0" />
-		<PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+		<PackageReference Include="LinqKit" Version="1.2.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-*" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-*" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\core\Dime.Repositories.Sql\Dime.Repositories.Sql.csproj" />
 		<ProjectReference Include="..\..\core\Dime.Repositories\Dime.Repositories.csproj" />
 	</ItemGroup>
-	<Import Project="..\EntityFramework.Shared\Dime.Repositories.Sql.EntityFramework.Shared.projitems" Label="Shared" />
 
 </Project>

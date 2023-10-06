@@ -1,8 +1,8 @@
-<p align="center"><img src="assets/db.svg?raw=true" width="350" alt="Logo"></p>
+<p align="center"><img src="assets/logo.png" width="350" alt="Logo"></p>
 
-# Repositories
-
-[![Build Status](https://dev.azure.com/dimesoftware/Utilities/_apis/build/status/dimesoftware.repository?branchName=master)](https://dev.azure.com/dimesoftware/Utilities/_build/latest?definitionId=182&branchName=master)
+<div align="center">
+<h1>Repositories</h1>
+</div>
 
 ## Introduction
 
