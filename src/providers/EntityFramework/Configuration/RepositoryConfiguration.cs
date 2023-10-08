@@ -1,8 +1,11 @@
-﻿namespace Dime.Repositories
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Dime.Repositories
 {
     /// <summary>
     /// Represents a repository configuration object
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class RepositoryConfiguration
     {
         /// <summary>

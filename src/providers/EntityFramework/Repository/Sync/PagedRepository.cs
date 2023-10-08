@@ -3,35 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using LinqKit;
-
-#if NET461
-
-using System.Data.Entity;
-
-#else
-
 using Microsoft.EntityFrameworkCore;
-
-#endif
 
 namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
-        #region Projected Pages
-
-        /// <summary>
-        /// Finds all hronous.
-        /// </summary>
-        /// <typeparam name="TResult">The type of the result.</typeparam>
-        /// <param name="where">The where.</param>
-        /// <param name="select">The select.</param>
-        /// <param name="orderBy">The order by.</param>
-        /// <param name="ascending"></param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <param name="includes">The includes.</param>
-        /// <returns></returns>
         public virtual Page<TResult> FindAllPaged<TResult>(
             Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, TResult>> select = null,
@@ -57,19 +34,6 @@ namespace Dime.Repositories
             return new Page<TResult>(query.ToList(), ctx.Count(where));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="where"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="select"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TResult> FindAllPaged<TResult>(
             Expression<Func<TEntity, bool>> where = null,
             Func<TEntity, object> groupBy = null,
@@ -96,19 +60,6 @@ namespace Dime.Repositories
             return new Page<TResult>(query.ToList(), ctx.Count(where));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="where"></param>
-        /// <param name="select"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TResult> FindAllPaged<TResult>(
            Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, TResult>> select = null,
@@ -134,20 +85,6 @@ namespace Dime.Repositories
             return new Page<TResult>(query.ToList(), ctx.Count(where));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="where"></param>
-        /// <param name="count"></param>
-        /// <param name="select"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TResult> FindAllPaged<TResult>(
            Expression<Func<TEntity, bool>> where = null,
             Expression<Func<TEntity, bool>> count = null,
@@ -175,20 +112,6 @@ namespace Dime.Repositories
             return new Page<TResult>(query.ToList(), ctx.Count(count));
         }
 
-        #endregion Projected Pages
-
-        #region Unprojected Pages
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="where"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            Expression<Func<TEntity, dynamic>> orderBy = null,
@@ -212,17 +135,6 @@ namespace Dime.Repositories
             return new Page<TEntity>(query.ToList(), ctx.Count(where));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="where"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            Expression<Func<TEntity, dynamic>> orderBy = null,
@@ -246,16 +158,6 @@ namespace Dime.Repositories
             return new Page<TEntity>(query.ToList(), ctx.Count(where));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="where"></param>
-        /// <param name="count"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            Expression<Func<TEntity, bool>> count = null,
@@ -278,16 +180,6 @@ namespace Dime.Repositories
             return new Page<TEntity>(query.ToList(), ctx.Count(count));
         }
 
-        /// <summary>
-        /// Gets the items hronously.
-        /// </summary>
-        /// <typeparam name="TEntity">The type of the entity.</typeparam>
-        /// <param name="where">The where.</param>
-        /// <param name="orderBy">The order by.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <param name="includes">The includes.</param>
-        /// <returns></returns>
         public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            IEnumerable<IOrder<TEntity>> orderBy = null,
@@ -309,16 +201,6 @@ namespace Dime.Repositories
             return new Page<TEntity>(query.ToList(), ctx.Count(where));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="where"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
         public Page<TEntity> FindAllPaged(
            Expression<Func<TEntity, bool>> where = null,
            IEnumerable<Expression<Func<TEntity, object>>> orderBy = null,
@@ -342,6 +224,5 @@ namespace Dime.Repositories
             return new Page<TEntity>(query.ToList(), ctx.Count(where));
         }
 
-        #endregion Unprojected Pages
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Dime.Repositories.Sql.EntityFramework.Tests
 {
     [TestClass]
-    public partial class CreateTests
+    public partial class CreateAsyncTests
     {
         [TestMethod]
         public void Create_ShouldAddOne()

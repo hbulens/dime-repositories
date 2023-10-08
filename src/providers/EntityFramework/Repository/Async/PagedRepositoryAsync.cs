@@ -1,27 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-
-#if NET461
-
-using System.Data.Entity;
-
-#else
-
-using Microsoft.EntityFrameworkCore;
-
-#endif
-
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using LinqKit;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
-        #region Projected Pages
-
         /// <summary>
         /// Finds all asynchronous.
         /// </summary>
@@ -129,7 +117,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes) where TResult : class
         {
-            await using TContext ctx = Context;
+            TContext ctx = Context;
             IQueryable<TResult> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -171,7 +159,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes) where TResult : class
         {
-            await using TContext ctx = Context;
+            TContext ctx = Context;
             IQueryable<TResult> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -185,10 +173,6 @@ namespace Dime.Repositories
 
             return await Task.FromResult(new Page<TResult>(query.ToList(), ctx.Count(count)));
         }
-
-        #endregion Projected Pages
-
-        #region Unprojected Pages
 
         /// <summary>
         ///
@@ -208,7 +192,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
-            await using TContext ctx = Context;
+            TContext ctx = Context;
             IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -246,7 +230,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
-            await using TContext ctx = Context;
+            TContext ctx = Context;
             IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -281,7 +265,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
-            await using TContext ctx = Context;
+            TContext ctx = Context;
             IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -314,7 +298,7 @@ namespace Dime.Repositories
             bool trackChanges = false,
             params string[] includes)
         {
-            await using TContext ctx = Context;
+            TContext ctx = Context;
             IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -347,7 +331,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
-            await using TContext ctx = Context;
+            TContext ctx = Context;
             IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -379,7 +363,7 @@ namespace Dime.Repositories
             int? pageSize = default,
             params string[] includes)
         {
-            await using TContext ctx = Context;
+            TContext ctx = Context;
             IQueryable<TEntity> query =
                 ctx.Set<TEntity>()
                     .Include(ctx, includes)
@@ -393,7 +377,5 @@ namespace Dime.Repositories
 
             return await Task.FromResult(new Page<TEntity>(query.ToList(), ctx.Count(where)));
         }
-
-        #endregion Unprojected Pages
     }
 }

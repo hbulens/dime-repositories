@@ -7,13 +7,6 @@ namespace Dime.Repositories
 {
     internal static partial class QueryFactory
     {
-        /// <summary>
-        /// Wrapper around LINQ ORDER BY
-        /// </summary>
-        /// <typeparam name="TSource">The type of the source.</typeparam>
-        /// <param name="source">The source.</param>
-        /// <param name="orderByExpression">The order by expression.</param>
-        /// <returns></returns>
         internal static IQueryable<TSource> WithOrder<TSource>(this IQueryable<TSource> source, IEnumerable<IOrder<TSource>> orderByExpression)
         {
             if (orderByExpression != null && orderByExpression.Count() > 1)
@@ -38,14 +31,6 @@ namespace Dime.Repositories
             return source.OrderBy(x => true);
         }
 
-        /// <summary>
-        /// Wrapper around LINQ ORDER BY
-        /// </summary>
-        /// <typeparam name="TSource">The type of the source.</typeparam>
-        /// <param name="source">The source.</param>
-        /// <param name="orderByExpression">The order by expression.</param>
-        /// <param name="ascending"></param>
-        /// <returns></returns>
         internal static IQueryable<TSource> WithOrder<TSource>(this IQueryable<TSource> source, IEnumerable<Expression<Func<TSource, object>>> orderByExpression, bool ascending)
         {
             if (orderByExpression == null)
@@ -69,14 +54,6 @@ namespace Dime.Repositories
             }
         }
 
-        /// <summary>
-        /// Wrapper around LINQ ORDER BY
-        /// </summary>
-        /// <typeparam name="TSource">The type of the source.</typeparam>
-        /// <param name="source">The source.</param>
-        /// <param name="orderByExpression">The order by expression.</param>
-        /// <param name="ascending"></param>
-        /// <returns></returns>
         internal static IQueryable<TSource> WithOrder<TSource>(this IQueryable<TSource> source, Expression<Func<TSource, object>> orderByExpression, bool ascending)
         {
             if (orderByExpression == null)
@@ -87,14 +64,6 @@ namespace Dime.Repositories
                 : source.OrderByDescending(compiledExpression).AsQueryable();
         }
 
-        /// <summary>
-        /// Wrapper around LINQ ORDER BY
-        /// </summary>
-        /// <typeparam name="TSource">The type of the source.</typeparam>
-        /// <param name="source">The source.</param>
-        /// <param name="orderByExpression">The order by expression.</param>
-        /// <param name="ascending"></param>
-        /// <returns></returns>
         internal static IQueryable<TSource> WithOrder<TSource>(this IQueryable<TSource> source, Func<TSource, object> orderByExpression, bool ascending)
         {
             if (orderByExpression == null)

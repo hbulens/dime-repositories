@@ -67,6 +67,7 @@ namespace Dime.Repositories
                             failedEntry.OriginalValues.SetValues(dbValues);
                             return SaveChanges(context);
                         }
+
                         return true;
                     }
 
@@ -86,12 +87,8 @@ namespace Dime.Repositories
                     throw sqlException.Number switch
                     {
                         2627 => (Exception)new ConcurrencyException(sqlException.Message, sqlException),
-                        547 => new ConstraintViolationException(sqlException.Message,
-                            sqlException)
-                        ,
-                        2601 => new ConstraintViolationException(sqlException.Message,
-                            sqlException)
-                        ,
+                        547 => new ConstraintViolationException(sqlException.Message, sqlException),
+                        2601 => new ConstraintViolationException(sqlException.Message, sqlException),
                         _ => new DatabaseAccessException(sqlException.Message, sqlException)
                     };
                 }

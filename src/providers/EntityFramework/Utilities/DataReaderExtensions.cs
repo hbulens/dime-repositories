@@ -7,12 +7,6 @@ namespace Dime.Repositories
 {
     internal static class DataReaderExtensions
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="reader"></param>
-        /// <returns></returns>
         internal static List<T> GetRecords<T>(this IDataReader reader)
         {
             List<T> result = new();
@@ -33,12 +27,6 @@ namespace Dime.Repositories
             return result;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="dr"></param>
-        /// <param name="columnName"></param>
-        /// <returns></returns>
         public static bool HasColumn(this IDataRecord dr, string columnName)
         {
             for (int i = 0; i < dr.FieldCount; i++)

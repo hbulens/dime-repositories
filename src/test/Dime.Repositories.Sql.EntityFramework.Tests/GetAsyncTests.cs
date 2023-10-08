@@ -1,22 +1,20 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Dime.Repositories.Sql.EntityFramework.Tests
 {
     [TestClass]
-    public partial class DeleteTests
-    {
+    public partial class GetAsyncTests
+    {     
         [TestMethod]
-        public void Delete_ByEntity_ShouldRemoveOne()
+        public async Task FindAllAsync_Contains_ShouldFindMatches()
         {
             using TestDatabase testDb = new();
-
             using IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(testDb.Options));
-            repo.Delete(new Blog { BlogId = 1 });
-
-            using BloggingContext context = new(testDb.Options);
-            Assert.AreEqual(2, context.Blogs.Count());
+            IEnumerable<Blog> result = await repo.FindAllAsync(x => x.Url.Contains("cat"));
+            Assert.AreEqual(2, result.Count());
         }
     }
 }

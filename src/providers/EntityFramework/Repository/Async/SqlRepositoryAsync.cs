@@ -12,7 +12,7 @@ namespace Dime.Repositories
     {
         public async Task ExecuteSqlAsync(string sql)
         {
-            await using TContext ctx = Context;
+            TContext ctx = Context;
             await ctx.Database.ExecuteSqlRawAsync(sql);
         }
 
@@ -25,7 +25,7 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(name, parameters);
-            await using TContext ctx = Context;
+            TContext ctx = Context;
             return await ctx.Database.ExecuteSqlRawAsync(execQueryString, parameters);
         }
 
@@ -38,7 +38,7 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(name, parameters);
-            await using TContext ctx = Context;
+            TContext ctx = Context;
             return await ctx.Database.ExecuteSqlRawAsync(execQueryString, parameters);
         }
 
@@ -65,7 +65,7 @@ namespace Dime.Repositories
             }
 
             string execQueryString = ExecQuery(nameof(name), parameters);
-            await using TContext ctx = Context;
+            TContext ctx = Context;
             return 1;
         }
 

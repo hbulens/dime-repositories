@@ -4,7 +4,7 @@
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <Authors>Dime Software</Authors>
-    <Version>2.0.0.0-alpha.49</Version>
+    <Version>2.0.0.0-alpha.50</Version>
     <TargetFrameworks>net8.0</TargetFrameworks>
     <AssemblyName>Dime.Repositories</AssemblyName>
     <PackageId>Dime.Repositories</PackageId>

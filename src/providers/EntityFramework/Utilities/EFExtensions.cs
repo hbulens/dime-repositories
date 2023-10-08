@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -50,6 +52,12 @@ namespace Dime.Repositories
             return GetEntityType<TEntity>(context)
                 .GetNavigations()
                 .Aggregate(query, (current, navigationProperty) => current.Include(context, navigationProperty.Name));
+        }
+
+        public static Task<List<TSource>> ToListAsyncSafe<TSource>(this IQueryable<TSource> source)
+        {
+            ArgumentNullException.ThrowIfNull(source);
+            return source is not IAsyncEnumerable<TSource> ? Task.FromResult(source.ToList()) : source.ToListAsync();
         }
     }
 }

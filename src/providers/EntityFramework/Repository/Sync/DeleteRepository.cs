@@ -1,28 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-
-#if NET461
-
-using System.Data.Entity;
-
-#else
-
-using Microsoft.EntityFrameworkCore;
-
-#endif
-
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
-        /// <summary>
-        /// Removes the record from the data store by its identifier
-        /// </summary>
-        /// <param name="id">The identifier of the entity</param>
-        /// <returns>Void</returns>
         public virtual void Delete(object? id)
         {
             using TContext ctx = Context;
@@ -34,12 +19,6 @@ namespace Dime.Repositories
             SaveChanges(ctx);
         }
 
-        /// <summary>
-        /// Removes the record from the data store by its identifier
-        /// </summary>
-        /// <param name="id">The identifier of the entity</param>
-        /// <param name="commit">Indicates whether or not SaveChanges should be called during this call</param>
-        /// <returns>Void</returns>
         public virtual void Delete(object? id, bool commit)
         {
             using TContext ctx = Context;
@@ -52,11 +31,6 @@ namespace Dime.Repositories
                 SaveChanges(ctx);
         }
 
-        /// <summary>
-        /// Removes the record from the data store
-        /// </summary>
-        /// <param name="entity">The disconnected entity to remove</param>
-        /// <returns>Void</returns>
         public virtual void Delete(TEntity entity)
         {
             using TContext ctx = Context;
@@ -65,11 +39,6 @@ namespace Dime.Repositories
             SaveChanges(ctx);
         }
 
-        /// <summary>
-        /// Removes the records
-        /// </summary>
-        /// <param name="entities">The disconnected entities to remove</param>
-        /// <returns>Void</returns>
         public void Delete(IEnumerable<TEntity> entities)
         {
             if (!entities.Any())
@@ -85,12 +54,6 @@ namespace Dime.Repositories
             SaveChanges(ctx);
         }
 
-        /// <summary>
-        /// Removes the record from the data store
-        /// </summary>
-        /// <param name="entity">The disconnected entity to remove</param>
-        /// <param name="commit">Indicates whether or not SaveChanges should be called during this call</param>
-        /// <returns></returns>
         public virtual void Delete(TEntity entity, bool commit)
         {
             using TContext ctx = Context;
@@ -101,11 +64,6 @@ namespace Dime.Repositories
                 SaveChanges(ctx);
         }
 
-        /// <summary>
-        /// Removes the record from the data store
-        /// </summary>
-        /// <param name="where">The expression to execute against the data store</param>
-        /// <returns>Void</returns>
         public virtual void Delete(Expression<Func<TEntity, bool>> where)
         {
             using TContext ctx = Context;
