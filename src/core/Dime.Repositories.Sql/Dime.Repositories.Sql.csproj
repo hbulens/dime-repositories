@@ -5,9 +5,9 @@
 		<AssemblyVersion>2.0.0.0</AssemblyVersion>
 		<FileVersion>2.0.0.0</FileVersion>
 		<Authors>Dime Software</Authors>
-		<Version>2.0.0.0-alpha.38</Version>
+		<Version>2.0.0.0</Version>
 		<Authors>Dime Software</Authors>
-		<TargetFrameworks>net461;net7.0</TargetFrameworks>
+		<TargetFrameworks>net8.0</TargetFrameworks>
 		<AssemblyName>Dime.Repositories.Sql</AssemblyName>
 		<PackageId>Dime.Repositories.Sql</PackageId>
 		<PackageIconUrl>https://cdn.dime-software.com/dime-software/logo-shape.png</PackageIconUrl>
@@ -19,7 +19,7 @@
 		<Description>Repository contracts with support for SQL databases</Description>
 		<IncludeSource>True</IncludeSource>
 		<IncludeSymbols>True</IncludeSymbols>
-		<Copyright>Copyright © 2022</Copyright>
+		<Copyright>Copyright © 2023</Copyright>
 		<PackageLicenseUrl></PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/dimesoftware/repository</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/dimesoftware/repository</RepositoryUrl>
@@ -31,17 +31,7 @@
 		<ProjectReference Include="..\Dime.Repositories\Dime.Repositories.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>	
-		<PackageReference Include="System.Data.Common" Version="4.3.0" />
-		<PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
 	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net461'">
-		<PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' != 'net461'">
-		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.1" />
-	</ItemGroup>
-
 </Project>
