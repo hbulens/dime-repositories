@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.0.1.0</VersionPrefix>
-		<AssemblyVersion>2.0.1.0</AssemblyVersion>
-		<FileVersion>2.0.1.0</FileVersion>
+		<VersionPrefix>2.0.2.0</VersionPrefix>
+		<AssemblyVersion>2.0.2.0</AssemblyVersion>
+		<FileVersion>2.0.2.0</FileVersion>
 		<Authors>Dime Software</Authors>
-		<Version>2.0.1.0</Version>
+		<Version>2.0.2.0</Version>
 		<Authors>Dime Software</Authors>
 		<TargetFrameworks>net8.0</TargetFrameworks>
 		<AssemblyName>Dime.Repositories.Sql</AssemblyName>
@@ -32,6 +32,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
 	</ItemGroup>
 </Project>
