@@ -14,7 +14,7 @@ namespace Dime.Repositories
         public Page(IEnumerable<T> data)
         {
             Data = data;
-            Summary = new List<dynamic>();
+            Summary = [];
         }
 
         public Page(IEnumerable<T> data, int total)
@@ -32,7 +32,7 @@ namespace Dime.Repositories
         public Page(IEnumerable<T> data, int total, string message, IEnumerable<dynamic> summary)
             : this(data, total, message)
         {
-            Summary = summary != null ? summary.ToList() : new List<dynamic>();
+            Summary = summary != null ? summary.ToList() : [];
         }
 
         public IEnumerable<T> Data { get; set; }

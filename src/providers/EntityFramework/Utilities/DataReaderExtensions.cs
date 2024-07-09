@@ -9,7 +9,7 @@ namespace Dime.Repositories
     {
         internal static List<T> GetRecords<T>(this IDataReader reader)
         {
-            List<T> result = new();
+            List<T> result = [];
             while (reader.Read())
             {
                 T t = (T)typeof(T).GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());

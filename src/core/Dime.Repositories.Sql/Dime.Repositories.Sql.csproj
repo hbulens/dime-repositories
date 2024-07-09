@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<VersionPrefix>2.0.2.0</VersionPrefix>
-		<AssemblyVersion>2.0.2.0</AssemblyVersion>
-		<FileVersion>2.0.2.0</FileVersion>
+		<VersionPrefix>2.0.3.0</VersionPrefix>
+		<AssemblyVersion>2.0.3.0</AssemblyVersion>
+		<FileVersion>2.0.3.0</FileVersion>
 		<Authors>Dime Software</Authors>
-		<Version>2.0.2.0</Version>
+		<Version>2.0.3.0</Version>
 		<Authors>Dime Software</Authors>
 		<TargetFrameworks>net8.0</TargetFrameworks>
 		<AssemblyName>Dime.Repositories.Sql</AssemblyName>

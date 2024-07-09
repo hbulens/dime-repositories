@@ -10,6 +10,12 @@ namespace Dime.Repositories
 {
     public partial class EfRepository<TEntity, TContext>
     {
+        public virtual async Task DeleteAsync()
+        {
+            TContext ctx = Context;
+            await ctx.Set<TEntity>().ExecuteDeleteAsync();
+        }
+
         public virtual async Task DeleteAsync(object? id)
         {
             if (id is IEnumerable)
@@ -91,15 +97,7 @@ namespace Dime.Repositories
         public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> where)
         {
             TContext ctx = Context;
-            IEnumerable<TEntity> entities = ctx.Set<TEntity>().With(where).AsNoTracking().ToList();
-            if (entities.Any())
-            {
-                foreach (TEntity item in entities)
-                    ctx.Set<TEntity>().Attach(item);
-
-                ctx.Set<TEntity>().RemoveRange(entities);
-                await SaveChangesAsync(ctx);
-            }
+            await ctx.Set<TEntity>().With(where).ExecuteDeleteAsync();
         }
     }
 }
