@@ -26,6 +26,12 @@ namespace Dime.Repositories
         Task DeleteAsync(object? id);
 
         /// <summary>
+        /// Removes all records
+        /// </summary>    
+        /// <returns>Task</returns>
+        Task DeleteAsync();
+
+        /// <summary>
         /// Removes the record from the data store by its identifier
         /// </summary>
         /// <param name="id">The identifier of the entity</param>

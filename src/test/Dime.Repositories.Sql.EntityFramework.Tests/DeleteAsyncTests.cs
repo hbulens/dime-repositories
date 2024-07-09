@@ -27,12 +27,26 @@ namespace Dime.Repositories.Sql.EntityFramework.Tests
             using TestDatabase testDb = new();
             using IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(testDb.Options));
 
-            List<int> ids = new() { 1, 2 };
+            List<int> ids = [1, 2];
             await repo.DeleteAsync(ids);
 
             // Use a separate instance of the context to verify correct data was saved to database
             await using BloggingContext context = new(testDb.Options);
             Assert.AreEqual(1, context.Blogs.Count());
+        }
+
+        [TestMethod]
+        public async Task DeleteAsync_Bulk_ShouldRemoveList()
+        {
+            using TestDatabase testDb = new();
+            using IRepository<Blog> repo = new EfRepository<Blog, BloggingContext>(new BloggingContext(testDb.Options));
+
+            List<int> ids = [1, 2];
+            await repo.DeleteAsync();
+
+            // Use a separate instance of the context to verify correct data was saved to database
+            await using BloggingContext context = new(testDb.Options);
+            Assert.AreEqual(0, context.Blogs.Count());
         }
     }
 }
